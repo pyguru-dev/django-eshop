@@ -148,8 +148,11 @@
               <span class="divider d-lg-show"></span>
               <a href="blog.html" class="d-lg-show">بلاگ </a>
               <a href="contact-us.html" class="d-lg-show">تماس با ما </a>
-              <a href="my-account.html" class="d-lg-show">حساب من </a>
-              <a
+              {% if user.is_authenticated %}
+               <a href="my-account.html" class="d-lg-show">حساب من </a>
+               <a>خروج</a>
+              {% else %}
+                <a
                 href="{% static 'ajax/login.html' %}"
                 class="d-lg-show login sign-in"
                 ><i class="w-icon-account"></i>ورود
@@ -160,6 +163,8 @@
                 class="ml-0 d-lg-show login register"
                 >ثبت نام
               </a>
+              {% endif %}
+             
             </div>
           </div>
         </div>

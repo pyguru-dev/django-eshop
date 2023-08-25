@@ -8,6 +8,7 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home_view'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    # path('api/', include('accounts.urls')),
     # path('api-auth/', include('rest_framework.urls')),
     # path('blog/', include('djshop.blog.urls')),
     # path('api/', include('api.urls')),
