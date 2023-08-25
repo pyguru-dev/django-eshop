@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views import generic
+from .forms import ContactForm
 
-# Create your views here.
+class ContactCreateView(generic.CreateView):
+    form_class = ContactForm
+    template_name = "pages/contact.html"
+    

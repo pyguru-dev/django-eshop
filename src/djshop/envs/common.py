@@ -1,10 +1,17 @@
 import os
+import sys
 from pathlib import Path
+from django.conf import settings
+from os.path import abspath, dirname, join
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+PROJECT_ROOT = os.path.dirname(__file__)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_BASE_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_DIR = str(BASE_BASE_DIR.joinpath('templates/djshop/'))
+
+sys.path.insert(0, join(PROJECT_ROOT, "apps"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,6 +39,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
+    'apps.blog',
+    'apps.api',
+    'apps.pages',
+    'apps.accounts',
 ]
 
 MIDDLEWARE = [

@@ -6,7 +6,7 @@ from .models import DJUser
 
 @admin.register(DJUser)
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
+    add_form = CustomUserCreationForm()
     form = CustomUserChangeForm
     model = DJUser
     list_display = ['username', 'email', 'is_staff']

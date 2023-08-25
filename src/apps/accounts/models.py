@@ -3,4 +3,4 @@ from django.contrib.auth.models import AbstractUser
 
 
 class DJUser(AbstractUser):
-    mobile = models.CharField(null=False, blank=False, unique=True)
+    mobile = models.CharField(null=False, blank=False, unique=True, max_length=11)
