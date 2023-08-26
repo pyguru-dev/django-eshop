@@ -38,7 +38,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
-
+    'ckeditor',
+    
     'apps.blog',
     'apps.api',
     'apps.pages',
@@ -121,11 +122,12 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_DIRS = [str(BASE_BASE_DIR.joinpath('static/djshop/'))]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 LOGIN_REDIRECT_URL = 'home_view'
 LOGOUT_REDIRECT_URL = 'home_view'

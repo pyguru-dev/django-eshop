@@ -1,4 +1,3 @@
-from typing import Any, Dict, Optional
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views import generic
@@ -7,6 +6,9 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
+from django.shortcuts import render
+from django.core.paginator import Paginator
+
 from .models import Post
 from .forms import CommentCreateForm
 
@@ -16,6 +18,7 @@ class PostListView(generic.ListView):
     queryset = Post.objects.all()
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
+    
 
 
 class PostDetailView(FormMixin, generic.DetailView):
@@ -75,3 +78,11 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user
+
+
+def post_by_tag(request, slug):
+    posts = Post.objects.filter(tags__slug=slug)
+    context = {
+        'posts' : posts
+    }
+    return render(request, "blog/post_list.html", context)

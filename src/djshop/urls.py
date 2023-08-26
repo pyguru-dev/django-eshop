@@ -10,7 +10,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     # path('accounts/', include('accounts.urls')),
     # path('api-auth/', include('rest_framework.urls')),
-    # path('blog/', include('apps.blog.urls')),
+    path('blog/', include('apps.blog.urls')),
     path('api/', include('apps.api.urls')),
 ]
 
