@@ -15,6 +15,7 @@ class Post(models.Model):
     author = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(_('عنوان'), max_length=150)
+    # slug = models.SlugField(unique=True)
     body = models.TextField()
     thumbnail = models.ImageField(upload_to='posts/')
     published_status = models.CharField(
@@ -43,3 +44,8 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse("post_list")
+
+
+class Category(models.Model):
+    name = models.TextField(max_length=100, unique=True,
+                            blank=False, null=False)
