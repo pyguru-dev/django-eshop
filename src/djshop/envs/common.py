@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'apps.blog',
     'apps.api',
     'apps.pages',
-    # 'apps.accounts',
+    'apps.accounts',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +137,6 @@ LOGOUT_REDIRECT_URL = 'home_view'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'apps.accounts.DJUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

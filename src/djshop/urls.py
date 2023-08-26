@@ -8,10 +8,10 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home_view'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    # path('accounts/', include('accounts.urls')),
-    # path('api-auth/', include('rest_framework.urls')),
+    path('accounts/', include('apps.accounts.urls')),
     path('blog/', include('apps.blog.urls')),
     path('api/', include('apps.api.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
