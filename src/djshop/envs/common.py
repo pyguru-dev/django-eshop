@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     
+    'apps.shop',
     'apps.blog',
     'apps.api',
     'apps.pages',
