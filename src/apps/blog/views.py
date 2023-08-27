@@ -24,29 +24,29 @@ class PostListView(generic.ListView):
 class PostDetailView(FormMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
-    template_name = 'blog/post_detail.html'
-    form_class = CommentCreateForm
+    template_name = 'blog/post_detail.html'    
+    # form_class = CommentCreateForm
 
-    def get_success_url(self) -> str:
-        return reverse('post_detail', kwargs={'pk': self.object.id})
+    # def get_success_url(self) -> str:
+    #     return reverse('post_detail', kwargs={'pk': self.object.id})
 
-    def get_context_data(self, **kwargs):
-        context = super(PostDeleteView, self).get_context_data(**kwargs)
-        context['form'] = CommentCreateForm(
-            initial={'article': self.object, 'user': self.request.user})
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(PostDeleteView, self).get_context_data(**kwargs)
+    #     context['form'] = CommentCreateForm(
+    #         initial={'article': self.object, 'user': self.request.user})
+    #     return context
 
-    def post(self, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            self.form_valid(self)
-        else:
-            pass
+    # def post(self, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         self.form_valid(self)
+    #     else:
+    #         pass
 
-    def form_valid(self, form):
-        form.save()
-        return super(PostDeleteView, self).form_valid(form)
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super(PostDeleteView, self).form_valid(form)
 
 
 class PostCreateView(LoginRequiredMixin,

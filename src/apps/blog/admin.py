@@ -20,6 +20,6 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
     # fields = ['title', 'body', 'published_status']
     fieldsets = (
-        (None, {'fields': ('title', 'body')}),
+        (None, {'fields': ('title', 'body', 'author')}),
         ("Status", {'fields': ('published_status',)})
     )
