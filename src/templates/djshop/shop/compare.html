@@ -28,12 +28,12 @@
         WebFontConfig = {
             google: { families: ['Poppins:400,500,600,700'] }
         };
-        ( function ( d ) {
-            var wf = d.createElement( 'script' ), s = d.scripts[0];
+        (function (d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
             wf.src = 'assets/js/webfont.js';
             wf.async = true;
-            s.parentNode.insertBefore( wf, s );
-        } )( document );
+            s.parentNode.insertBefore(wf, s);
+        })(document);
     </script>
 
     <link rel="preload" href="assets/vendor/fontawesome-free/webfonts/fa-regular-400.woff2" as="font" type="font/woff2"
@@ -46,19 +46,22 @@
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.min.css">
 
-    <!-- Plugin CSS -->
+
+    <!-- Plugin -->
+    <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css">
 
     <!-- Default CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/style-rtl.min.css">
 </head>
 
-<body>
+<body class="compare-page">
     <div class="page-wrapper">
-        <h1 class="d-none">قالب فروشگاهی چند فروشندگی وولمارت</h1>
         <!-- Start of Header -->
-        <header class="header header-border">
+        <header class="header">
             <div class="header-top">
                 <div class="container">
                     <div class="header-left">
@@ -594,7 +597,7 @@
                             </div>
                             <nav class="main-nav">
                                 <ul class="menu active-underline">
-                                    <li class="active">
+                                    <li>
                                         <a href="demo1.html">خانه </a>
                                     </li>
                                     <li>
@@ -724,7 +727,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li class="active">
                                         <a href="about-us.html">صفحات </a>
                                         <ul>
 
@@ -777,214 +780,282 @@
 
 
         <!-- Start of Main -->
-        <main class="main order">
-            <!-- Start of Breadcrumb -->
-            <nav class="breadcrumb-nav">
+        <main class="main">
+            <!-- Start of Page Header -->
+            <div class="page-header">
                 <div class="container">
-                    <ul class="breadcrumb shop-breadcrumb bb-no">
-                        <li class="passed"><a href="cart.html">فروشگاه پینگ سبد خرید </a></li>
-                        <li class="passed"><a href="checkout.html">پرداخت </a></li>
-                        <li class="active"><a href="order.html">سفارش کامل شد</a></li>
+                    <h1 class="page-title">مقایسه کردن</h1>
+                </div>
+            </div>
+            <!-- End of Page Header -->
+
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><a href="demo1.html">خانه </a></li>
+                        <li>مقایسه کردن</li>
                     </ul>
                 </div>
             </nav>
             <!-- End of Breadcrumb -->
 
-            <!-- Start of PageContent -->
+            <!-- Start of Page Content -->
             <div class="page-content mb-10 pb-2">
                 <div class="container">
-                    <div class="order-success text-center font-weight-bolder text-dark">
-                        <i class="fas fa-check"></i>
-                        متشکرم. سفارش شما دریافت شد.
-                    </div>
-                    <!-- End of Order Success -->
-
-                    <ul class="order-view list-style-none">
-                        <li>
-                            <label>شماره سفارش </label>
-                            <strong>945</strong>
-                        </li>
-                        <li>
-                            <label>وضعیت </label>
-                            <strong>در حال آماده</strong>
-                        </li>
-                        <li>
-                            <label>تاریخ</label>
-                            <strong>خرداد 5</strong>
-                        </li>
-                        <li>
-                            <label>مجموع</label>
-                            <strong>1850000 تومان</strong>
-                        </li>
-                        <li>
-                            <label>روش پرداخت </label>
-                            <strong>انتقال مستقیم بانکی</strong>
-                        </li>
-                    </ul>
-                    <!-- End of Order View -->
-
-                    <div class="order-details-wrapper mb-5">
-                        <h4 class="title text-uppercase ls-25 mb-5">جزئیات سفارش </h4>
-                        <table class="order-table">
-                            <thead>
-                                <tr>
-                                    <th class="text-dark">محصول </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="#">کت چاپ نخل </a>&nbsp;<strong>x 1</strong><br>
-                                        فروشنده :  <a href="#"> فروشنده  1</a>
-                                    </td>
-                                    <td>80000 تومان </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">کوله پشتی قهوه ای</a>&nbsp;<strong>x 1</strong><br>
-                                        فروشنده :  <a href="#"> فروشنده  1</a>
-                                    </td>
-                                    <td>50000 تومان</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>مجموع: </th>
-                                    <td>100000 تومان</td>
-                                </tr>
-                                <tr>
-                                    <th>حمل و نقل:</th>
-                                    <td>نرخ ثابت </td>
-                                </tr>
-                                <tr>
-                                    <th>روش پرداخت:</th>
-                                    <td>انتقال مستقیم بانکی</td>
-                                </tr>
-                                <tr class="total">
-                                    <th class="border-no">مجموع:</th>
-                                    <td class="border-no">100000 تومان</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- End of Order Details -->
-
-                    <div class="sub-orders mb-10">
-                        <h4 class="title mb-5 font-weight-bold ls-25">زیر سفارش ها  </h4>
-                        <div class="alert alert-icon alert-inline mb-5">
-                            <i class="w-icon-exclamation-triangle"></i>
-                            <strong>یادداشت:  </strong>این سفارش دارای محصولاتی از چندین فروشنده است. بنابراین ما این سفارش را به چند سفارش فروشنده تقسیم کردیم. هر سفارش به طور مستقل توسط فروشنده مربوطه انجام می شود.
-                        </div>
-                        <table class="order-subtable">
-                            <thead>
-                                <tr>
-                                    <th class="order">سفارش </th>
-                                    <th class="date">تاریخ </th>
-                                    <th class="status">وضعیت </th>
-                                    <th class="total">مجموع </th>
-                                    <th class="action"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="order">950</td>
-                                    <td class="date">خرداد 5</td>
-                                    <td class="status">در انتظار </td>
-                                    <td class="total">80000 تومان  برای 1 آیتم</td>
-                                    <td class="action"><a href="order-view.html" class="btn btn-rounded">نمایش </a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order">951</td>
-                                    <td class="date">خرداد 5</td>
-                                    <td class="status">در انتظار </td>
-                                    <td class="total">50000 تومان برای 1 آیتم</td>
-                                    <td class="action"><a href="order-view.html" class="btn btn-rounded">نمایش </a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- End of Sub Orders-->
-
-                    <div id="account-addresses">
-                        <div class="row">
-                            <div class="col-sm-6 mb-8">
-                                <div class="ecommerce-address billing-address">
-                                    <h4 class="title title-underline ls-25 font-weight-bold">آدرس قبض </h4>
-                                    <address class="mb-4">
-                                        <table class="address-table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>جعفر خان </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>راست چین </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>92020</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1112223334</td>
-                                                </tr>
-                                                <tr class="email">
-                                                    <td>nicework125@gmail.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </address>
+                    <div class="compare-table">
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-products">
+                            <div class="compare-col compare-field">محصول</div>
+                            <div class="compare-col compare-product">
+                                <a href="#" class="btn remove-product"><i class="w-icon-times-solid"></i></a>
+                                <div class="product text-center">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/elements/1.jpg" alt="Product" width="228"
+                                                height="257" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h3 class="product-name"><a href="product-default.html">ساعت مچی مشکی الکترونیکی</a></h3>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 mb-8">
-                                <div class="ecommerce-address shipping-address">
-                                    <h4 class="title title-underline ls-25 font-weight-bold">آدرس حمل و نقل
-                                    <address class="mb-4">
-                                        <table class="address-table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>جعفر خان </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>راست چین </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>92020</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </address>
+                            <div class="compare-col compare-product">
+                                <a href="#" class="btn remove-product"><i class="w-icon-times-solid"></i></a>
+                                <div class="product text-center">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/elements/2.jpg" alt="Product" width="228"
+                                                height="257" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h3 class="product-name"><a href="product-default.html">کفش ورزشی تابستانی </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-product">
+                                <a href="#" class="btn remove-product"><i class="w-icon-times-solid"></i></a>
+                                <div class="product text-center">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/elements/3.jpg" alt="Product" width="228"
+                                                height="257" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h3 class="product-name"><a href="product-default.html">ساعت طراحی جذاب</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-product">
+                                <a href="#" class="btn remove-product"><i class="w-icon-times-solid"></i></a>
+                                <div class="product text-center">
+                                    <figure class="product-media">
+                                        <a href="product-default.html">
+                                            <img src="assets/images/products/elements/4-1.jpg" alt="Product" width="228"
+                                                height="257" />
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"></a>
+                                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"></a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details">
+                                        <h3 class="product-name"><a href="product-default.html">موس بازی پرجمعیت</a></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- End of مقایسه محصولات -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-price">
+                            <div class="compare-col compare-field">قیمت </div>
+                            <div class="compare-col compare-value">
+                                <div class="product-price">
+                                    <span class="new-price">80000 تومان </span>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <div class="product-price">
+                                    <span class="new-price">86000 تومان</span>
+                                    <span class="old-price">120000 تومان</span>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <div class="product-price">
+                                    <span class="new-price">30000 تومان</span>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <div class="product-price">
+                                    <span class="new-price">220000 تومان</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Compare Price -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-availability">
+                            <div class="compare-col compare-field">دسترسی</div>
+                            <div class="compare-col compare-value">در انبار</div>
+                            <div class="compare-col compare-value">در انبار</div>
+                            <div class="compare-col compare-value">در انبار</div>
+                            <div class="compare-col compare-value">در انبار</div>
+                        </div>
+                        <!-- End of Compare Availability -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-description">
+                            <div class="compare-col compare-field">توضیحات</div>
+                            <div class="compare-col compare-value">
+                                <ul class="list-style-none list-type-check">
+                                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</li>
+                                    <li>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی.</li>
+                                    <li>مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد..</li>
+                                </ul>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <ul class="list-style-none list-type-check">
+                                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</li>
+                                    <li>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی.</li>
+                                    <li>مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد..</li>
+                                </ul>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <ul class="list-style-none list-type-check">
+                                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</li>
+                                    <li>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی.</li>
+                                    <li>مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد..</li>
+                                </ul>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <ul class="list-style-none list-type-check">
+                                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</li>
+                                    <li>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی.</li>
+                                    <li>مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد..</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End of Compare Description -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-reviews">
+                            <div class="compare-col compare-field">رتبه بندی ها و نظرات</div>
+                            <div class="compare-col compare-rating">
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span class="ratings" style="width: 80%;"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#" class="rating-reviews">(3 نظر )</a>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-rating">
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span class="ratings" style="width: 100%;"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#" class="rating-reviews">(5 نظر )</a>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-rating">
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span class="ratings" style="width: 60%;"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#" class="rating-reviews">(8 نظر )</a>
+                                </div>
+                            </div>
+                            <div class="compare-col compare-rating">
+                                <div class="ratings-container">
+                                    <div class="ratings-full">
+                                        <span class="ratings" style="width: 80%;"></span>
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <a href="#" class="rating-reviews">(3 نظر )</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Compare Reviews -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-category">
+                            <div class="compare-col compare-field">دسته </div>
+                            <div class="compare-col compare-value">ساعت</div>
+                            <div class="compare-col compare-value">کفش</div>
+                            <div class="compare-col compare-value">ساعت مچی</div>
+                            <div class="compare-col compare-value">الکترونیک</div>
+                        </div>
+                        <!-- End of Compare Category -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-meta">
+                            <div class="compare-col compare-field">کدها</div>
+                            <div class="compare-col compare-value">MS46891344</div>
+                            <div class="compare-col compare-value">MS46891389</div>
+                            <div class="compare-col compare-value">MS46891349</div>
+                            <div class="compare-col compare-value">MS4689158</div>
+                        </div>
+                        <!-- End of Compare Meta -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-color">
+                            <div class="compare-col compare-field">رنگ</div>
+                            <div class="compare-col compare-value">
+                                <span class="swatch" style="background-color: #ff0000;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #00ff00;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #0000ff;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #ECEC23;" title="قرمز"></span>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <span class="swatch" style="background-color: #000000;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #C0C0C0;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #808080;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #0080C0;" title="قرمز"></span>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <span class="swatch" style="background-color: #000000;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #95E8E8;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #FA0AF3;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #0A4BFA;" title="قرمز"></span>
+                            </div>
+                            <div class="compare-col compare-value">
+                                <span class="swatch" style="background-color: #000000;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #0000A0;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #42FDF9;" title="قرمز"></span>
+                                <span class="swatch" style="background-color: #9BA3A4;" title="قرمز"></span>
+                            </div>
+                        </div>
+                        <!-- End of Compare Color -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-size">
+                            <div class="compare-col compare-field">سایز</div>
+                            <div class="compare-col compare-value">متوسط ، کوچک</div>
+                            <div class="compare-col compare-value">متوسط ، بزرگ</div>
+                            <div class="compare-col compare-value">کوچک</div>
+                            <div class="compare-col compare-value">متوسط</div>
+                        </div>
+                        <!-- End of Compare Size -->
+                        <div class="compare-row cols-xl-5 cols-lg-4 cols-md-3 cols-2 compare-brand">
+                            <div class="compare-col compare-field">برند</div>
+                            <div class="compare-col compare-value">اپل</div>
+                            <div class="compare-col compare-value">New Balance</div>
+                            <div class="compare-col compare-value">Node Js</div>
+                            <div class="compare-col compare-value">Green Grass</div>
+                        </div>
+                        <!-- End of Compare Brand -->
                     </div>
-                    <!-- End of Account Address -->
-
-                    <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-back mt-6"><i class="w-icon-long-arrow-left"></i>بازگشت به فهرست</a>
                 </div>
+                <!-- End of Compare Table -->
             </div>
-            <!-- End of PageContent -->
+            <!-- End of Page Content -->
         </main>
         <!-- End of Main -->
 
         <!-- Start of Footer -->
-        <footer class="footer">
+        <footer class="footer appear-animate">
             <div class="footer-newsletter bg-primary pt-6 pb-6">
                 <div class="container">
                     <div class="row justify-content-center align-items-center">
@@ -995,16 +1066,18 @@
                                 </div>
                                 <div class="icon-box-content">
                                     <h4 class="icon-box-title text-white text-uppercase mb-0">مشترک شدن در خبرنامه ما</h4>
-                                    <p class="text-white">تمام آخرین اطلاعات در مورد رویدادها، فروش ها و پیشنهادات را دریافت کنید.</p>
+                                    <p class="text-white">تمام آخرین اطلاعات در مورد رویدادها، فروش ها و پیشنهادات را دریافت کنید.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-7 col-lg-6 col-md-9 mt-4 mt-lg-0 ">
-                            <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-rounded">
+                            <form action="#" method="get"
+                                class="input-wrapper input-wrapper-inline input-wrapper-rounded">
                                 <input type="email" class="form-control mr-2 bg-white" name="email" id="email"
                                     placeholder="آدرس ایمیل " />
-                            <button class="btn btn-dark btn-rounded" type="submit">اشتراک در <i
-                                    class="w-icon-long-arrow-left"></i></button>
+                                <button class="btn btn-dark btn-rounded" type="submit">اشتراک در <i
+                                        class="w-icon-long-arrow-left"></i></button>
                             </form>
                         </div>
                     </div>
@@ -1202,8 +1275,7 @@
                         </div>
                         <figure class="product-media">
                             <a href="#">
-                                <img src="assets/images/cart/product-1.jpg" alt="product" height="84"
-                                    width="94" />
+                                <img src="assets/images/cart/product-1.jpg" alt="product" height="84" width="94" />
                             </a>
                         </figure>
                         <button class="btn btn-link btn-close" aria-label="button">
@@ -1223,8 +1295,7 @@
                         </div>
                         <figure class="product-media">
                             <a href="#">
-                                <img src="assets/images/cart/product-2.jpg" alt="product" width="84"
-                                    height="94" />
+                                <img src="assets/images/cart/product-2.jpg" alt="product" width="84" height="94" />
                             </a>
                         </figure>
                         <button class="btn btn-link btn-close" aria-label="button">
@@ -1245,15 +1316,15 @@
             </div>
             <!-- End of Dropdown Box -->
         </div>
-        
+
         <div class="header-search hs-toggle dir-up">
             <a href="#" class="search-toggle sticky-link">
                 <i class="w-icon-search"></i>
                 <p>جستجو </p>
             </a>
             <form action="#" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off"
-                    placeholder="جستجو" required />
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="جستجو"
+                    required />
                 <button class="btn btn-search" type="submit">
                     <i class="w-icon-search"></i>
                 </button>
@@ -1261,7 +1332,7 @@
         </div>
     </div>
     <!-- End of Sticky Footer -->
-    
+
     <!-- Start of Scroll Top -->
     <a id="scroll-top" class="scroll-top" href="#top" title="بالا" role="button"> <i class="w-icon-angle-up"></i> <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70"> <circle id="progress-indicator" fill="transparent" stroke="#000000" stroke-miterlimit="10" cx="35" cy="35" r="34" style="stroke-dasharray: 16.4198, 400;"></circle> </svg> </a>
     <!-- End of Scroll Top -->
@@ -1276,8 +1347,8 @@
 
         <div class="mobile-menu-container scrollable">
             <form action="#" method="get" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off"
-                    placeholder="جستجو" required />
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="جستجو"
+                    required />
                 <button class="btn btn-search" type="submit">
                     <i class="w-icon-search"></i>
                 </button>
@@ -1306,8 +1377,10 @@
                                         <li><a href="shop-banner-sidebar.html">بنر با نوار کناری</a></li>
                                         <li><a href="shop-boxed-banner.html">بنر باکسی </a></li>
                                         <li><a href="shop-fullwidth-banner.html">بنر تمام عرض </a></li>
-                                        <li><a href="shop-horizontal-filter.html">فیلتر افقی <span class="tip tip-hot">داغ </span></a></li>
-                                        <li><a href="shop-off-canvas.html">بدون نوار کناری <span class="tip tip-new">جدید </span></a></li>
+                                        <li><a href="shop-horizontal-filter.html">فیلتر افقی <span
+                                                    class="tip tip-hot">داغ </span></a></li>
+                                        <li><a href="shop-off-canvas.html">بدون نوار کناری <span
+                                                    class="tip tip-new">جدید </span></a></li>
                                         <li><a href="shop-infinite-scroll.html"> اسکرول بی نهایت آژاکس</a></li>
                                         <li><a href="shop-right-sidebar.html">سایدبار چپ </a></li>
                                         <li><a href="shop-both-sidebar.html">هر دو نوار کناری </a></li>
@@ -1337,13 +1410,15 @@
                                         <li><a href="product-extended.html">اطلاعات گسترده </a>
                                         </li>
                                         <li><a href="product-without-sidebar.html">بدون نوار کناری </a></li>
-                                        <li><a href="product-video.html">360<sup>درجه </sup>  ویدئو <span class="tip tip-new">جدید </span></a></li>
+                                        <li><a href="product-video.html">360<sup>درجه </sup>  ویدئو <span
+                                                    class="tip tip-new">جدید </span></a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="#">چیدمان محصول </a>
                                     <ul>
-                                        <li><a href="product-default.html">پیشفرض <span class="tip tip-hot">داغ </span></a></li>
+                                        <li><a href="product-default.html">پیشفرض <span
+                                                    class="tip tip-hot">داغ </span></a></li>
                                         <li><a href="product-vertical.html">شست عمودی </a></li>
                                         <li><a href="product-grid.html">تصاویر شبکه ای </a></li>
                                         <li><a href="product-masonry.html">ساختمانی </a></li>
@@ -1416,7 +1491,7 @@
                         <li>
                             <a href="about-us.html">صفحات </a>
                             <ul>
-                                
+
                                 <li><a href="about-us.html">درباره ما </a></li>
                                 <li><a href="become-a-vendor.html">فروشنده شوید </a></li>
                                 <li><a href="contact-us.html">تماس با ما </a></li>
@@ -1693,7 +1768,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="shop-banner-sidebar.html" class="font-weight-bold text-primary text-uppercase ls-25">
+                            <a href="shop-banner-sidebar.html"
+                                class="font-weight-bold text-primary text-uppercase ls-25">
                                 نمایش همه دسته بندیها <i class="w-icon-angle-left"></i>
                             </a>
                         </li>
@@ -1706,8 +1782,12 @@
 
     <!-- Plugin JS File -->
     <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/sticky/sticky.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/zoom/jquery.zoom.js"></script>
+    <script src="assets/vendor/photoswipe/photoswipe.min.js"></script>
+    <script src="assets/vendor/photoswipe/photoswipe-ui-default.min.js"></script>
     <script src="assets/js/main.min.js"></script>
 </body>
 

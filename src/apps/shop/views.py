@@ -8,5 +8,5 @@ class ProductDetailView(DetailView):
     pass
 
 class CartView(TemplateView):
-    pass
+    template_name = "shop/cart.html"
 

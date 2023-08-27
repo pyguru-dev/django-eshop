@@ -28,12 +28,12 @@
         WebFontConfig = {
             google: { families: ['Poppins:400,500,600,700'] }
         };
-        ( function ( d ) {
-            var wf = d.createElement( 'script' ), s = d.scripts[0];
+        (function (d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
             wf.src = 'assets/js/webfont.js';
             wf.async = true;
-            s.parentNode.insertBefore( wf, s );
-        } )( document );
+            s.parentNode.insertBefore(wf, s);
+        })(document);
     </script>
 
     <link rel="preload" href="assets/vendor/fontawesome-free/webfonts/fa-regular-400.woff2" as="font" type="font/woff2"
@@ -46,9 +46,11 @@
 
     <!-- Vendor CSS -->
     <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css">
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css">
+    <link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
 
     <!-- Default CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/style-rtl.min.css">
@@ -56,9 +58,8 @@
 
 <body>
     <div class="page-wrapper">
-        <h1 class="d-none">قالب فروشگاهی چند فروشندگی وولمارت</h1>
         <!-- Start of Header -->
-        <header class="header header-border">
+        <header class="header">
             <div class="header-top">
                 <div class="container">
                     <div class="header-left">
@@ -594,7 +595,7 @@
                             </div>
                             <nav class="main-nav">
                                 <ul class="menu active-underline">
-                                    <li class="active">
+                                    <li>
                                         <a href="demo1.html">خانه </a>
                                     </li>
                                     <li>
@@ -724,7 +725,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li class="active">
                                         <a href="about-us.html">صفحات </a>
                                         <ul>
 
@@ -777,206 +778,145 @@
 
 
         <!-- Start of Main -->
-        <main class="main order">
-            <!-- Start of Breadcrumb -->
-            <nav class="breadcrumb-nav">
+        <main class="main wishlist-page">
+            <!-- Start of Page Header -->
+            <div class="page-header">
                 <div class="container">
-                    <ul class="breadcrumb shop-breadcrumb bb-no">
-                        <li class="passed"><a href="cart.html">فروشگاه پینگ سبد خرید </a></li>
-                        <li class="passed"><a href="checkout.html">پرداخت </a></li>
-                        <li class="active"><a href="order.html">سفارش کامل شد</a></li>
+                    <h1 class="page-title mb-0">علاقه مندیها</h1>
+                </div>
+            </div>
+            <!-- End of Page Header -->
+
+            <!-- Start of Breadcrumb -->
+            <nav class="breadcrumb-nav mb-10">
+                <div class="container">
+                    <ul class="breadcrumb">
+                        <li><a href="demo1.html">خانه </a></li>
+                        <li>علاقه مندیها</li>
                     </ul>
                 </div>
             </nav>
             <!-- End of Breadcrumb -->
 
             <!-- Start of PageContent -->
-            <div class="page-content mb-10 pb-2">
+            <div class="page-content">
                 <div class="container">
-                    <div class="order-success text-center font-weight-bolder text-dark">
-                        <i class="fas fa-check"></i>
-                        متشکرم. سفارش شما دریافت شد.
-                    </div>
-                    <!-- End of Order Success -->
-
-                    <ul class="order-view list-style-none">
-                        <li>
-                            <label>شماره سفارش </label>
-                            <strong>945</strong>
-                        </li>
-                        <li>
-                            <label>وضعیت </label>
-                            <strong>در حال آماده</strong>
-                        </li>
-                        <li>
-                            <label>تاریخ</label>
-                            <strong>خرداد 5</strong>
-                        </li>
-                        <li>
-                            <label>مجموع</label>
-                            <strong>1850000 تومان</strong>
-                        </li>
-                        <li>
-                            <label>روش پرداخت </label>
-                            <strong>انتقال مستقیم بانکی</strong>
-                        </li>
-                    </ul>
-                    <!-- End of Order View -->
-
-                    <div class="order-details-wrapper mb-5">
-                        <h4 class="title text-uppercase ls-25 mb-5">جزئیات سفارش </h4>
-                        <table class="order-table">
-                            <thead>
-                                <tr>
-                                    <th class="text-dark">محصول </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="#">کت چاپ نخل </a>&nbsp;<strong>x 1</strong><br>
-                                        فروشنده :  <a href="#"> فروشنده  1</a>
-                                    </td>
-                                    <td>80000 تومان </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">کوله پشتی قهوه ای</a>&nbsp;<strong>x 1</strong><br>
-                                        فروشنده :  <a href="#"> فروشنده  1</a>
-                                    </td>
-                                    <td>50000 تومان</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>مجموع: </th>
-                                    <td>100000 تومان</td>
-                                </tr>
-                                <tr>
-                                    <th>حمل و نقل:</th>
-                                    <td>نرخ ثابت </td>
-                                </tr>
-                                <tr>
-                                    <th>روش پرداخت:</th>
-                                    <td>انتقال مستقیم بانکی</td>
-                                </tr>
-                                <tr class="total">
-                                    <th class="border-no">مجموع:</th>
-                                    <td class="border-no">100000 تومان</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!-- End of Order Details -->
-
-                    <div class="sub-orders mb-10">
-                        <h4 class="title mb-5 font-weight-bold ls-25">زیر سفارش ها  </h4>
-                        <div class="alert alert-icon alert-inline mb-5">
-                            <i class="w-icon-exclamation-triangle"></i>
-                            <strong>یادداشت:  </strong>این سفارش دارای محصولاتی از چندین فروشنده است. بنابراین ما این سفارش را به چند سفارش فروشنده تقسیم کردیم. هر سفارش به طور مستقل توسط فروشنده مربوطه انجام می شود.
-                        </div>
-                        <table class="order-subtable">
-                            <thead>
-                                <tr>
-                                    <th class="order">سفارش </th>
-                                    <th class="date">تاریخ </th>
-                                    <th class="status">وضعیت </th>
-                                    <th class="total">مجموع </th>
-                                    <th class="action"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="order">950</td>
-                                    <td class="date">خرداد 5</td>
-                                    <td class="status">در انتظار </td>
-                                    <td class="total">80000 تومان  برای 1 آیتم</td>
-                                    <td class="action"><a href="order-view.html" class="btn btn-rounded">نمایش </a></td>
-                                </tr>
-                                <tr>
-                                    <td class="order">951</td>
-                                    <td class="date">خرداد 5</td>
-                                    <td class="status">در انتظار </td>
-                                    <td class="total">50000 تومان برای 1 آیتم</td>
-                                    <td class="action"><a href="order-view.html" class="btn btn-rounded">نمایش </a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- End of Sub Orders-->
-
-                    <div id="account-addresses">
-                        <div class="row">
-                            <div class="col-sm-6 mb-8">
-                                <div class="ecommerce-address billing-address">
-                                    <h4 class="title title-underline ls-25 font-weight-bold">آدرس قبض </h4>
-                                    <address class="mb-4">
-                                        <table class="address-table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>جعفر خان </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>راست چین </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>92020</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1112223334</td>
-                                                </tr>
-                                                <tr class="email">
-                                                    <td>nicework125@gmail.com</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </address>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 mb-8">
-                                <div class="ecommerce-address shipping-address">
-                                    <h4 class="title title-underline ls-25 font-weight-bold">آدرس حمل و نقل
-                                    <address class="mb-4">
-                                        <table class="address-table">
-                                            <tbody>
-                                                <tr>
-                                                    <td>جعفر خان </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>راست چین </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>پاناما </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>92020</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </address>
-                                </div>
-                            </div>
+                    <h3 class="wishlist-title">علاقه مندیهای من</h3>
+                    <table class="shop-table wishlist-table">
+                        <thead>
+                            <tr>
+                                <th class="product-name"><span>محصول </span></th>
+                                <th></th>
+                                <th class="product-price"><span>قیمت </span></th>
+                                <th class="product-stock-status"><span>وضعیت انبار </span></th>
+                                <th class="wishlist-action">اقدامات </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <div class="p-relative">
+                                        <a href="product-default.html">
+                                            <figure>
+                                                <img src="assets/images/shop/7-1.jpg" alt="product" width="300"
+                                                    height="338">
+                                            </figure>
+                                        </a>
+                                        <button type="submit" class="btn btn-close"><i
+                                                class="fas fa-times"></i></button>
+                                    </div>
+                                </td>
+                                <td class="product-name">
+                                    <a href="product-default.html">
+                                        تنه آسمان آبی
+                                    </a>
+                                </td>
+                                <td class="product-price">
+                                    <ins class="new-price">85000 تومان</ins>
+                                </td>
+                                <td class="product-stock-status">
+                                    <span class="wishlist-in-stock">در انبار</span>
+                                </td>
+                                <td class="wishlist-action">
+                                    <div class="d-lg-flex">
+                                        <a href="#"
+                                            class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">نمایش سریع</a>
+                                        <a href="#" class="btn btn-dark btn-rounded btn-sm ml-lg-2 btn-cart">افزودن به سبد</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <div class="p-relative">
+                                        <a href="product-default.html">
+                                            <figure>
+                                                <img src="assets/images/shop/19-1.jpg" alt="product" width="300"
+                                                    height="338">
+                                            </figure>
+                                        </a>
+                                        <button type="submit" class="btn btn-close"><i
+                                                class="fas fa-times"></i></button>
+                                    </div>
+                                </td>
+                                <td class="product-name">
+                                    <a href="product-default.html">
+                                        انگشتر دست ساز
+                                    </a>
+                                </td>
+                                <td class="product-price"><ins class="new-price">78000 تومان</ins></td>
+                                <td class="product-stock-status">
+                                    <span class="wishlist-in-stock">در انبار</span>
+                                </td>
+                                <td class="wishlist-action">
+                                    <div class="d-lg-flex">
+                                        <a href="#"
+                                            class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">نمایش سریع</a>
+                                        <a href="#" class="btn btn-dark btn-rounded btn-sm ml-lg-2 btn-cart">افزودن به سبد</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <div class="p-relative">
+                                        <a href="product-default.html">
+                                            <figure>
+                                                <img src="assets/images/shop/20.jpg" alt="product" width="300"
+                                                    height="338">
+                                            </figure>
+                                        </a>
+                                        <button type="submit" class="btn btn-close"><i
+                                                class="fas fa-times"></i></button>
+                                    </div>
+                                </td>
+                                <td class="product-name">
+                                    <a href="product-default.html">
+                                        جا مدادی
+                                    </a>
+                                </td>
+                                <td class="product-price"><ins class="new-price">118000 تومان</ins></td>
+                                <td class="product-stock-status">
+                                    <span class="wishlist-in-stock">در انبار</span>
+                                </td>
+                                <td class="wishlist-action">
+                                    <div class="d-lg-flex">
+                                        <a href="#"
+                                            class="btn btn-quickview btn-outline btn-default btn-rounded btn-sm mb-2 mb-lg-0">نمایش سریع</a>
+                                        <a href="#" class="btn btn-dark btn-rounded btn-sm ml-lg-2 btn-cart">افزودن به سبد</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="social-links">
+                        <label>اشتراک در:</label>
+                        <div class="social-icons social-no-color border-thin">
+                            <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
+                            <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
+                            <a href="#" class="social-icon social-pinterest w-icon-pinterest"></a>
+                            <a href="#" class="social-icon social-email far fa-envelope"></a>
+                            <a href="#" class="social-icon social-whatsapp fab fa-whatsapp"></a>
                         </div>
                     </div>
-                    <!-- End of Account Address -->
-
-                    <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-back mt-6"><i class="w-icon-long-arrow-left"></i>بازگشت به فهرست</a>
                 </div>
             </div>
             <!-- End of PageContent -->
@@ -995,16 +935,18 @@
                                 </div>
                                 <div class="icon-box-content">
                                     <h4 class="icon-box-title text-white text-uppercase mb-0">مشترک شدن در خبرنامه ما</h4>
-                                    <p class="text-white">تمام آخرین اطلاعات در مورد رویدادها، فروش ها و پیشنهادات را دریافت کنید.</p>
+                                    <p class="text-white">تمام آخرین اطلاعات در مورد رویدادها، فروش ها و پیشنهادات را دریافت کنید.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-7 col-lg-6 col-md-9 mt-4 mt-lg-0 ">
-                            <form action="#" method="get" class="input-wrapper input-wrapper-inline input-wrapper-rounded">
+                            <form action="#" method="get"
+                                class="input-wrapper input-wrapper-inline input-wrapper-rounded">
                                 <input type="email" class="form-control mr-2 bg-white" name="email" id="email"
                                     placeholder="آدرس ایمیل " />
-                            <button class="btn btn-dark btn-rounded" type="submit">اشتراک در <i
-                                    class="w-icon-long-arrow-left"></i></button>
+                                <button class="btn btn-dark btn-rounded" type="submit">اشتراک در <i
+                                        class="w-icon-long-arrow-left"></i></button>
                             </form>
                         </div>
                     </div>
@@ -1202,8 +1144,7 @@
                         </div>
                         <figure class="product-media">
                             <a href="#">
-                                <img src="assets/images/cart/product-1.jpg" alt="product" height="84"
-                                    width="94" />
+                                <img src="assets/images/cart/product-1.jpg" alt="product" height="84" width="94" />
                             </a>
                         </figure>
                         <button class="btn btn-link btn-close" aria-label="button">
@@ -1223,8 +1164,7 @@
                         </div>
                         <figure class="product-media">
                             <a href="#">
-                                <img src="assets/images/cart/product-2.jpg" alt="product" width="84"
-                                    height="94" />
+                                <img src="assets/images/cart/product-2.jpg" alt="product" width="84" height="94" />
                             </a>
                         </figure>
                         <button class="btn btn-link btn-close" aria-label="button">
@@ -1245,15 +1185,15 @@
             </div>
             <!-- End of Dropdown Box -->
         </div>
-        
+
         <div class="header-search hs-toggle dir-up">
             <a href="#" class="search-toggle sticky-link">
                 <i class="w-icon-search"></i>
                 <p>جستجو </p>
             </a>
             <form action="#" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off"
-                    placeholder="جستجو" required />
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="جستجو"
+                    required />
                 <button class="btn btn-search" type="submit">
                     <i class="w-icon-search"></i>
                 </button>
@@ -1261,7 +1201,7 @@
         </div>
     </div>
     <!-- End of Sticky Footer -->
-    
+
     <!-- Start of Scroll Top -->
     <a id="scroll-top" class="scroll-top" href="#top" title="بالا" role="button"> <i class="w-icon-angle-up"></i> <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70"> <circle id="progress-indicator" fill="transparent" stroke="#000000" stroke-miterlimit="10" cx="35" cy="35" r="34" style="stroke-dasharray: 16.4198, 400;"></circle> </svg> </a>
     <!-- End of Scroll Top -->
@@ -1276,8 +1216,8 @@
 
         <div class="mobile-menu-container scrollable">
             <form action="#" method="get" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off"
-                    placeholder="جستجو" required />
+                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="جستجو"
+                    required />
                 <button class="btn btn-search" type="submit">
                     <i class="w-icon-search"></i>
                 </button>
@@ -1306,8 +1246,10 @@
                                         <li><a href="shop-banner-sidebar.html">بنر با نوار کناری</a></li>
                                         <li><a href="shop-boxed-banner.html">بنر باکسی </a></li>
                                         <li><a href="shop-fullwidth-banner.html">بنر تمام عرض </a></li>
-                                        <li><a href="shop-horizontal-filter.html">فیلتر افقی <span class="tip tip-hot">داغ </span></a></li>
-                                        <li><a href="shop-off-canvas.html">بدون نوار کناری <span class="tip tip-new">جدید </span></a></li>
+                                        <li><a href="shop-horizontal-filter.html">فیلتر افقی <span
+                                                    class="tip tip-hot">داغ </span></a></li>
+                                        <li><a href="shop-off-canvas.html">بدون نوار کناری <span
+                                                    class="tip tip-new">جدید </span></a></li>
                                         <li><a href="shop-infinite-scroll.html"> اسکرول بی نهایت آژاکس</a></li>
                                         <li><a href="shop-right-sidebar.html">سایدبار چپ </a></li>
                                         <li><a href="shop-both-sidebar.html">هر دو نوار کناری </a></li>
@@ -1337,13 +1279,15 @@
                                         <li><a href="product-extended.html">اطلاعات گسترده </a>
                                         </li>
                                         <li><a href="product-without-sidebar.html">بدون نوار کناری </a></li>
-                                        <li><a href="product-video.html">360<sup>درجه </sup>  ویدئو <span class="tip tip-new">جدید </span></a></li>
+                                        <li><a href="product-video.html">360<sup>درجه </sup>  ویدئو <span
+                                                    class="tip tip-new">جدید </span></a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="#">چیدمان محصول </a>
                                     <ul>
-                                        <li><a href="product-default.html">پیشفرض <span class="tip tip-hot">داغ </span></a></li>
+                                        <li><a href="product-default.html">پیشفرض <span
+                                                    class="tip tip-hot">داغ </span></a></li>
                                         <li><a href="product-vertical.html">شست عمودی </a></li>
                                         <li><a href="product-grid.html">تصاویر شبکه ای </a></li>
                                         <li><a href="product-masonry.html">ساختمانی </a></li>
@@ -1416,7 +1360,7 @@
                         <li>
                             <a href="about-us.html">صفحات </a>
                             <ul>
-                                
+
                                 <li><a href="about-us.html">درباره ما </a></li>
                                 <li><a href="become-a-vendor.html">فروشنده شوید </a></li>
                                 <li><a href="contact-us.html">تماس با ما </a></li>
@@ -1693,7 +1637,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="shop-banner-sidebar.html" class="font-weight-bold text-primary text-uppercase ls-25">
+                            <a href="shop-banner-sidebar.html"
+                                class="font-weight-bold text-primary text-uppercase ls-25">
                                 نمایش همه دسته بندیها <i class="w-icon-angle-left"></i>
                             </a>
                         </li>
@@ -1704,9 +1649,161 @@
     </div>
     <!-- End of Mobile Menu -->
 
+    <!-- Start of Quick View -->
+    <div class="product product-single product-popup">
+        <div class="row gutter-lg">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <div class="product-gallery product-gallery-sticky mb-0">
+                    <div class="product-single-swiper swiper-container swiper-theme nav-inner row cols-1 gutter-no">
+                        <figure class="product-image">
+                            <img src="assets/images/products/popup/1-440x494.jpg"
+                                data-zoom-image="assets/images/products/popup/1-800x900.jpg"
+                                alt="Water Boil Black Utensil" width="800" height="900">
+                        </figure>
+                        <figure class="product-image">
+                            <img src="assets/images/products/popup/2-440x494.jpg"
+                                data-zoom-image="assets/images/products/popup/2-800x900.jpg"
+                                alt="Water Boil Black Utensil" width="800" height="900">
+                        </figure>
+                        <figure class="product-image">
+                            <img src="assets/images/products/popup/3-440x494.jpg"
+                                data-zoom-image="assets/images/products/popup/3-800x900.jpg"
+                                alt="Water Boil Black Utensil" width="800" height="900">
+                        </figure>
+                        <figure class="product-image">
+                            <img src="assets/images/products/popup/4-440x494.jpg"
+                                data-zoom-image="assets/images/products/popup/4-800x900.jpg"
+                                alt="Water Boil Black Utensil" width="800" height="900">
+                        </figure>
+                    </div>
+                    <div class="product-thumbs-wrap">
+                        <div class="product-thumbs">
+                            <div class="product-thumb active">
+                                <img src="assets/images/products/popup/1-103x116.jpg" alt="Product Thumb" width="103"
+                                    height="116">
+                            </div>
+                            <div class="product-thumb">
+                                <img src="assets/images/products/popup/2-103x116.jpg" alt="Product Thumb" width="103"
+                                    height="116">
+                            </div>
+                            <div class="product-thumb">
+                                <img src="assets/images/products/popup/3-103x116.jpg" alt="Product Thumb" width="103"
+                                    height="116">
+                            </div>
+                            <div class="product-thumb">
+                                <img src="assets/images/products/popup/4-103x116.jpg" alt="Product Thumb" width="103"
+                                    height="116">
+                            </div>
+                        </div>
+                        <button class="thumb-up disabled"><i class="w-icon-angle-right"></i></button>
+                        <button class="thumb-down disabled"><i class="w-icon-angle-right"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 overflow-hidden p-relative">
+                <div class="product-details scrollable pl-0">
+                    <h2 class="product-title">ساعت مچی مشکی الکترونیکی</h2>
+                    <div class="product-bm-wrapper">
+                        <figure class="brand">
+                            <img src="assets/images/products/brand/brand-1.jpg" alt="Brand" width="102" height="48" />
+                        </figure>
+                        <div class="product-meta">
+                            <div class="product-categories">
+                                دسته بندی: 
+                                <span class="product-category"><a href="#">الکترونیک </a></span>
+                            </div>
+                            <div class="product-sku">
+                               کد:  <span>MS46891340</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="product-divider">
+
+                    <div class="product-price">80000 تومان </div>
+
+                    <div class="ratings-container">
+                        <div class="ratings-full">
+                            <span class="ratings" style="width: 80%;"></span>
+                            <span class="tooltiptext tooltip-top"></span>
+                        </div>
+                        <a href="#" class="rating-reviews">(3 نظر )</a>
+                    </div>
+
+                    <div class="product-short-desc">
+                        <ul class="list-type-check list-style-none">
+                            <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</li>
+                            <li>چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی.</li>
+                            <li>مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد..</li>
+                        </ul>
+                    </div>
+
+                    <hr class="product-divider">
+
+                    <div class="product-form product-variation-form product-color-swatch product-variations">
+                        <label>رنگ :</label>
+                        <div class="d-flex align-items-center">
+                            <a href="#" class="color" style="background-color: #ffcc01"></a>
+                            <a href="#" class="color" style="background-color: #ca6d00;"></a>
+                            <a href="#" class="color" style="background-color: #1c93cb;"></a>
+                            <a href="#" class="color" style="background-color: #ccc;"></a>
+                            <a href="#" class="color" style="background-color: #333;"></a>
+                        </div>
+                    </div>
+                    <div class="product-form product-variation-form product-size-swatch product-variations">
+                        <label>سایز :</label>
+                        <div class="flex-wrap d-flex align-items-center">
+                            <a href="#" class="size">کوچک </a>
+                            <a href="#" class="size">متوسط </a>
+                            <a href="#" class="size">بزرگ </a>
+                            <a href="#" class="size">خبلی بزرگ </a>
+                        </div>
+                    </div>
+
+                    <div class="product-variation-price">
+                        <span></span>
+                    </div>
+
+                    <div class="product-form">
+                        <div class="product-qty-form">
+                            <div class="input-group">
+                                <input class="quantity form-control" type="number" min="1" max="10000000">
+                                <button class="quantity-plus w-icon-plus"></button>
+                                <button class="quantity-minus w-icon-minus"></button>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-cart">
+                            <i class="w-icon-cart"></i>
+                            <span>افزودن به سبد  </span>
+                        </button>
+                    </div>
+
+                    <div class="social-links-wrapper">
+                        <div class="social-links">
+                            <div class="social-icons social-no-color border-thin">
+                                <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
+                                <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
+                                <a href="#" class="social-icon social-instagram w-icon-instagram"></a>
+                                <a href="#" class="social-icon social-youtube w-icon-youtube"></a>
+                                <a href="#" class="social-icon social-pinterest w-icon-pinterest"></a>
+                            </div>
+                        </div>
+                        <span class="divider d-xs-show"></span>
+                        <div class="product-link-wrapper d-flex">
+                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"><span></span></a>
+                            <a href="#"
+                                class="btn-product-icon btn-compare btn-icon-left w-icon-compare"><span></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Quick view -->
+
     <!-- Plugin JS File -->
     <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/sticky/sticky.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
     <script src="assets/js/main.min.js"></script>
 </body>
