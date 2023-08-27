@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'ckeditor',
+    "django_unicorn",
     
     'apps.shop',
     'apps.blog',

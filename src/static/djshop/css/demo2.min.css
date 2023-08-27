@@ -21,6 +21,7 @@
     Swiper Container
 ---------------------------------------------- */
 /*Start Fonts*/
+
 @font-face {
     font-family: IRANSansfanum;
     font-style: normal;
@@ -1112,7 +1113,7 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
-  font-family: yekan;
+  font-family: Vazir !important;
   font-size: 1.4rem;
   line-height: 1.6;
   color: #666;

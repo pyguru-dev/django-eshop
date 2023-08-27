@@ -1,3 +1,4 @@
+import datetime
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
@@ -5,6 +6,8 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from ckeditor.fields import RichTextField
+from django.utils import timezone
+
 
 class Post(models.Model):
     PUBLISHED_STATUS = (
@@ -33,7 +36,10 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post_detail", kwargs={"pk": self.pk})
+        return reverse("post_detail",  args=[str(self.id)])
+
+    def posts_was_published_recently(self):
+        return self.created_at >= timezone.now() - datetime.timedelta(days=1)
 
 
 class Comment(models.Model):
@@ -52,6 +58,7 @@ class Comment(models.Model):
 class Category(models.Model):
     name = models.TextField(max_length=100, unique=True,
                             blank=False, null=False)
+
 
 class Tag(models.Model):
     name = models.TextField(max_length=100, unique=True,

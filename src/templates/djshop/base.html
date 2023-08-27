@@ -1,4 +1,6 @@
 {% load static %}
+{% load unicorn %}
+
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -41,11 +43,18 @@
 
     <!-- Default CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/demo2.min.css' %}">
+
+    {% unicorn_scripts %}
+
 </head>
 
 <body class="home">
+    {% csrf_token %}
+
     <div class="page-wrapper">
+        
         <h1 class="d-none">قالب فروشگاهی چند فروشندگی وولمارت</h1>
+
         <!-- Start of Header -->
         <header class="header">
             <div class="header-top">
@@ -531,7 +540,7 @@
                                 <h4 class="widget-title">حساب کاربری </h4>
                                 <ul class="widget-body">
                                     <li><a href="#">پیگیر سفارشات من </a></li>
-                                    <li><a href="cart.html">سبد خرید </a></li>
+                                    <li><a href="{% url 'cart' %}">سبد خرید </a></li>
                                     <li><a href="login.html">ورود </a></li>
                                     <li><a href="#">راهنما </a></li>
                                     <li><a href="{% url 'wishlist' %}">علاقه مندیهای من  </a></li>
@@ -558,74 +567,12 @@
                     <div class="widget widget-category">
                         <div class="category-box">
                             <h6 class="category-name">مصرف کننده برق:</h6>
-                            <a href="#">تلویزیون</a>
-                            <a href="#">وضعیت هوا </a>
-                            <a href="#">یخچال </a>
-                            <a href="#">ماشین لباسشویی </a>
-                            <a href="#">بلندگوی صوتی </a>
-                            <a href="#">دوربین امنیتی </a>
+                            <a href="#">تلویزیون</a>                            
                             <a href="#">نمایش همه </a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">پوشاک و لباس:</h6>
-                            <a href="#">تیشرت مردانه</a>
-                            <a href="#">لباس </a>
-                            <a href="#">کفش ورزشی مردانه </a>
-                            <a href="#">کوله پشتی چرمی </a>
-                            <a href="#">ساعت </a>
-                            <a href="#">شلوار جین </a>
-                            <a href="#">عینک آفتابی </a>
-                            <a href="#">چکمه </a>
-                            <a href="#">ریبان </a>
-                            <a href="#">تجهیزات جانبی </a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">خانه، باغ و آشپزخانه:</h6>
-                            <a href="#">کاناپه </a>
-                            <a href="#">صندلی </a>
-                            <a href="#">اتاق خواب </a>
-                            <a href="#">هال </a>
-                            <a href="#">وسایل آشپزی </a>
-                            <a href="#">وسایل آشپزی </a>
-                            <a href="#">مخلوط کن </a>
-                            <a href="#"> تجهیزات باغبانی </a>
-                            <a href="#">دکور </a>
-                            <a href="#">کتابخانه </a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">سلامت و زیبایی:</h6>
-                            <a href="#">مراقبت از پوست </a>
-                            <a href="#">دوش بدن </a>
-                            <a href="#">آرایش </a>
-                            <a href="#">مراقبت از مو </a>
-                            <a href="#">رژ لب </a>
-                            <a href="#">عطر </a>
-                            <a href="#">نمایش همه </a>
-                        </div>
-                        <div class="category-box">
-                            <h6 class="category-name">جواهرات و ساعت:</h6>
-                            <a href="#">گردن بند </a>
-                            <a href="#">آویز </a>
-                            <a href="#">حلقه الماس </a>
-                            <a href="#">گوشواره نقره </a>
-                            <a href="#">ناظر چرم </a>
-                            <a href="#">رولکس </a>
-                            <a href="#">گوچی </a>
-                            <a href="#">عقیق استرالیایی </a>
-                            <a href="#">آمولیت </a>
-                            <a href="#">خورشید پیریت </a>
-                        </div>
+                        </div>                       
                         <div class="category-box">
                             <h6 class="category-name">کامپیوتر و فناوری:</h6>
-                            <a href="#">لپ تاپ </a>
-                            <a href="#">ایمک </a>
-                            <a href="#">گوشی هوشمند </a>
-                            <a href="#">تبلت </a>
-                            <a href="#">اپل </a>
-                            <a href="#">ایسوس </a>
-                            <a href="#">درون </a>
-                            <a href="#">اسپیکر بی سیم </a>
-                            <a href="#">کنترل کننده بازی </a>
+                            <a href="#">لپ تاپ </a>                          
                             <a href="#">نمایش همه </a>
                         </div>
                     </div>
@@ -637,7 +584,7 @@
                     <div class="footer-right">
                         <span class="payment-label mr-lg-8">ما از پرداخت مطمئن استفاده می کنیم</span>
                         <figure class="payment">
-                            <img src="{% static '' %}images/payment.png" alt="payment" width="159" height="25" />
+                            <img src="{% static 'images/payment.png' %}" alt="payment" width="159" height="25" />
                         </figure>
                     </div>
                 </div>
@@ -653,7 +600,7 @@
             <i class="w-icon-home"></i>
             <p>خانه</p>
         </a>
-        <a href="shop-banner-sidebar.html" class="sticky-link">
+        <a href="{% url 'product_list' %}" class="sticky-link">
             <i class="w-icon-category"></i>
             <p>فروشگاه </p>
         </a>
@@ -662,7 +609,7 @@
             <p>حساب کاربری </p>
         </a>
         <div class="cart-dropdown dir-up">
-            <a href="cart.html" class="sticky-link">
+            <a href="{% url 'cart' %}" class="sticky-link">
                 <i class="w-icon-cart"></i>
                 <p>سبد خرید </p>
             </a>
@@ -687,36 +634,16 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-
-                    <div class="product product-cart">
-                        <div class="product-detail">
-                            <h3 class="product-name">
-                                <a href="product-default.html">پینا کاربردی آبی<br>لباس جین جلو</a>
-                            </h3>
-                            <div class="price-box">
-                                <span class="product-quantity">1</span>
-                                <span class="product-price">32000 تومان</span>
-                            </div>
-                        </div>
-                        <figure class="product-media">
-                            <a href="product-default.html">
-                                <img src="{% static '' %}images/cart/product-2.jpg" alt="product" width="84" height="94" />
-                            </a>
-                        </figure>
-                        <button class="btn btn-link btn-close" aria-label="button">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
                 </div>
 
                 <div class="cart-total">
                     <label>مجموع: </label>
-                    <span class="price">58000 تومان</span>
+                    <span class="price">0 تومان</span>
                 </div>
 
                 <div class="cart-action">
-                    <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">سبد خرید </a>
-                    <a href="checkout.html" class="btn btn-primary  btn-rounded">پرداخت </a>
+                    <a href="{% url 'cart' %}" class="btn btn-dark btn-outline btn-rounded">سبد خرید </a>
+                    <a href="{% url 'checkout' %}" class="btn btn-primary  btn-rounded">پرداخت </a>
                 </div>
             </div>
             <!-- End of Dropdown Box -->
@@ -783,60 +710,15 @@
                                 <li>
                                     <a href="#">صفحات فروشگاه </a>
                                     <ul>
-                                        <li><a href="shop-banner-sidebar.html">بنر با نوار کناری</a></li>
-                                        <li><a href="shop-boxed-banner.html">بنر باکسی </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">بنر تمام عرض </a></li>
-                                        <li><a href="shop-horizontal-filter.html">فیلتر افقی <span
-                                                    class="tip tip-hot">داغ </span></a></li>
-                                        <li><a href="shop-off-canvas.html">بدون نوار کناری <span
-                                                    class="tip tip-new">جدید </span></a></li>
-                                        <li><a href="shop-infinite-scroll.html"> اسکرول بی نهایت آژاکس</a></li>
-                                        <li><a href="shop-right-sidebar.html">سایدبار چپ </a></li>
-                                        <li><a href="shop-both-sidebar.html">هر دو نوار کناری </a></li>
+                                        <li><a href="shop-banner-sidebar.html">بنر با نوار کناری</a></li>                                    
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="#">چیدمان فروشگاه </a>
                                     <ul>
-                                        <li><a href="shop-grid-3cols.html">3 حالت ستون ها </a></li>
-                                        <li><a href="shop-grid-4cols.html">4 حالت ستون ها </a></li>
-                                        <li><a href="shop-grid-5cols.html">5 حالت ستون ها </a></li>
-                                        <li><a href="shop-grid-6cols.html">6 حالت ستون ها </a></li>
-                                        <li><a href="shop-grid-7cols.html">7 حالت ستون ها </a></li>
-                                        <li><a href="shop-grid-8cols.html">8 حالت ستون ها </a></li>
-                                        <li><a href="shop-list.html">حالت فهرست</a></li>
-                                        <li><a href="shop-list-sidebar.html">حالت فهرست با نوار کناری</a></li>
+                                        <li><a href="shop-grid-3cols.html">3 حالت ستون ها </a></li>                                      
                                     </ul>
-                                </li>
-                                <li>
-                                    <a href="#">صفحات محصول  </a>
-                                    <ul>
-                                        <li><a href="product-variable.html">محصول متغیر </a></li>
-                                        <li><a href="product-featured.html">ویژه و جذاب </a></li>
-                                        <li><a href="product-accordion.html">داده ها در آکاردئون</a></li>
-                                        <li><a href="product-section.html">داده ها در بخش ها </a></li>
-                                        <li><a href="product-swatch.html">نمونه تصویر </a></li>
-                                        <li><a href="product-extended.html">اطلاعات گسترده </a>
-                                        </li>
-                                        <li><a href="product-without-sidebar.html">بدون نوار کناری </a></li>
-                                        <li><a href="product-video.html">360<sup>درجه </sup>  ویدئو <span
-                                                    class="tip tip-new">جدید </span></a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">چیدمان محصول </a>
-                                    <ul>
-                                        <li><a href="product-default.html">پیشفرض <span
-                                                    class="tip tip-hot">داغ </span></a></li>
-                                        <li><a href="product-vertical.html">شست عمودی </a></li>
-                                        <li><a href="product-grid.html">تصاویر شبکه ای </a></li>
-                                        <li><a href="product-masonry.html">ساختمانی </a></li>
-                                        <li><a href="product-gallery.html">گالری </a></li>
-                                        <li><a href="product-sticky-info.html">اطلاعات چسبناک </a></li>
-                                        <li><a href="product-sticky-thumb.html">تصویر چسبناک </a></li>
-                                        <li><a href="product-sticky-both.html">هردو چسبناک </a></li>
-                                    </ul>
-                                </li>
+                                </li>                            
                             </ul>
                         </li>
                         <li>
@@ -845,95 +727,23 @@
                                 <li>
                                     <a href="#">لیست فروشگاه </a>
                                     <ul>
-                                        <li><a href="vendor-dokan-store-list.html">فهرست فروشگاه  1</a></li>
-                                        <li><a href="vendor-wcfm-store-list.html">فهرست فروشگاه  2</a></li>
-                                        <li><a href="vendor-wcmp-store-list.html">فهرست فروشگاه  3</a></li>
-                                        <li><a href="vendor-wc-store-list.html">فهرست فروشگاه  4</a></li>
+                                        <li><a href="vendor-dokan-store-list.html">فهرست فروشگاه  1</a></li>                                       
                                     </ul>
-                                </li>
-                                <li>
-                                    <a href="#">فروشگاه فروشنده </a>
-                                    <ul>
-                                        <li><a href="vendor-dokan-store.html">فروشگاه فروشنده  1</a></li>
-                                        <li><a href="vendor-wcfm-store-product-grid.html">فروشگاه فروشنده  2</a></li>
-                                        <li><a href="vendor-wcmp-store-product-grid.html">فروشگاه فروشنده  3</a></li>
-                                        <li><a href="vendor-wc-store-product-grid.html">فروشگاه فروشنده  4</a></li>
-                                    </ul>
-                                </li>
+                                </li>                             
                             </ul>
-                        </li>
-                        <li>
-                            <a href="blog.html">بلاگ </a>
-                            <ul>
-                                <li><a href="blog.html">کلاسیک </a></li>
-                                <li><a href="blog-listing.html">لیستی </a></li>
-                                <li>
-                                    <a href="#">گرید </a>
-                                    <ul>
-                                        <li><a href="blog-grid-2cols.html">شبکه 2 ستون</a></li>
-                                        <li><a href="blog-grid-3cols.html">شبکه 3 ستون</a></li>
-                                        <li><a href="blog-grid-4cols.html">شبکه 4ستون</a></li>
-                                        <li><a href="blog-grid-sidebar.html">سایدبار شبکه ای </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">ساختمانی </a>
-                                    <ul>
-                                        <li><a href="blog-masonry-2cols.html">ساختمانی 2 ستون </a></li>
-                                        <li><a href="blog-masonry-3cols.html">ساختمانی 3 ستون </a></li>
-                                        <li><a href="blog-masonry-4cols.html">ساختمانی 4ستون </a></li>
-                                        <li><a href="blog-masonry-sidebar.html">نوار کناری ساختمانی </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">ماسک </a>
-                                    <ul>
-                                        <li><a href="blog-mask-grid.html">ماسک وبلاگ گرید </a></li>
-                                        <li><a href="blog-mask-masonry.html">ماسک وبلاگ ساختمانی </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="post-single.html">تک نوشته </a>
-                                </li>
-                            </ul>
-                        </li>
+                        </li>                      
                         <li>
                             <a href="about-us.html">صفحات </a>
                             <ul>
 
-                                <li><a href="about-us.html">درباره ما </a></li>
-                                <li><a href="become-a-vendor.html">فروشنده شوید </a></li>
-                                <li><a href="contact-us.html">تماس با ما </a></li>
-                                <li><a href="login.html">ورود </a></li>
-                                <li><a href="faq.html">نقل و قل </a></li>
-                                <li><a href="error-404.html">ارور 404</a></li>
-                                <li><a href="coming-soon.html">به زودی </a></li>
+                                <li><a href="{% url 'about_view' %}">درباره ما </a></li>                                
+                                <li><a href="{% url 'contact_view' %}">تماس با ما </a></li>                                
                                 <li><a href="{% url 'wishlist' %}">علاقه مندیها </a></li>
-                                <li><a href="cart.html">سبد خرید </a></li>
-                                <li><a href="checkout.html">پرداخت </a></li>
-                                <li><a href="my-account.html">حساب من </a></li>
+                                <li><a href="{% url 'cart' %}">سبد خرید </a></li>
+                                <li><a href="{% url 'checkout' %}">پرداخت </a></li>
+                                <li><a href="accounts/">حساب من </a></li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="elements.html">المنت ها </a>
-                            <ul>
-                                <li><a href="element-products.html">محصولات </a></li>
-                                <li><a href="element-titles.html">عناوین </a></li>
-                                <li><a href="element-typography.html">تایپوگرافی </a></li>
-                                <li><a href="element-categories.html">دسته بندی محصول </a></li>
-                                <li><a href="element-buttons.html">دکمه ها </a></li>
-                                <li><a href="element-accordions.html">آکاردئون </a></li>
-                                <li><a href="element-alerts.html">هشدار و اعلان</a></li>
-                                <li><a href="element-tabs.html">زبانه ها </a></li>
-                                <li><a href="element-testimonials.html">مشتریان </a></li>
-                                <li><a href="element-blog-posts.html">پست های وبلاگ </a></li>
-                                <li><a href="element-instagrams.html">اینستاگرام </a></li>
-                                <li><a href="element-cta.html">دکمه اقدام تماس</a></li>
-                                <li><a href="element-vendors.html">فروشندگان </a></li>
-                                <li><a href="element-icon-boxes.html">آیکن باکس </a></li>
-                                <li><a href="element-icons.html">آیکن ها </a></li>
-                            </ul>
-                        </li>
+                        </li>                        
                     </ul>
                 </div>
                 <div class="tab-pane" id="categories">
@@ -948,93 +758,17 @@
                                     <ul>
                                         <li><a href="shop-fullwidth-banner.html">تازه رسیده ها </a>
                                         </li>
-                                        <li><a href="shop-fullwidth-banner.html">پرفروش ترین ها </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">پر طرفدار </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">تن پوش </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کفش ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کیسه ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">تجهیزات جانبی </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">جواهر و
-                                                ساعت </a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href="#">زنانه </a>
                                     <ul>
                                         <li><a href="shop-fullwidth-banner.html">تازه رسیده ها </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">پرفروش ترین ها </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">پر طرفدار </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">تن پوش </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کفش ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کیسه ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">تجهیزات جانبی </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">جواهر و
-                                                ساعت </a></li>
+                                        </li>                                       
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-home"></i>خانه و باغ
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">اتاق خواب </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">تخت، قاب و پایه</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کمد </a></li>
-                                        <li><a href="shop-fullwidth-banner.html"> میزهای خواب </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">تخت و تخت کودک</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">اسلحه </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">هال </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">میز های قهوه </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">صندلی </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">جداول </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">فوتون و مبل تختخواب شو</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کابینت و صندوقچه</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">دفتر </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">صندلی های اداری </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">میز </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">قفسه های کتاب </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">قفسه پوشه ها </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html"> اتاق استراحت
-                                                جداول </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">آشپزخانه و غذاخوری</a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">ست های غذاخوری </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">کابینت های نگهداری آشپزخانه</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">قفسه های بشرز </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">صندلی های غذاخوری </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">اتاق غذاخوری جداول </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">چهارپایه بار </a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+                        </li>                       
                         <li>
                             <a href="shop-fullwidth-banner.html">
                                 <i class="w-icon-electronics"></i>الکترونیک 
@@ -1043,138 +777,11 @@
                                 <li>
                                     <a href="#">لپ تاپ و کامپیوتر</a>
                                     <ul>
-                                        <li><a href="shop-fullwidth-banner.html">کامپیوترهای رومیزی</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">مانیتور </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">لپ تاپ </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">هارد دیسک و فضای ذخیره سازی</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">کامپیوتر تجهیزات جانبی </a></li>
+                                        <li><a href="shop-fullwidth-banner.html">کامپیوترهای رومیزی</a></li>                                      
                                     </ul>
-                                </li>
-                                <li>
-                                    <a href="#">تلویزیون و ویدئو</a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">تلویزیون ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">بلندگوهای صوتی خانگی</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">پروژکتورها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">دستگاه های پخش رسانه</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">دوربین های دیجیتال</a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">دوربین های دیجیتال SLR</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">دوربین های ورزشی و اکشن</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">لنزهای دوربین  </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">چاپگر عکس </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">کارت های حافظه دیجیتال</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">تلفن های همراه </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">تلفن های حامل </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">گوشی های قفل نشده </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">قاب های گوشی و موبایل</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">شارژر تلفن همراه</a></li>
-                                    </ul>
-                                </li>
+                                </li>                              
                             </ul>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-furniture"></i> مبلمان
-                            </a>
-                            <ul>
-                                <li>
-                                    <a href="#">مبلمان </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">مبل و کاناپه</a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">صندلی </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">چارچوب های تخت </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">میزهای کنار تخت </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">میز آرایش</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">نورپردازی </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">لامپ </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">لامپ ها </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">چراغ های سقفی </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">چراغ های دیواری </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">حمام نورپردازی </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">خانه تجهیزات جانبی </a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">تجهیزات جانبی تزئینی </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">شمع و نگهدارنده</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">عطر خانگی </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">آینه </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">ساعت ها </a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#">باغ و فضای باز</a>
-                                    <ul>
-                                        <li><a href="shop-fullwidth-banner.html">مبلمان باغ </a></li>
-                                        <li><a href="shop-fullwidth-banner.html">ماشین های چمن زنی </a>
-                                        </li>
-                                        <li><a href="shop-fullwidth-banner.html">واشرهای تحت فشار</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">تمام ابزار باغبانی</a></li>
-                                        <li><a href="shop-fullwidth-banner.html">غذاخوری در فضای باز</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-heartbeat"></i>سلامت و زیبایی
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-gift"></i>ایده های هدیه
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-gamepad"></i>اسباب بازی و بازی
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-ice-cream"></i>آشپزی 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-ios"></i>گوشی های هوشمند 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-camera"></i>دوربین و عکس 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="shop-fullwidth-banner.html">
-                                <i class="w-icon-ruby"></i>تجهیزات جانبی 
-                            </a>
-                        </li>
+                        </li>                    
                         <li>
                             <a href="shop-banner-sidebar.html"
                                 class="font-weight-bold text-primary text-uppercase ls-25">
@@ -1379,17 +986,17 @@
     <!-- End of Quick view -->
 
     <!-- Plugin JS File -->
-    <script src="{% static '' %}vendor/jquery/jquery.min.js"></script>
-    <script src="{% static '' %}vendor/jquery.plugin/jquery.plugin.min.js"></script>
-    <script src="{% static '' %}vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="{% static '' %}vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="{% static '' %}vendor/jquery.countdown/jquery.countdown.min.js"></script>
-    <script src="{% static '' %}vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="{% static '' %}vendor/floating-parallax/parallax.min.js"></script>
-    <script src="{% static '' %}vendor/zoom/jquery.zoom.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.plugin/jquery.plugin.min.js' %}"></script>
+    <script src="{% static 'vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/swiper/swiper-bundle.min' %}.js"></script>
+    <script src="{% static 'vendor/jquery.countdown/jquery.countdown.min.js' %}"></script>
+    <script src="{% static 'vendor/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'vendor/floating-parallax/parallax.min.js' %}"></script>
+    <script src="{% static 'vendor/zoom/jquery.zoom.js' %}"></script>
 
     <!-- Main Js -->
-    <script src="{% static '' %}js/main.min.js"></script>
+    <script src="{% static 'js/main.min.js' %}"></script>
 </body>
 
 

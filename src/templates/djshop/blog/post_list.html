@@ -41,7 +41,7 @@
                     {% for post in posts %}
                     <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
                         <figure class="post-media br-sm">
-                            <a href="/blog/{{ post.pk }}/">
+                            <a href="{% url 'post_detail' post.pk %}">
                                 <img src="assets/images/blog/classic/1.jpg" width="930"
                                     height="500" alt="blog">
                             </a>
@@ -51,11 +51,11 @@
                                 <a href="#">مد </a>
                             </div>
                             <h4 class="post-title">
-                                <a href="/blog/{{ post.pk }}/">{{ post.title }}</a>
+                                <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
                             </h4>
                             <div class="post-content">
                                 <p>{{ post.body }}</p>
-                                <a href="/blog/{{ post.pk }}/" class="btn btn-link btn-primary">(ادامه مطلب)</a>
+                                <a href="{% url 'post_detail' post.pk %}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
                             </div>
                             <div class="post-meta">
                                 توسط <a href="#" class="post-author">{{ post.author.username }}</a>

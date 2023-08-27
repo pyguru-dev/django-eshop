@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 
 {% block title %}صفحه اصلی{% endblock title %}
 
 {% block content %}
+
 <div class="intro-section">
     <div class="swiper-container swiper-theme nav-inner pg-inner animation-slider pg-xxl-hide pg-show nav-xxl-show nav-hide"
         data-swiper-options="{
@@ -219,45 +221,7 @@
             }
         }
     }">
-        <div class="swiper-wrapper row cols-lg-5 cols-md-4 cols-2">
-            <div class="swiper-slide product-wrap">
-                <div class="product text-center">
-                    <figure class="product-media">
-                        <a href="product-default.html">
-                            <img src="{% static 'images/1-1' %}-1.jpg" alt="Product"
-                                width="300" height="338">
-                            <img src="{% static 'images/1-1' %}-2.jpg" alt="Product"
-                                width="300" height="338">
-                        </a>
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
-                                title="افزودن به سبد "></a>
-                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                title="افزودن به علاقه مندیها"></a>
-                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                title="نمایش سریع"></a>
-                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                title="افزودن برای مقایسه"></a>
-                        </div>
-                        <div class="product-label-group">
-                            <label class="product-label label-new">جدید </label>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <h4 class="product-name"><a href="product-default.html">تسلی دهنده زنانه</a></h4>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width: 100%;"></span>
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <a href="product-default.html" class="rating-reviews">(3 نظر )</a>
-                        </div>
-                        <div class="product-price">
-                            <ins class="new-price">48000 تومان - 89000 تومان</ins>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="swiper-wrapper row cols-lg-5 cols-md-4 cols-2">           
             <div class="swiper-slide product-wrap">
                 <div class="product text-center">
                     <figure class="product-media">
@@ -294,111 +258,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper-slide product-wrap">
-                <div class="product text-center">
-                    <figure class="product-media">
-                        <a href="product-default.html">
-                            <img src="{% static 'images/1-3' %}-1.jpg" alt="Product"
-                                width="300" height="338">
-                            <img src="{% static 'images/1-3' %}-2.jpg" alt="Product"
-                                width="300" height="338">
-                        </a>
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
-                                title="افزودن به سبد "></a>
-                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                title="افزودن به علاقه مندیها"></a>
-                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                title="نمایش سریع"></a>
-                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                title="افزودن برای مقایسه"></a>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <h4 class="product-name"><a href="product-default.html">کفش چرم قهوه ای </a></h4>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width: 80%;"></span>
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <a href="product-default.html" class="rating-reviews">(6 نظر )</a>
-                        </div>
-                        <div class="product-price">
-                            <ins class="new-price">48000 تومان - 89000 تومان</ins>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide product-wrap">
-                <div class="product text-center">
-                    <figure class="product-media">
-                        <a href="product-default.html">
-                            <img src="{% static 'images/1-4' %}.jpg" alt="Product" width="300"
-                                height="338">
-                        </a>
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
-                                title="افزودن به سبد "></a>
-                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                title="افزودن به علاقه مندیها"></a>
-                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                title="نمایش سریع"></a>
-                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                title="افزودن برای مقایسه"></a>
-                        </div>
-                        <div class="product-label-group">
-                            <label class="product-label label-new">جدید </label>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <h4 class="product-name"><a href="product-default.html">چراغ قوه قابل حمل</a></h4>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width: 100%;"></span>
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <a href="product-default.html" class="rating-reviews">(8 نظر )</a>
-                        </div>
-                        <div class="product-price">
-                            <ins class="new-price">89000 تومان</ins><del class="old-price">118000 تومان</del>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-slide product-wrap">
-                <div class="product text-center">
-                    <figure class="product-media">
-                        <a href="product-default.html">
-                            <img src="{% static 'images/1-5' %}.jpg" alt="Product" width="300"
-                                height="338">
-                        </a>
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-cart w-icon-cart"
-                                title="افزودن به سبد "></a>
-                            <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                title="افزودن به علاقه مندیها"></a>
-                            <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                title="نمایش سریع"></a>
-                            <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                title="افزودن برای مقایسه"></a>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <h4 class="product-name"><a href="product-default.html">شارژر USB</a></h4>
-                        <div class="ratings-container">
-                            <div class="ratings-full">
-                                <span class="ratings" style="width: 100%;"></span>
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <a href="product-default.html" class="rating-reviews">(3 نظر )</a>
-                        </div>
-                        <div class="product-price">
-                            <ins class="new-price">19000 تومان</ins><del class="old-price">40000 تومان</del>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>           
         </div>
         <div class="swiper-pagination"></div>
     </div>
