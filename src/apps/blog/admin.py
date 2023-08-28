@@ -4,7 +4,8 @@ from .models import Post, Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['comment']
+    list_display = ['comment', 'is_approved', 'created_at']
+    list_filter = ['is_approved']
 
 
 class CommentInline(admin.StackedInline):
@@ -23,3 +24,4 @@ class PostAdmin(admin.ModelAdmin):
         (None, {'fields': ('title', 'body', 'author')}),
         ("Status", {'fields': ('published_status',)})
     )
+    # filter_horizontal = ['tags']

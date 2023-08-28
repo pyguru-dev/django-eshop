@@ -48,6 +48,10 @@ class Comment(models.Model):
     article = models.ForeignKey(
         Post, related_name='comments', on_delete=models.CASCADE)
 
+    is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self) -> str:
         return self.comment
 
@@ -56,10 +60,23 @@ class Comment(models.Model):
 
 
 class Category(models.Model):
+    parent = models.ForeignKey(
+        'self', verbose_name='parent', blank=True, null=True, on_delete=models.CASCADE)
     name = models.TextField(max_length=100, unique=True,
                             blank=False, null=False)
+    description = models.TextField(blank=True, null=True)
+    # image = models.
+
+    class Meta:
+        db_table = 'categories'
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Tag(models.Model):
     name = models.TextField(max_length=100, unique=True,
                             blank=False, null=False)
+
+    def __str__(self) -> str:
+        return self.name
