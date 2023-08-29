@@ -1,5 +1,6 @@
 import os
 import sys
+from datetime import timedelta
 from pathlib import Path
 from django.conf import settings
 from os.path import abspath, dirname, join
@@ -41,12 +42,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     "django_unicorn",
-    
+
     'apps.shop',
     'apps.blog',
     'apps.api',
     'apps.pages',
     'apps.accounts',
+    'apps.payments',
 ]
 
 MIDDLEWARE = [

@@ -13,6 +13,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
     body = RichTextField()
+    price = models.PositiveBigIntegerField(null=False, blank=False)
     thumbnail = models.ImageField(upload_to="posts/%Y/%m/%d")
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d')
@@ -20,9 +21,13 @@ class Product(models.Model):
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+    class Meta:
+        verbose_name = 'Products'
+
     def __str__(self) -> str:
         return self.title
+
 
 class File(models.Model):
     pass
