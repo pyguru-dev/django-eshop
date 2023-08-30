@@ -1,4 +1,6 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+
 from .models import Post, Comment
 
 
@@ -14,7 +16,7 @@ class CommentInline(admin.StackedInline):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(ImportExportModelAdmin):
     list_display = ['id', 'title', 'author', 'published_status', 'created_at']
     list_filter = ['published_status']
     search_fields = ['title', 'author__username']
@@ -25,3 +27,4 @@ class PostAdmin(admin.ModelAdmin):
         ("Status", {'fields': ('published_status',)})
     )
     # filter_horizontal = ['tags']
+    # resource_class = PostResource

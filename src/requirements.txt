@@ -1,0 +1,38 @@
+asgiref @ file:///C:/ci_311/asgiref_1676448296195/work
+beautifulsoup4==4.12.2
+cachetools==4.2.4
+certifi==2023.7.22
+charset-normalizer==3.2.0
+decorator==4.4.2
+defusedxml==0.7.1
+diff-match-patch==20230430
+Django @ file:///C:/ci_311/django_1676469589007/work
+django-ckeditor==6.7.0
+django-cors-headers==4.2.0
+django-filter==23.2
+django-import-export==3.2.0
+django-js-asset==2.1.0
+django-unicorn==0.54.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
+et-xmlfile==1.1.0
+idna==3.4
+Markdown==3.4.4
+MarkupPy==1.14
+odfpy==1.4.1
+openpyxl==3.1.2
+orjson==3.9.5
+Pillow==10.0.0
+psycopg2==2.9.7
+PyJWT==2.8.0
+pytz==2023.3
+PyYAML==6.0.1
+requests==2.31.0
+shortuuid==1.0.11
+soupsieve==2.4.1
+sqlparse @ file:///C:/b/abs_88361ub_qu/croot/sqlparse_1690904577514/work
+tablib==3.5.0
+tzdata @ file:///croot/python-tzdata_1690578112552/work
+urllib3==2.0.4
+xlrd==2.0.1
+xlwt==1.3.0

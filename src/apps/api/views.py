@@ -4,12 +4,16 @@ from rest_framework import status, generics, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from django.contrib.auth import get_user_model
 from apps.shop.models import Product
 from apps.shop.serializers import ProductSerializer
 from apps.blog.models import Category, Post, Tag
 from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
 from apps.blog.serializers import PostSerializer, CategorySerializer, TagSerializer
+from apps.accounts.serializers import RegisterSerializer
+
+User = get_user_model()
 
 
 class ProductListView(APIView):
@@ -70,6 +74,10 @@ class RegisterView(APIView):
         return Response({'code': code})
 
 
+# class RegisterView(generics.CreateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = RegisterSerializer
+    
 class GetTokenView(APIView):
     def post(self, request):
         mobile = request.data.get('mobile')
@@ -82,51 +90,50 @@ class GatewayListView(APIView):
         serializer = GatewaySerializer(categories, many=True)
         return Response(serializer.data)
 
+
 class PaymentView(APIView):
     permission_classes = [IsAuthenticated]
-    
-    def get(self,request):
+
+    def get(self, request):
         gateway_id = request.query_params.get("gateway")
-        
+
         try:
             gateway = Gateway.objects.get(pk=gateway_id)
         except (Gateway.DoesNotExist):
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
         payment = Payment.objects.create(
             user=request.user,
             gateway=gateway,
             price=0,
             token=str(uuid.uuid4())
         )
-        
-        return Response({'token' : payment.token, 'callback_url' : ''})
-    
-    
+
+        return Response({'token': payment.token, 'callback_url': ''})
+
     def post(self, request):
         token = request.data.get('token')
         status = request.data.get('status')
-        
+
         try:
             payment = Payment.objects.get(token=token)
         except Payment.DoesNotExist:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
         if status != 10:
             payment.status = Payment.STATUS_CANCELED
             payment.save()
-            return Response({'data' : "payment failed"})
-        
+            return Response({'data': "payment failed"})
+
         req = requests.post('bank_verification_url', data={})
-        
+
         if req.status_code == 100:
             payment.status = Payment.STATUS_ERROR
             payment.save()
-            return Response({'data' : "payment failed"})
-        
+            return Response({'data': "payment failed"})
+
         payment.status = Payment.STATUS_PAID
         payment.save()
-        
+
         # save order
         return Response()

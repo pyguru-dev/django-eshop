@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'ckeditor',
     "django_unicorn",
+    'import_export',
 
     'apps.shop',
     'apps.blog',
