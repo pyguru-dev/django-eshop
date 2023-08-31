@@ -1,4 +1,5 @@
 import datetime
+from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.db import models
 from django.conf import settings
@@ -9,7 +10,13 @@ from ckeditor.fields import RichTextField
 from django.utils import timezone
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super(PublishedManager,self).get_queryset().filter(status='p')
+
 class Post(models.Model):
+    objects = models.Manager()
+    published = PublishedManager()
     PUBLISHED_STATUS = (
         ('p', 'Published'),
         ('d', 'Draft'),

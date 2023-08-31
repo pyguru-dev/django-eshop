@@ -12,6 +12,7 @@ urlpatterns = [
     path('blog/', include('apps.blog.urls')),
     path('api/', include('apps.api.urls')),
     path('payments/', include('apps.payments.urls')),
+    path('friendships/', include('apps.friendships.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path("unicorn/", include("django_unicorn.urls")),
 ]

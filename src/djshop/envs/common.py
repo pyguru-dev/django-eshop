@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.pages',
     'apps.accounts',
     'apps.payments',
+    'apps.friendships',
 ]
 
 MIDDLEWARE = [
