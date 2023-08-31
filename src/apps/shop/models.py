@@ -30,7 +30,10 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Products'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
+
+        
 
     def __str__(self) -> str:
         return self.title
