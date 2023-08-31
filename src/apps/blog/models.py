@@ -8,6 +8,21 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
 from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from treebeard.mp_tree import MP_Node
+
+
+class Rate(models.Model):
+    rate = models.PositiveBigIntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveBigIntegerField()
+    content_object = GenericForeignKey()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['content_type', 'object_id'])
+        ]
 
 
 class PublishedManager(models.Manager):
@@ -33,10 +48,10 @@ class Post(models.Model):
         max_length=1, choices=PUBLISHED_STATUS, default='d')
     # category = models.ForeignKey("Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
-    
+
     likes = models.PositiveBigIntegerField(default=0)
     dislikes = models.PositiveBigIntegerField(default=0)
-    
+    rates = GenericRelation(Rate)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -71,16 +86,20 @@ class Comment(models.Model):
         return reverse("post_list")
 
 
-class Category(models.Model):
+class Category(MP_Node):
     parent = models.ForeignKey(
         'self', verbose_name='parent', blank=True, null=True, on_delete=models.CASCADE)
-    name = models.TextField(max_length=100, unique=True,
-                            blank=False, null=False)
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True,
+                            blank=False, null=False, db_index=True)
+    slug = models.SlugField()
+    description = models.TextField(blank=True, null=True, max_length=2048)
+    is_active = models.BooleanField(default=True)
     # image = models.
 
     class Meta:
-        db_table = 'categories'
+        # db_table = 'categories'
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
 
     def __str__(self) -> str:
         return self.name
@@ -93,12 +112,15 @@ class Tag(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class RecyclePost(Post):
-    
+
     deleted = models.Manager()
+
     class Meta:
         proxy = True
-        
+
+
 class Vote(models.Model):
     class VoteChoice(models.TextChoices):
         like = 'l', _('like')
@@ -119,5 +141,3 @@ class Vote(models.Model):
 #         Post.objects.filter(id=instance.post.id).update(likes=F("likes") + 1)
 #     else:
 #         Post.objects.filter(id=instance.post.id).update(likes=F("dislikes") + 1)
-        
-    

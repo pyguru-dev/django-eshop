@@ -15,7 +15,7 @@ from .forms import CommentCreateForm
 
 class PostListView(generic.ListView):
     model = Post
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().select_related('category')
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
     

@@ -1,6 +1,7 @@
 import requests
 from django.shortcuts import get_object_or_404
-from rest_framework import status, generics, mixins
+from rest_framework import status, generics, mixins, viewsets
+from rest_framework.exceptions import NotAcceptable
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
@@ -10,7 +11,7 @@ from apps.shop.serializers import ProductSerializer
 from apps.blog.models import Category, Post, Tag
 from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
-from apps.blog.serializers import PostSerializer, CategorySerializer, TagSerializer
+from apps.blog.serializers import CategoryTreeSerializer, CreateCategoryNodeSerializer, PostSerializer, CategorySerializer, TagSerializer
 from apps.accounts.serializers import RegisterSerializer
 
 User = get_user_model()
@@ -20,6 +21,7 @@ class ProductListView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request):
+        # products = Product.objects.all().select_related('category')
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
@@ -50,6 +52,28 @@ class CategoryListView(APIView):
         return Response(serializer.data)
 
 
+class CategoryViewSet(viewsets.ModelViewSet):
+
+    def get_queryset(self):
+        if self.action == 'list':
+            return Category.objects.filter(depth=1)
+        else:
+            return Category.objects.all()
+
+    def get_serializer_class(self):
+        
+        match self.action:
+            case 'list':
+                return CategoryTreeSerializer
+            case 'create':
+                return CreateCategoryNodeSerializer
+            case 'retrieve':
+                return 
+            case _:
+                raise NotAcceptable()
+
+
+
 class TagListView(APIView):
     def get(self, request):
         categories = Tag.objects.all()
@@ -77,7 +101,7 @@ class RegisterView(APIView):
 # class RegisterView(generics.CreateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = RegisterSerializer
-    
+
 class GetTokenView(APIView):
     def post(self, request):
         mobile = request.data.get('mobile')

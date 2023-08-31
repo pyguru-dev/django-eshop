@@ -3,8 +3,9 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
 from import_export.admin import ImportExportModelAdmin
-
-from .models import Post, Comment, RecyclePost
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
+from .models import Post, Comment, RecyclePost, Category
 
 
 @admin.register(Comment)
@@ -35,7 +36,7 @@ class PostAdmin(ImportExportModelAdmin):
 
 @admin.register(RecyclePost)
 class PostAdmin(admin.ModelAdmin):
-    
+
     actions = ['recover']
 
     def get_queryset(self, request):
@@ -44,3 +45,8 @@ class PostAdmin(admin.ModelAdmin):
     @admin.action(description='Recover deleted item')
     def recover(self, request, queryset):
         queryset.update(is_deleted=False, deleted_at=Null)
+
+
+@admin.register(Category)
+class CategoryAdmin(TreeAdmin):
+    form = movenodeform_factory(Category)
