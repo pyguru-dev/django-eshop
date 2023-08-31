@@ -1,7 +1,10 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 from import_export.admin import ImportExportModelAdmin
 
-from .models import Post, Comment
+from .models import Post, Comment, RecyclePost
 
 
 @admin.register(Comment)
@@ -28,3 +31,16 @@ class PostAdmin(ImportExportModelAdmin):
     )
     # filter_horizontal = ['tags']
     # resource_class = PostResource
+
+
+@admin.register(RecyclePost)
+class PostAdmin(admin.ModelAdmin):
+    
+    actions = ['recover']
+
+    def get_queryset(self, request):
+        return RecyclePost.deleted.filter(is_deleted=True)
+
+    @admin.action(description='Recover deleted item')
+    def recover(self, request, queryset):
+        queryset.update(is_deleted=False, deleted_at=Null)

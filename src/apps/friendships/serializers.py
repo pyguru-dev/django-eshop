@@ -15,6 +15,6 @@ class UserListSerializer(ModelSerializer):
         return ''
 
 
-class FriendshipSerialize(Serializer):
+class FriendshipSerialize(ModelSerializer):
     class Meta:
         model = ''

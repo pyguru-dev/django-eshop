@@ -5,7 +5,7 @@ from .models import Gateway, Payment
 class GatewaySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Gateway
-        fields = ['title', 'url']
+        fields = ['id', 'title', 'url']
 
 
 class PaymentSerializer(serializers.HyperlinkedModelSerializer):

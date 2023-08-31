@@ -5,14 +5,15 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
 from django.utils import timezone
 
 
 class PublishedManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super(PublishedManager,self).get_queryset().filter(status='p')
+        return super(PublishedManager, self).get_queryset().filter(status='p')
+
 
 class Post(models.Model):
     objects = models.Manager()
@@ -32,6 +33,10 @@ class Post(models.Model):
         max_length=1, choices=PUBLISHED_STATUS, default='d')
     # category = models.ForeignKey("Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
+    
+    likes = models.PositiveBigIntegerField(default=0)
+    dislikes = models.PositiveBigIntegerField(default=0)
+    
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -87,3 +92,32 @@ class Tag(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+class RecyclePost(Post):
+    
+    deleted = models.Manager()
+    class Meta:
+        proxy = True
+        
+class Vote(models.Model):
+    class VoteChoice(models.TextChoices):
+        like = 'l', _('like')
+        dislike = 'd', _('dislike')
+
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='votes')
+    vote = models.CharField(max_length=12, choices=VoteChoice.choices)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _('Vote')
+
+
+# @receiver(post_save, sender=Vote)
+# def update_votes(sender,instance, **kwargs):
+#     if instance.vote = Vote.VoteChoice.like:
+#         Post.objects.filter(id=instance.post.id).update(likes=F("likes") + 1)
+#     else:
+#         Post.objects.filter(id=instance.post.id).update(likes=F("dislikes") + 1)
+        
+    

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from .models import Payment, Gateway
 
 
@@ -8,5 +9,5 @@ class GatewayAdmin(admin.ModelAdmin):
 
 
 @admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = []
+class PaymentAdmin(ImportExportModelAdmin):
+    list_display = ['id','price']

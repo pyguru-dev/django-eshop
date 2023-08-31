@@ -12,5 +12,5 @@ class Friendship(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbos_name = 'Friendship'
-        unique_togethe = ('request_from', 'request_to',)
+        verbose_name = 'Friendship'
+        unique_together = ('request_from', 'request_to',)
