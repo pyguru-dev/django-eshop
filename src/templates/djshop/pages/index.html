@@ -2419,49 +2419,7 @@
                     <img src="{% static 'images/1.png' %}" alt="Brand" width="290"
                         height="100" />
                 </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/2.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/3.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/4.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/5.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/6.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/7.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/8.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>
+            </div>            
         </div>
     </div>
     <!-- End of Brands Wrapper -->
@@ -2484,10 +2442,11 @@
         }
     }">
         <div class="swiper-wrapper row cols-lg-4 cols-md-3 cols-sm-2 cols-1">
+            {% for post in last_posts %}
             <div class="swiper-slide post">
                 <figure class="post-media br-sm">
-                    <a href="post-single.html">
-                        <img src="{% static 'images/1.jpg' %}" alt="Post" width="620" height="398"
+                    <a href="{% url 'post_detail' post.id %}">
+                        <img src="{% static post.title %}" alt="Post" width="620" height="398"
                             style="background-color: #898078;">
                     </a>
                     <div class="post-calendar">
@@ -2496,77 +2455,15 @@
                     </div>
                 </figure>
                 <div class="post-details">
-                    <h4 class="post-title"><a href="post-single.html">ما می‌خواهیم متفاوت باشیم، و مد این امکان را به من می‌دهد</a></h4>
+                    <h4 class="post-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h4>
                     <div class="post-content">
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</p>
+                        <p>{{ post.description }}</p>
                     </div>
-                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
+                    <a href="{% url 'post_detail' post.id %}" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
                             class="w-icon-long-arrow-left"></i></a>
                 </div>
             </div>
-            <div class="swiper-slide post">
-                <figure class="post-media br-sm">
-                    <a href="post-single.html">
-                        <img src="{% static 'images/2.jpg' %}" alt="Post" width="620" height="398"
-                            style="background-color: #EDEFEE;">
-                    </a>
-                    <div class="post-calendar">
-                        <span class="post-day">14</span>
-                        <span class="post-month">اردیبهشت </span>
-                    </div>
-                </figure>
-                <div class="post-details">
-                    <h4 class="post-title"><a href="post-single.html">کاوش مد برای زنان در</a></h4>
-                    <div class="post-content">
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</p>
-                    </div>
-                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
-                            class="w-icon-long-arrow-left"></i></a>
-                </div>
-            </div>
-            <div class="swiper-slide post">
-                <figure class="post-media br-sm">
-                    <a href="post-single.html">
-                        <img src="{% static 'images/3.jpg' %}" alt="Post" width="620" height="398"
-                            style="background-color: #A1A09E;">
-                    </a>
-                    <div class="post-calendar">
-                        <span class="post-day">25</span>
-                        <span class="post-month">اردیبهشت </span>
-                    </div>
-                </figure>
-                <div class="post-details">
-                    <h4 class="post-title"><a href="post-single.html">مد از دیدگاه بیرونی به شما می گوید که چه کسی هستید</a></h4>
-                    <div class="post-content">
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</p>
-                    </div>
-                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
-                            class="w-icon-long-arrow-left"></i></a>
-                </div>
-            </div>
-            <div class="swiper-slide post">
-                <figure class="post-media br-sm">
-                    <a href="post-single.html">
-                        <img src="{% static 'images/4.jpg' %}" alt="Post" width="620" height="398"
-                            style="background-color: #EDF1F2;">
-                    </a>
-                    <div class="post-calendar">
-                        <span class="post-day">16</span>
-                        <span class="post-month">اردیبهشت </span>
-                    </div>
-                </figure>
-                <div class="post-details">
-                    <h4 class="post-title"><a href="post-single.html">فقط لباس جین نهایی را پیدا کردم </a>
-                    </h4>
-                    <div class="post-content">
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است..</p>
-                    </div>
-                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
-                            class="w-icon-long-arrow-left"></i></a>
-                </div>
-            </div>
+            {% endfor %}          
         </div>
         <div class="swiper-pagination"></div>
     </div>

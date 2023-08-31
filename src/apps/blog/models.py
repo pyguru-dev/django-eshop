@@ -43,7 +43,8 @@ class Post(models.Model):
     title = models.CharField(_('عنوان'), max_length=150)
     # slug = models.SlugField(unique=True)
     body = RichTextField()
-    thumbnail = models.ImageField(upload_to="posts/%Y/%m/%d")
+    thumbnail = models.ImageField(
+        upload_to="posts/%Y/%m/%d", blank=False, null=False)
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d')
     # category = models.ForeignKey("Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)

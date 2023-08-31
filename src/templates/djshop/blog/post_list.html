@@ -25,9 +25,8 @@
     <nav class="breadcrumb-nav mb-6">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="">خانه </a></li>
-                <li><a href="blog/">بلاگ </a></li>
-                <li>لیستی</li>
+                <li><a href="{% url 'home_view' %}">خانه </a></li>
+                <li><a href="{% url 'post_list' %}">بلاگ </a></li>                
             </ul>
         </div>
     </nav>
@@ -42,19 +41,19 @@
                     <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
                         <figure class="post-media br-sm">
                             <a href="{% url 'post_detail' post.pk %}">
-                                <img src="assets/images/blog/classic/1.jpg" width="930"
+                                <img src="/" width="930"
                                     height="500" alt="blog">
                             </a>
                         </figure>
                         <div class="post-details">
                             <div class="post-cats text-primary">
-                                <a href="#">مد </a>
+                                <a href="#"> مد </a>
                             </div>
                             <h4 class="post-title">
                                 <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
                             </h4>
                             <div class="post-content">
-                                <p>{{ post.body }}</p>
+                                <p>{{ post.body|truncatewords:5 }}</p>
                                 <a href="{% url 'post_detail' post.pk %}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
                             </div>
                             <div class="post-meta">
@@ -63,25 +62,46 @@
                             </div>
                         </div>
                     </article>
-                    {% endfor %}                   
+                    {% endfor %}  
+
                     <ul class="pagination justify-content-center">
-                        <li class="prev disabled">
-                            <a href="#" aria-label="قبلی" tabindex="-1" aria-disabled="true">
+
+                        {% if page_obj.has_previous  %}
+                        <li class="prev">
+                            <a href="?page={{ page_obj.previous_page_number }}" aria-label="قبلی" tabindex="-1" aria-disabled="true">
                                 <i class="w-icon-long-arrow-right"></i>قبلی
                             </a>
                         </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
+                        {% endif %}
+
+                        
+                        {% comment %} <li class="page-item active">
+                            <a class="page-link" href="#">{{ page_obj.number }}</a>
+                        </li> {% endcomment %}
+
+                         {% for i in page_obj.paginator.page_range %}
+                            {% if i == page_obj.number %}
+                            <li class="page-item active">
+                                <a class="page-link" href="#">{{ i }}</a>
+                            </li>
+                            {% else %}
+                            {{ i }}
+                            {% endif %}
+
+                        {% endfor %} 
+
+                        {% if page_obj.has_next %}
                         <li class="next">
-                            <a href="#" aria-label="بعدی">
+                            <a href="?page={{ page_obj.next_page_number }}" aria-label="بعدی">
                                بعدی <i class="w-icon-long-arrow-left"></i>
                             </a>
                         </li>
+                        {% endif %}
+
+                        {% comment %} {% include 'partials/pagination.html' with page=posts %} {% endcomment %}
+
                     </ul>
+
                 </div>
                 <!-- End of Main Content -->
                 <aside class="sidebar right-sidebar blog-sidebar sidebar-fixed sticky-sidebar-wrapper">

@@ -17,6 +17,9 @@ class ProductDetailView(DetailView):
 class CartView(TemplateView):
     template_name = "shop/cart.html"
 
+class CompareView(TemplateView):
+    template_name = "shop/compare.html"
+
 
 class CheckoutView(TemplateView):
     template_name = "shop/checkout.html"

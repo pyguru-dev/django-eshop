@@ -108,54 +108,10 @@
                                     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی, لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است .
                                 </p>
                             </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="#collapse2" class="expand">چرا ثبت نام من به تاخیر افتاد؟</a>
-                            </div>
-                            <div id="collapse2" class="card-body collapsed">
-                                <p class="mb-0">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی, لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است .
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="#collapse3" class="expand">برای خرید محصولات به چه چیزهایی نیاز دارم؟</a>
-                            </div>
-                            <div id="collapse3" class="card-body collapsed">
-                                <p class="mb-0">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی, لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است .
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="#collapse4" class="expand">چگونه می توانم سفارش را پیگیری کنم؟</a>
-                            </div>
-                            <div id="collapse4" class="card-body collapsed">
-                                <p class="mb-0">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی, لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است .
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="#collapse5" class="expand">چگونه می توانم پول را پس بگیرم؟</a>
-                            </div>
-                            <div id="collapse5" class="card-body collapsed">
-                                <p class="mb-0">
-                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی, لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است .
-                                </p>
-                            </div>
-                        </div>
+                        </div>                     
                     </div>
                 </div>
-                <div class="col-lg-6 mb-8">
+                {% comment %} <div class="col-lg-6 mb-8">
                     <h4 class="title mb-3">ارسال پیام به ما</h4>
                     <form class="form contact-us-form" action="#" method="post">
                         <div class="form-group">
@@ -174,6 +130,14 @@
                                 class="form-control"></textarea>
                         </div>
                         <button type="submit" class="btn btn-dark btn-rounded">اکنون ارسال کنید </button>
+                    </form>
+                </div> {% endcomment %}
+                <div class="col-lg-6 mb-8">
+                    <h4 class="title mb-3">ارسال پیام به ما</h4>
+                    <form class="form contact-us-form" method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <button type="submit" value="submit" class="btn btn-dark btn-rounded">اکنون ارسال کنید </button>
                     </form>
                 </div>
             </div>

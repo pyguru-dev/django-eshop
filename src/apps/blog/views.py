@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.shortcuts import render
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post
 from .forms import CommentCreateForm
@@ -15,9 +15,11 @@ from .forms import CommentCreateForm
 
 class PostListView(generic.ListView):
     model = Post
-    queryset = Post.objects.all().select_related('category')
+    # queryset = Post.objects.all().select_related('category')
+    queryset = Post.objects.all()
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
+    paginate_by = 1
     
 
 

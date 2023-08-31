@@ -86,8 +86,10 @@ class Option(models.Model):
     required = models.BooleanField(default=False)
 
 
-class File(models.Model):
-    pass
+class Brand(models.Model):
+    title = models.CharField(max_length=255, blank=False,null=False, unique=True)
+    logo = models.ImageField(upload_to='brands/',null=False,blank=False)
+
 
 
 class SoftDeleteQuerySet(models.QuerySet):
@@ -113,3 +115,5 @@ class SoftDelete(models.Model):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
+
+

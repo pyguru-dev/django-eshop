@@ -43,6 +43,9 @@
 
     <!-- Default CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/demo2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style-rtl.min.css' %}" />
+
+    {% block styles %} {% endblock styles %}
 
     {% unicorn_scripts %}
 
@@ -524,12 +527,12 @@
                         </div>
                         <div class="col-lg-3 col-sm-6">
                             <div class="widget">
-                                <h3 class="widget-title">کمپانی </h3>
+                                <h3 class="widget-title">دیجی شاپ </h3>
                                 <ul class="widget-body">
-                                    <li><a href="about-us.html">درباره ما </a></li>
+                                    <li><a href="{% url 'about_view' %}">درباره ما </a></li>
+                                    <li><a href="{% url 'contact_view' %}">تماس با ما </a></li>
                                     <li><a href="#">اعضای تیم </a></li>
                                     <li><a href="#">شغل </a></li>
-                                    <li><a href="contact-us.html">تماس با ما </a></li>
                                     <li><a href="#">وابسته </a></li>
                                     <li><a href="#">تاریخچه سفارش ها </a></li>
                                 </ul>
@@ -997,6 +1000,9 @@
 
     <!-- Main Js -->
     <script src="{% static 'js/main.min.js' %}"></script>
+
+    {% block scripts %} {% endblock scripts %}
+
 </body>
 
 

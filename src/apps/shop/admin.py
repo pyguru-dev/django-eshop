@@ -36,6 +36,9 @@ class ProductAdmin(ImportExportModelAdmin):
     prepopulated_fields = {
         'slug': ('title',)
     }
+    raw_id_fields = ['author']
+    # list_editable = ['publish_status']
+    list_display_links = ('title',)
 
     def attribute_count(self, obj):
         return obj.attributes.count()
