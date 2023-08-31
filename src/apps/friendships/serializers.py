@@ -7,7 +7,12 @@ User = get_user_model()
 class UserListSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username']
+        fields = ['id', 'username', 'avatar']
+
+    def get_avatar(self, instance):
+        if hasattr(instance, 'profile') and instance.profile.avatar:
+            return instance.profile.avatar.url
+        return ''
 
 
 class FriendshipSerialize(Serializer):
