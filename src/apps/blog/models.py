@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
@@ -20,6 +21,7 @@ class Rate(models.Model):
     content_object = GenericForeignKey()
 
     class Meta:
+        db_table = 'rates'
         indexes = [
             models.Index(fields=['content_type', 'object_id'])
         ]
@@ -39,7 +41,7 @@ class Post(models.Model):
     )
 
     author = models.ForeignKey(
-        get_user_model(), on_delete=models.CASCADE, related_name='posts')
+        User, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(_('عنوان'), max_length=150)
     # slug = models.SlugField(unique=True)
     body = RichTextField()
@@ -47,7 +49,8 @@ class Post(models.Model):
         upload_to="posts/%Y/%m/%d", blank=False, null=False)
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d')
-    # category = models.ForeignKey("Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        "Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
 
     likes = models.PositiveBigIntegerField(default=0)
@@ -57,8 +60,10 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        db_table = 'posts'
         ordering = ['-created_at']
-        verbose_name_plural = 'Posts'
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
 
     def __str__(self) -> str:
         return self.title
@@ -72,13 +77,19 @@ class Post(models.Model):
 
 class Comment(models.Model):
     comment = models.TextField(max_length=250)
-    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(
         Post, related_name='comments', on_delete=models.CASCADE)
 
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'comments'
+        ordering = ['-created_at']
+        verbose_name = _("Post")
+        verbose_name_plural = _("Posts")
 
     def __str__(self) -> str:
         return self.comment
@@ -98,7 +109,7 @@ class Category(MP_Node):
     # image = models.
 
     class Meta:
-        # db_table = 'categories'
+        db_table = 'categories'
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
@@ -109,6 +120,11 @@ class Category(MP_Node):
 class Tag(models.Model):
     name = models.TextField(max_length=100, unique=True,
                             blank=False, null=False)
+
+    class Meta:
+        db_table = 'tags'
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
     def __str__(self) -> str:
         return self.name
@@ -133,8 +149,9 @@ class Vote(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        db_table = 'votes'
         verbose_name = _('Vote')
-
+        verbose_name_plural = _("Votes")
 
 # @receiver(post_save, sender=Vote)
 # def update_votes(sender,instance, **kwargs):

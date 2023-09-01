@@ -2,8 +2,11 @@ from datetime import timezone
 from django.db import models
 from django.db.models import Q
 from ckeditor.fields import RichTextField
-from apps.accounts.models import CustomUser
+from django.contrib.auth import get_user_model
+# from apps.accounts.models import User
 
+
+User = get_user_model()
 
 class Product(models.Model):
     PUBLISHED_STATUS = (
@@ -11,7 +14,7 @@ class Product(models.Model):
         ('d', 'Draft'),
     )
     author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name='products')
+        User, on_delete=models.CASCADE, related_name='products')
     title = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True, allow_unicode=True)
     body = RichTextField()

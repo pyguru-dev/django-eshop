@@ -47,14 +47,14 @@ INSTALLED_APPS = [
     'treebeard',
     'drf_spectacular',
 
+    'apps.accounts',
     'apps.shop',
     'apps.blog',
     'apps.api',
     'apps.pages',
-    'apps.accounts',
     'apps.payments',
     'apps.friendships',
-    # 'apps.shortener',
+    'apps.shortener',
 ]
 
 MIDDLEWARE = [
@@ -161,7 +161,7 @@ LOGOUT_REDIRECT_URL = 'home_view'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+# AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
