@@ -22,5 +22,19 @@ class ContactCreateView(CreateView):
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
     
+# def ContactUsCreate(request):
+#     if  request.method == 'POST':
+#         form = ContactForm(request.POST)
+#         if form.is_valid():
+#             contact = Contact.objects.create(
+#                 name=form.cleaned_data['name']
+#             )
+#             contact.save()
+#             return redirect('contact_view')
+#         else:
+#             context = {'form' : form}
+#             return render(request, 'pages/contact.html', context)
+        
+        
 class AboutView(TemplateView):
     template_name = "pages/about.html"

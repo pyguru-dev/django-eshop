@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.payments',
     'apps.friendships',
+    # 'apps.shortener',
 ]
 
 MIDDLEWARE = [
@@ -163,6 +164,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_POST=25
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+EMAIL_USE_TLS=True
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/', include('apps.api.urls')),
     path('payments/', include('apps.payments.urls')),
     path('friendships/', include('apps.friendships.urls')),
+    path('shortener/', include('apps.shortener.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path("unicorn/", include("django_unicorn.urls")),
     path("__debug__/", include("debug_toolbar.urls")),

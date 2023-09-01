@@ -133,10 +133,22 @@
                     </form>
                 </div> {% endcomment %}
                 <div class="col-lg-6 mb-8">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% if field.errors%}
+                                {% for error in field.errors%}
+                                   {{ field.label }} : {{ error }}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if form.non_field_errors%}
+                            {{ form.non_field_errors }}
+                        {% endif %}
+                    {% endif %}
                     <h4 class="title mb-3">ارسال پیام به ما</h4>
                     <form class="form contact-us-form" method="post">
-                        {{ form.as_p }}
                         {% csrf_token %}
+                        {{ form.as_p }}
                         <button type="submit" value="submit" class="btn btn-dark btn-rounded">اکنون ارسال کنید </button>
                     </form>
                 </div>
