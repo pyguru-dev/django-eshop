@@ -41,7 +41,7 @@ class CategoryTreeSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tag
-        fields = ['name', 'url']
+        fields = ['id', 'name', 'url']
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):

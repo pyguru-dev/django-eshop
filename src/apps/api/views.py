@@ -43,10 +43,15 @@ class ProductDetailView(APIView):
 class PostListView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly,]
 
 
 class CategoryListView(APIView):
+    def get_queryset(self):
+        return Category.objects.all()
+
     def get(self, request):
+
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
@@ -61,24 +66,27 @@ class CategoryViewSet(viewsets.ModelViewSet):
             return Category.objects.all()
 
     def get_serializer_class(self):
-        
+
         match self.action:
             case 'list':
                 return CategoryTreeSerializer
             case 'create':
                 return CreateCategoryNodeSerializer
             case 'retrieve':
-                return 
+                return
             case _:
                 raise NotAcceptable()
 
 
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly,]
+    # def get(self, request):
 
-class TagListView(APIView):
-    def get(self, request):
-        categories = Tag.objects.all()
-        serializer = TagSerializer(categories, many=True)
-        return Response(serializer.data)
+    #     categories = Tag.objects.all()
+    #     serializer = TagSerializer(categories, many=True)
+    #     return Response(serializer.data)
 
 
 class RegisterView(APIView):
@@ -101,6 +109,18 @@ class RegisterView(APIView):
 # class RegisterView(generics.CreateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = RegisterSerializer
+
+# @api_view(["POST"])
+# def register(request):
+#     if request.method == 'POST':
+#         serializer = RegisterSerializer(data=request.data)
+#         data = {}
+#         if serializer.is_valid():
+#             user = serializer.save()
+#             data['token'] = Token.objects.get(user=user).key
+#             data['message'] = 'register is ok'
+#             return Response(data)
+
 
 class GetTokenView(APIView):
     def post(self, request):
