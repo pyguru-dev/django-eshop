@@ -5,9 +5,9 @@ from .models import Payment, Gateway
 
 @admin.register(Gateway)
 class GatewayAdmin(admin.ModelAdmin):
-    list_display = []
+    list_display = ['id', 'title']
 
 
 @admin.register(Payment)
 class PaymentAdmin(ImportExportModelAdmin):
-    list_display = ['id','price']
+    list_display = ['id', 'price']

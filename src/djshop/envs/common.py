@@ -46,15 +46,21 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'treebeard',
     'drf_spectacular',
+    'jalali_date',
 
-    'apps.accounts',
-    'apps.shop',
-    'apps.blog',
-    'apps.api',
-    'apps.pages',
-    'apps.payments',
-    'apps.friendships',
-    'apps.shortener',
+
+    'apps.core.apps.CoreConfig',
+    'apps.accounts.apps.AccountsConfig',
+    'apps.shop.apps.ShopConfig',
+    'apps.blog.apps.BlogConfig',
+    'apps.api.apps.ApiConfig',
+    'apps.pages.apps.PagesConfig',
+    'apps.payments.apps.PaymentsConfig',
+    'apps.friendships.apps.FriendshipConfig',
+    'apps.shortener.apps.ShortenerConfig',
+
+
+    'utils',
 ]
 
 MIDDLEWARE = [
@@ -104,6 +110,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'postgres':  {
+
     }
 }
 
@@ -139,7 +148,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
+
+
+# import locale
+# locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 USE_I18N = True
 
@@ -178,12 +191,12 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    
+
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 24

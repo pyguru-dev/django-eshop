@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import auth, User
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
@@ -9,6 +10,10 @@ from django.contrib.auth import get_user_model
 from .models import UserProfile
 
 # User = get_user_model()
+
+
+class AccountView(LoginRequiredMixin, generic.TemplateView):
+    template_name = "accounts/dashboard.html"
 
 
 class RegisterView(generic.CreateView):

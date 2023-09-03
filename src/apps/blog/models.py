@@ -6,12 +6,14 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from treebeard.mp_tree import MP_Node
+from utils.utils import jalali_converter
 
 
 class Rate(models.Model):
@@ -41,29 +43,31 @@ class Post(models.Model):
     )
 
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts')
+        User, on_delete=models.CASCADE, related_name='posts', verbose_name=_('نویسنده'))
     title = models.CharField(_('عنوان'), max_length=150)
     # slug = models.SlugField(unique=True)
-    body = RichTextField()
+    body = RichTextField(_('متن مقاله'))
     thumbnail = models.ImageField(
         upload_to="posts/%Y/%m/%d", blank=False, null=False)
     published_status = models.CharField(
-        max_length=1, choices=PUBLISHED_STATUS, default='d')
+        max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
     category = models.ForeignKey(
-        "Category", related_name='post', verbose_name='categories', on_delete=models.CASCADE)
-    # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
+        "Category", related_name='post', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
+    # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
 
     likes = models.PositiveBigIntegerField(default=0)
     dislikes = models.PositiveBigIntegerField(default=0)
     rates = GenericRelation(Rate)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name=_('تاریخ ثبت'))
 
     class Meta:
         db_table = 'posts'
         ordering = ['-created_at']
-        verbose_name = _("Post")
-        verbose_name_plural = _("Posts")
+        verbose_name = _("مقاله")
+        verbose_name_plural = _("مقاله ها")
 
     def __str__(self) -> str:
         return self.title
@@ -73,6 +77,15 @@ class Post(models.Model):
 
     def posts_was_published_recently(self):
         return self.created_at >= timezone.now() - datetime.timedelta(days=1)
+
+    def jcreated_at(self):
+        return jalali_converter(self.created_at)
+    
+    def category_published(self):
+        return self.category.filter(status=True)
+    
+    def thumbnail_tag(self):
+        return format_html("<img width=100 src='{}' />".format(self.thumbnail.url))
 
 
 class Comment(models.Model):
@@ -88,8 +101,8 @@ class Comment(models.Model):
     class Meta:
         db_table = 'comments'
         ordering = ['-created_at']
-        verbose_name = _("Post")
-        verbose_name_plural = _("Posts")
+        verbose_name = _("نظر")
+        verbose_name_plural = _("نظرات")
 
     def __str__(self) -> str:
         return self.comment
@@ -100,33 +113,38 @@ class Comment(models.Model):
 
 class Category(MP_Node):
     parent = models.ForeignKey(
-        'self', verbose_name='parent', blank=True, null=True, on_delete=models.CASCADE)
+        'self', verbose_name=_('دسته بندی والد'), blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True,
-                            blank=False, null=False, db_index=True)
-    slug = models.SlugField()
-    description = models.TextField(blank=True, null=True, max_length=2048)
-    is_active = models.BooleanField(default=True)
+                            blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
+    slug = models.SlugField(max_length=255, unique=True,
+                            verbose_name=_('اسلاگ'))
+    description = models.TextField(
+        blank=True, null=True, max_length=2048, verbose_name=_('توضیحات'))
+    is_active = models.BooleanField(
+        default=True, verbose_name=_('دسته بندی فعال باشد?'))
     # image = models.
 
     class Meta:
         db_table = 'categories'
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
+        verbose_name = _("دسته بندی")
+        verbose_name_plural = _("دسته بندی ها")
 
     def __str__(self) -> str:
         return self.name
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True,
-                            blank=False, null=False)
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
-    
+    name = models.CharField(max_length=255, unique=True,
+                            blank=False, null=False, verbose_name=_('عنوان'))
+    slug = models.SlugField(max_length=255, unique=True,
+                            verbose_name=_('اسلاگ'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+
     class Meta:
         db_table = 'tags'
-        verbose_name = _("Tag")
-        verbose_name_plural = _("Tags")
+        verbose_name = _("برچسب")
+        verbose_name_plural = _("برچسب ها")
 
     def __str__(self) -> str:
         return self.name

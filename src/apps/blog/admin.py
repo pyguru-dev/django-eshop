@@ -2,10 +2,14 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
+from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
 from .models import Post, Comment, RecyclePost, Category, Tag
+
+# admin.site.disable_action('delete_selected')
+# admin.site.site_header = ''
 
 
 @admin.register(Comment)
@@ -21,17 +25,23 @@ class CommentInline(admin.StackedInline):
 
 @admin.register(Post)
 class PostAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'title', 'author', 'published_status', 'created_at']
-    list_filter = ['published_status']
+    list_display = ['id', 'title', 'category',
+                    'author', 'published_status', 'created_at',]
+    list_filter = ['published_status', 'author','created_at']
     search_fields = ['title', 'author__username']
+    list_display_links = ['id', 'title']
     inlines = [CommentInline]
     # fields = ['title', 'body', 'published_status']
     fieldsets = (
-        (None, {'fields': ('title', 'body', 'author')}),
+        (None, {'fields': ('title', 'body', 'author', 'category')}),
         ("Status", {'fields': ('published_status',)})
     )
     # filter_horizontal = ['tags']
     # resource_class = PostResource
+
+    def tags_to_str(self, obj):
+        return ", ".join(tag.title for tag in obj.tags.all())
+    tags_to_str.short_description = _('برسب ها')
 
 
 @admin.register(RecyclePost)
@@ -46,11 +56,26 @@ class PostAdmin(admin.ModelAdmin):
     def recover(self, request, queryset):
         queryset.update(is_deleted=False, deleted_at=Null)
 
+    @admin.action(description="Draft posts to published")
+    def draft_to_published_posts(self, request, queryset):
+        rows_updated = queryset.update(status="p")
+        if rows_updated == 1:
+            message_bit = 'منتشر شد.'
+        else:
+            message_bit = 'منتشر شدند.'
+        self.message_user(request, "{} مقاله {}".format(
+            rows_updated, message_bit))
+
+    @admin.action(description="Published posts to draft")
+    def published_to_draft_posts(self, request, queryset):
+        queryset.update(status="d")
+
 
 @admin.register(Category)
 class CategoryAdmin(TreeAdmin):
     form = movenodeform_factory(Category)
 
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['id', 'name', 'slug', 'created_at']

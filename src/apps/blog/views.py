@@ -1,3 +1,5 @@
+from typing import Any, Optional
+from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.views import generic
@@ -6,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Post
@@ -27,8 +29,13 @@ class PostDetailView(FormMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
     template_name = 'blog/post_detail.html'    
-    slug_field = 'id'        
-    slug_url_kwarg = 'id'
+    # slug_field = 'post_id'        
+    # slug_url_kwarg = 'id'
+    
+    # def get_object(self, queryset):
+    #     slug = self.kwargs.get('post_id')
+    #     return get_object_or_404(Post.objects.published(), slug=slug)
+    
     # form_class = CommentCreateForm
 
     # def get_success_url(self) -> str:
