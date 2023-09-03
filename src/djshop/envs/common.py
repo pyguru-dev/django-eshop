@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'treebeard',
     'drf_spectacular',
     'jalali_date',
+    "graphene_django",
 
 
     'apps.core.apps.CoreConfig',
@@ -246,4 +247,8 @@ JALALI_DATE_DEFAULTS = {
             ]
         }
     },
+}
+
+GRAPHENE = {
+    "SCHEMA": "djshop.schema.schema"
 }
