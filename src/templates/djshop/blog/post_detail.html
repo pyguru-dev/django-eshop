@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock title %}
+{% block title %} {{ post.title }} {% endblock title %}
 
 {% block content %}
 
  <!-- Start of Page Header -->
  <div class="page-header">
     <div class="container">
-        <h1 class="page-title mb-0">تک نوشته</h1>
+        <h1 class="page-title mb-0">{{ post.title }}</h1>
     </div>
 </div>
 <!-- End of Page Header -->
@@ -16,9 +16,9 @@
 <nav class="breadcrumb-nav">
     <div class="container">
         <ul class="breadcrumb bb-no">
-            <li><a href="demo1.html">خانه </a></li>
-            <li><a href="blog.html">بلاگ </a></li>
-            <li>تک نوشته</li>
+            <li><a href="{% url 'home_view' %}">خانه </a></li>
+            <li><a href="{% url 'post_list' %}">بلاگ </a></li>
+            <li>{{ post.title }}</li>
         </ul>
     </div>
 </nav>
@@ -31,46 +31,24 @@
             <div class="main-content post-single-content">
                 <div class="post post-grid post-single">
                     <figure class="post-media br-sm">
-                        <img src="assets/images/blog/single/1.jpg" alt="Blog" width="930" height="500" />
+                        <img src="assets/images/blog/single/1.jpg" alt="{{ post.title }}" width="930" height="500" />
                     </figure>
                     <div class="post-details">
                         <div class="post-meta">
-                            توسط <a href="#" class="post-author">جان دوو</a>
-                            - <a href="#" class="post-date">1401.3.5</a>
+                            توسط <a href="#" class="post-author">{{ post.author.username }}</a>
+                            - <a href="#" class="post-date">{{ post.created_at }}</a>
                             <a href="#" class="post-comment"><i class="w-icon-comments"></i><span>0</span>نظرات </a>
                         </div>
-                        <h2 class="post-title"><a href="#">مد از نقطه نظر بیرونی به شما می گوید که چه کسی هستید</a></h2>
+                        <h2 class="post-title"><a href="#">{{ post.title }}</a></h2>
                         <div class="post-content">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. . </p>
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد. <a href="#">تکنولوژی مورد نیاز و کاربردهای متنوع با.</a>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. 
-                            </p>
+                            <p>{{ post.body }}</p>
                         </div>
                     </div>
                 </div>
-                <!-- End Post -->
-                <blockquote class="text-center mb-8">
-                    <i class="fas fa-quote-left"></i>
-                    <p class="font-weight-bold text-dark mt-1 mb-2">جنگ و بازاریابی شباهت های زیادی دارند</p>
-                    <cite class="font-weight-normal text-dark">جولی کیستن </cite>
-                </blockquote>
-                <!-- End Blockquote -->
-                <p class="mb-10">تکنولوژی مورد نیاز و کاربردهای متنوع با. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد.</p>
-                <h4 class="title title-md font-weight-bold">پیش‌فرض به ذهن آگاهی: اثر سوم شخص</h4>
-                <p class="mb-2">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد.</p>
-                <ul class="list-style-none list-type-check">
-                    <li>جنگ و بازاریابی شباهت های زیادی دارند.</li>
-                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. .</li>
-                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. .</li>
-                    <li>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. .</li>
-                </ul>
-                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. .</p>
+                
                 <div class="tags">
                     <label class="text-dark mr-2">برچسب ها: </label>
-                    <a href="#" class="tag">مد </a>
-                    <a href="#" class="tag">سبک </a>
-                    <a href="#" class="tag">مسافرت </a>
-                    <a href="#" class="tag">زنانه </a>
+                    <a href="#" class="tag">مد </a>                    
                 </div>
                 <!-- End Tag -->
                 <div class="social-links mb-10">
@@ -85,14 +63,14 @@
                 <!-- End Social Links -->
                 <div class="post-author-detail">
                     <figure class="author-media mr-4">
-                        <img src="assets/images/blog/single/1.png" alt="Author" width="105" height="105" />
+                        <img src="assets/images/blog/single/1.png" alt="{{ post.author.username }}" width="105" height="105" />
                     </figure>
                     <div class="author-details">
                         <div class="author-name-wrapper flex-wrap mb-2">
-                            <h4 class="author-name font-weight-bold mb-2 pr-4 mr-auto">جعفر خان
+                            <h4 class="author-name font-weight-bold mb-2 pr-4 mr-auto">{{ post.author.username }}
                                 <span class="font-weight-normal text-default">(نویسنده)</span>
                             </h4>
-                            <a href="#" class="btn btn-primary btn-link btn-icon-right pb-0 text-normal font-weight-normal mb-2">پست های بیشتر توسط ادمین<i class="w-icon-long-arrow-left"></i></a>
+                            <a href="#" class="btn btn-primary btn-link btn-icon-right pb-0 text-normal font-weight-normal mb-2">پست های بیشتر توسط نویسنده<i class="w-icon-long-arrow-left"></i></a>
                         </div>
                         <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. . </p>
                     </div>
@@ -149,55 +127,7 @@
                                     <h4 class="post-title mb-3"><a href="post-single.html">مد در مورد اینکه از چه کسی هستید بگویید...</a></h4>
                                     <a href="post-single.html" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
                                 </div>
-                            </div>
-                            <div class="swiper-slide post post-grid">
-                                <figure class="post-media br-sm">
-                                    <a href="post-single.html">
-                                        <img src="assets/images/blog/single/3.jpg" alt="Post" width="296"
-                                            height="190" style="background-color: #cad2d1;" />
-                                    </a>
-                                </figure>
-                                <div class="post-details text-center">
-                                    <div class="post-meta">
-                                        توسط <a href="#" class="post-author">هیلاری کرتون </a>
-                                        - <a href="#" class="post-date">1401.1.23</a>
-                                    </div>
-                                    <h4 class="post-title mb-3"><a href="post-single.html">یک پست وبلاگ جالب با تصاویر ارائه می شود</a></h4>
-                                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide post post-grid">
-                                <figure class="post-media br-sm">
-                                    <a href="post-single.html">
-                                        <img src="assets/images/blog/single/4.jpg" alt="Post" width="296"
-                                            height="190" style="background-color: #ececec;" />
-                                    </a>
-                                </figure>
-                                <div class="post-details text-center">
-                                    <div class="post-meta">
-                                        توسط <a href="#" class="post-author">کاسپر دایلن </a>
-                                        - <a href="#" class="post-date">1401.1.23</a>
-                                    </div>
-                                    <h4 class="post-title mb-3"><a href="post-single.html">یک پست وبلاگ جالب با تصاویر ارائه می شود</a></h4>
-                                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide post post-grid">
-                                <figure class="post-media br-sm">
-                                    <a href="post-single.html">
-                                        <img src="assets/images/blog/single/5.jpg" alt="Post" width="296"
-                                            height="190" style="background-color: #AFAFAF;" />
-                                    </a>
-                                </figure>
-                                <div class="post-details text-center">
-                                    <div class="post-meta">
-                                        توسط <a href="#" class="post-author">جان دوو</a>
-                                        - <a href="#" class="post-date">1401.1.23</a>
-                                    </div>
-                                    <h4 class="post-title mb-3"><a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</a></h4>
-                                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
                         <button class="swiper-button-next"></button>
                         <button class="swiper-button-prev"></button>
@@ -205,7 +135,7 @@
                 </div>
                 <!-- End پست های اخیر -->
                 
-                <h4 class="title title-lg font-weight-bold pt-1 mt-10">3 نظرات </h4>
+                <h4 class="title title-lg font-weight-bold pt-1 mt-10">0 نظرات </h4>
                 <ul class="comments list-style-none pl-0">
                     <li class="comment">
                         <div class="comment-body">
@@ -236,22 +166,7 @@
                                 <a href="#" class="btn btn-dark btn-link btn-underline btn-icon-right btn-reply">پاسخ <i class="w-icon-long-arrow-left"></i></a>
                             </div>  
                         </div>
-                    </li>
-                    <li class="comment">
-                        <div class="comment-body">
-                            <figure class="comment-avatar">
-                                <img src="assets/images/blog/single/1.png" alt="Avatar" width="90" height="90" />
-                            </figure>
-                            <div class="comment-content">
-                                <h4 class="comment-author font-weight-bold">
-                                    <a href="#">جان دوو</a>
-                                    <span class="comment-date">خرداد 1401</span>
-                                </h4>
-                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.</p>
-                                <a href="#" class="btn btn-dark btn-link btn-underline btn-icon-right btn-reply">پاسخ <i class="w-icon-long-arrow-left"></i></a>
-                            </div>
-                        </div>
-                    </li>
+                    </li>                    
                 </ul>
                 <!-- End Comments -->
                 <form class="reply-section pb-4">
@@ -295,13 +210,7 @@
                         <div class="widget widget-categories">
                             <h3 class="widget-title bb-no mb-0">دسته بندیها </h3>
                             <ul class="widget-body filter-items search-ul">
-                                <li><a href="blog.html">لباس ها </a></li>
-                                <li><a href="blog.html">سرگرمی </a></li>
-                                <li><a href="blog.html">مد </a></li>
-                                <li><a href="blog.html">سبک زندگی </a></li>
-                                <li><a href="blog.html">بیشتر </a></li>
-                                <li><a href="blog.html">کفش ها </a></li>
-                                <li><a href="blog.html">تکتولوژی </a></li>
+                                <li><a href="blog.html">لباس ها </a></li>                               
                             </ul>
                         </div>
                         <!-- End of Widget categories -->
@@ -327,33 +236,7 @@
                                                             <a href="post-single.html">مد از نقطه نظر بیرونی به شما می گوید که چه کسی هستید</a>
                                                         </h4>
                                                     </div>
-                                                </div>
-                                                <div class="post-widget mb-4">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/2.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">لباس مردانه تابستانی جدید پیدا شد</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-                                                <div class="post-widget mb-2">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/3.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>
+                                                </div>                                               
                                             </div>
                                             <div class="swiper-slide widget-col">
                                                 <div class="post-widget mb-4">
@@ -368,33 +251,7 @@
                                                             <a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی</a>
                                                         </h4>
                                                     </div>
-                                                </div>
-                                                <div class="post-widget mb-4">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/5.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-                                                <div class="post-widget mb-2">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/6.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">یک پست وبلاگ جالب با تصاویر ارائه می شود</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>
+                                                </div>                                                
                                             </div>
                                         </div>
                                         <button class="swiper-button-next"></button>
@@ -403,26 +260,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of Widget posts -->
-                        <div class="widget widget-custom-block">
-                            <h3 class="widget-title bb-no">بلوک سفارشی </h3>
-                            <div class="widget-body">
-                                <p class="text-default mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد.</p>
-                            </div>
-                        </div>
+                       
                         <!-- End of Widget custom block -->
                         <div class="widget widget-tags">
                             <h3 class="widget-title bb-no">برچسب های جدید </h3>
                             <div class="widget-body tags">
                                 <a href="#" class="tag">مد </a>                            
-                            </div>
-                        </div>
-                        <div class="widget widget-calendar">
-                            <h3 class="widget-title bb-no">تقویم </h3>
-                            <div class="widget-body">
-                                <div class="calendar-container" data-calendar-options="{
-                                    'dayExcerpt': 1
-                                }"></div>
                             </div>
                         </div>
                     </div>
