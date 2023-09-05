@@ -2,8 +2,9 @@ import os
 import sys
 from pathlib import Path
 from django.conf import settings
-from os.path import abspath, dirname, join
-# from decouple 
+from os.path import join
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_ROOT = os.path.dirname(__file__)
@@ -188,7 +189,7 @@ AUTH_USER_MODEL = 'accounts.User'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_POST = 25
-EMAIL_HOST_USER = ''
+# EMAIL_HOST_USER = config('')
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
