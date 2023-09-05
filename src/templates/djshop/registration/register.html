@@ -33,6 +33,7 @@
             <div class="tab-pane active" id="sign-up">
               <form method="post" action="">
                 {% csrf_token %}
+                {{ form.as_p }}
                 <div class="form-group">
                   <label>آدرس ایمیل *</label>
                   <input

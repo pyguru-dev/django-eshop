@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block title %}صفحه اصلی{% endblock title %}
-
-{% block styles %}
-
-{% endblock styles %}
 
 {% block content %}
 <!-- Start of Main -->
@@ -14,9 +9,9 @@
   <nav class="breadcrumb-nav">
     <div class="container">
       <ul class="breadcrumb shop-breadcrumb bb-no">
-        <li class="active"><a href="cart.html">فروشگاه پینگ سبد خرید </a></li>
-        <li><a href="checkout.html">پرداخت </a></li>
-        <li><a href="order.html">سفارش کامل شد</a></li>
+        <li class="active"><a href="{% url 'cart' %}"> سبد خرید </a></li>
+        <li><a href="#">پرداخت </a></li>
+        <li><a href="#">سفارش کامل شد</a></li>
       </ul>
     </div>
   </nav>
@@ -26,6 +21,7 @@
   <div class="page-content">
     <div class="container">
       <div class="row gutter-lg mb-10">
+        {% if user.is_authenticated %}
         <div class="col-lg-8 pr-lg-4 mb-6">
           <table class="shop-table cart-table">
             <thead>
@@ -299,6 +295,18 @@
             </div>
           </div>
         </div>
+        {% else %}
+        <div class="col-lg-8 mx-auto pr-lg-4 mb-6">
+          <div class="card">برای مشاهده سبد خرید ابتدا وارد شوید</div>
+          <div class="cart-action mb-6">
+            <a
+              href="{% url 'login_view' %}"
+              class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"
+              ><i class="w-icon-long-arrow-left"></i>ورود</a
+            >
+          </div>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -306,5 +314,3 @@
 </div>
 <!-- End of Main -->
 {% endblock content %}
-
-

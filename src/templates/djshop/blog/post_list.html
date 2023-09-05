@@ -37,70 +37,74 @@
         <div class="container">
             <div class="row gutter-lg">
                 <div class="main-content">
-                    {% for post in posts %}
-                    <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
-                        <figure class="post-media br-sm">
-                            <a href="{{ post.get_absolute_url }}">
-                                <img src="/" width="930"
-                                    height="500" alt="blog">
-                            </a>
-                        </figure>
-                        <div class="post-details">
-                            <div class="post-cats text-primary">
-                                <a href="#"> {{ post.category }} </a>
+                    {% if posts %}
+                        {% for post in posts %}
+                        <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
+                            <figure class="post-media br-sm">
+                                <a href="{{ post.get_absolute_url }}">
+                                    <img src="/" width="930"
+                                        height="500" alt="blog">
+                                </a>
+                            </figure>
+                            <div class="post-details">
+                                <div class="post-cats text-primary">
+                                    <a href="#"> {{ post.category }} </a>
+                                </div>
+                                <h4 class="post-title">
+                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                </h4>
+                                <div class="post-content">
+                                    <p>{{ post.body|striptags|truncatewords:5 }}</p>
+                                    <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
+                                </div>
+                                <div class="post-meta">
+                                    توسط <a href="#" class="post-author">{{ post.author.username }}</a>
+                                    - <a href="#" class="post-date">{{ post.created_at }}</a>
+                                </div>
                             </div>
-                            <h4 class="post-title">
-                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                            </h4>
-                            <div class="post-content">
-                                <p>{{ post.body|striptags|truncatewords:5 }}</p>
-                                <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
-                            </div>
-                            <div class="post-meta">
-                                توسط <a href="#" class="post-author">{{ post.author.username }}</a>
-                                - <a href="#" class="post-date">{{ post.created_at }}</a>
-                            </div>
-                        </div>
-                    </article>
-                    {% endfor %}  
+                        </article>
+                        {% endfor %}  
 
-                    <ul class="pagination justify-content-center">
+                        <ul class="pagination justify-content-center">
 
-                        {% if page_obj.has_previous  %}
-                        <li class="prev">
-                            <a href="?page={{ page_obj.previous_page_number }}" aria-label="قبلی" tabindex="-1" aria-disabled="true">
-                                <i class="w-icon-long-arrow-right"></i>قبلی
-                            </a>
-                        </li>
-                        {% endif %}
-
-                        
-                        {% comment %} <li class="page-item active">
-                            <a class="page-link" href="#">{{ page_obj.number }}</a>
-                        </li> {% endcomment %}
-
-                         {% for i in page_obj.paginator.page_range %}
-                            {% if i == page_obj.number %}
-                            <li class="page-item active">
-                                <a class="page-link" href="#">{{ i }}</a>
+                            {% if page_obj.has_previous  %}
+                            <li class="prev">
+                                <a href="?page={{ page_obj.previous_page_number }}" aria-label="قبلی" tabindex="-1" aria-disabled="true">
+                                    <i class="w-icon-long-arrow-right"></i>قبلی
+                                </a>
                             </li>
-                            {% else %}
-                            {{ i }}
                             {% endif %}
 
-                        {% endfor %} 
+                            
+                            {% comment %} <li class="page-item active">
+                                <a class="page-link" href="#">{{ page_obj.number }}</a>
+                            </li> {% endcomment %}
 
-                        {% if page_obj.has_next %}
-                        <li class="next">
-                            <a href="?page={{ page_obj.next_page_number }}" aria-label="بعدی">
-                               بعدی <i class="w-icon-long-arrow-left"></i>
-                            </a>
-                        </li>
-                        {% endif %}
+                            {% for i in page_obj.paginator.page_range %}
+                                {% if i == page_obj.number %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">{{ i }}</a>
+                                </li>
+                                {% else %}
+                                {{ i }}
+                                {% endif %}
 
-                        {% comment %} {% include 'partials/pagination.html' with page=posts %} {% endcomment %}
+                            {% endfor %} 
 
-                    </ul>
+                            {% if page_obj.has_next %}
+                            <li class="next">
+                                <a href="?page={{ page_obj.next_page_number }}" aria-label="بعدی">
+                                بعدی <i class="w-icon-long-arrow-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% comment %} {% include 'partials/pagination.html' with page=posts %} {% endcomment %}
+
+                        </ul>
+                    {% else %}
+                        <div class="alert">تا کنون مقاله ای ثبت نشده است.</div>
+                    {% endif %}
 
                 </div>
                 <!-- End of Main Content -->
@@ -180,28 +184,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End of Widget posts -->
-                            <div class="widget widget-custom-block">
-                                <h3 class="widget-title bb-no">بلوک سفارشی </h3>
-                                <div class="widget-body">
-                                    <p class="text-default mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد.</p>
-                                </div>
-                            </div>
-                            <!-- End of Widget custom block -->
+                            
                             <div class="widget widget-tags">
                                 <h3 class="widget-title bb-no">برچسب های جدید </h3>
                                 <div class="widget-body tags">
                                     <a href="#" class="tag">مد </a>                                  
                                 </div>
-                            </div>
-                            <div class="widget widget-calendar">
-                                <h3 class="widget-title bb-no">تقویم </h3>
-                                <div class="widget-body">
-                                    <div class="calendar-container" data-calendar-options="{
-                                        'dayExcerpt': 1
-                                    }"></div>
-                                </div>
-                            </div>
+                            </div>                         
                         </div>
                     </div>
                 </aside>

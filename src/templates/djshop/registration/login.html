@@ -36,7 +36,8 @@
                         <div class="tab-pane active" id="sign-up">
                             <form method="post" action="">
                                 {% csrf_token %}
-                                <div class="form-group">
+                                {{ form.as_p }}
+                                {% comment %} <div class="form-group">
                                     <label>آدرس ایمیل *</label>
                                     <input type="email" class="form-control" name="email" id="email" required>
                                 </div>
@@ -48,7 +49,7 @@
                                 <div class="form-checkbox d-flex align-items-center justify-content-between mb-5">
                                     <input type="checkbox" class="custom-checkbox" id="remember" name="remember" required checked>
                                     <label for="agree" class="font-size-md">مرا به خاطر بسپار!</label>
-                                </div>
+                                </div> {% endcomment %}
                                 <button type='submit' value='submit' class="btn btn-primary btn-block">ورود</button>
                             </form>
                         </div>

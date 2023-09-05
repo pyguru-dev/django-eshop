@@ -3,7 +3,7 @@ from .models import ContactModel
 
 
 class ContactForm(forms.ModelForm):    
-    message = forms.CharField(max_length=255, widget=forms.Textarea)    
+    message = forms.CharField(max_length=255, widget=forms.Textarea, required=True)    
     
     class Meta:
         model = ContactModel

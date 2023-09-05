@@ -24,6 +24,11 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+class LoginForm(forms.Form):    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
 
 class AccountSettingForm():
     class Meta:

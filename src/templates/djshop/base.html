@@ -110,45 +110,11 @@
           <div class="container">
             <div class="header-left">
               <p class="welcome-msg">
-                پیام فروشگاه لغو کنید. به فروشگاه ما خوش آمدید!
+                به فروشگاه دیجی شاپ خوش آمدید.
               </p>
             </div>
             <div class="header-right pr-0">
-              <div class="dropdown">
-                <a href="#language"
-                  ><img
-                    src="{% static '' %}images/flags/eng.png"
-                    alt="ENG Flag"
-                    width="14"
-                    height="8"
-                    class="dropdown-image"
-                  />
-                  انگلیسی
-                </a>
-                <div class="dropdown-box">
-                  <a href="#ENG">
-                    <img
-                      src="{% static '' %}images/flags/eng.png"
-                      alt="ENG Flag"
-                      width="14"
-                      height="8"
-                      class="dropdown-image"
-                    />
-                    انگلیسی
-                  </a>
-                  <a href="#FRA">
-                    <img
-                      src="{% static '' %}images/flags/fra.png"
-                      alt="FRA Flag"
-                      width="14"
-                      height="8"
-                      class="dropdown-image"
-                    />
-                    فرانسوی
-                  </a>
-                </div>
-              </div>
-
+           
               <!-- End of Dropdown Menu -->
               <span class="divider d-lg-show"></span>
 
@@ -264,6 +230,8 @@
                     <a href="#">صفحات </a>
                     <ul>
                       <li><a href="{% url 'about_view' %}">درباره ما </a></li>
+                      <li><a href="{% url 'contact_view' %}">تماس ما </a></li>
+                      <li><a href="{% url 'faqs_view' %}">سوالات متداول </a></li>
                     </ul>
                   </li>
                 </ul>

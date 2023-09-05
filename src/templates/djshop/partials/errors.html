@@ -1,0 +1,12 @@
+{% if form.errors %}
+    {% for field in form %}
+        {% if field.errors%}
+            {% for error in field.errors%}
+                {{ field.label }} : {{ error }}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% if form.non_field_errors%}
+        {{ form.non_field_errors }}
+    {% endif %}
+{% endif %}

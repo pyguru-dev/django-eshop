@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}سوالات متداول{% endblock title %}
+
+{% block content %}
+
+  
+  <!-- Start of Page Header -->
+  <div class="page-header" style="height: 180px;">
+    <div class="container">
+        <h1 class="page-title mb-0"> سوالات متداول</h1>
+    </div>
+</div>
+<!-- End of Page Header -->
+
+<!-- Start of Breadcrumb -->
+<nav class="breadcrumb-nav mb-10 pb-1">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'home_view' %}">خانه </a></li>
+            <li>سوالات متداول</li>
+        </ul>
+    </div>
+</nav>
+<!-- End of Breadcrumb -->
+
+<!-- Start of PageContent -->
+<div class="page-content faq">
+    <div class="container">
+        <section class="content-title-section">
+            <h3 class="title title-simple justify-content-center bb-no pb-0">سوالات متداول
+            </h3>
+            <p class="description text-center">شما می توانید سوالات را با <b>المنت های وولمارت</b> به راحتی یافت کنید.</p>
+        </section>
+
+        <section class="mb-6">
+            <h4 class="title title-center mb-5">اطلاعات حمل و نقل </h4>
+            <div class="row">
+                <div class="col-md-6 mb-8">
+                    <div class="accordion accordion-bg accordion-gutter-md accordion-border">
+                        <div class="card">
+                            <div class="card-header">
+                                <a href="#collapse1-1" class="collapse">چه روش های حمل و نقل موجود است؟</a>
+                            </div>
+                            <div id="collapse1-1" class="card-body expanded">
+                                <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                                    مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای .
+                                </p>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>                
+            </div>
+            
+        </section>
+
+    </div>
+</div>
+<!-- End of PageContent -->
+
+{% endblock content %}

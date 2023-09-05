@@ -7,15 +7,14 @@ from django.shortcuts import redirect, render
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView
+from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView, LoginView as BaseLoginView
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from apps.accounts.forms import RegisterForm
+from apps.accounts.forms import RegisterForm,LoginForm
 from apps.payments.models import Payment
 from utils.utils import account_activation_token
 from .models import UserProfile, User
@@ -54,6 +53,14 @@ class RegisterView(generic.CreateView):
         email.send()
         return HttpResponse('email sent')
         
+
+class LoginView(BaseLoginView):
+    # form_class = LoginForm
+    # success_url = reverse_lazy('home_view')    
+    pass
+
+
+
 def activate_account_mail(request,uidb64,token):
     try:
         uid = force_text(urlsafe_base64_encode(uidb64))
@@ -68,12 +75,6 @@ def activate_account_mail(request,uidb64,token):
         return HttpResponse('ok')
     else:
         return HttpResponse('link invalid')
-
-class LoginView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('home_view')
-    template_name = 'registration/login.html'
-
 
 class PasswordChangeView(BasePasswordChangeView):
     success_url = reverse_lazy('')

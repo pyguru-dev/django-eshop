@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Product
 
 
@@ -21,5 +21,5 @@ class CompareView(TemplateView):
     template_name = "shop/compare.html"
 
 
-class CheckoutView(TemplateView):
+class CheckoutView(LoginRequiredMixin,TemplateView):
     template_name = "shop/checkout.html"
