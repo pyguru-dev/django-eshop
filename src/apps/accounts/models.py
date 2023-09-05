@@ -9,6 +9,7 @@ class Country(models.Model):
     
     
 
+
 class User(AbstractUser):
     # mobile = models.CharField(null=True, blank=True,
     #                           unique=True, max_length=11)
@@ -36,3 +37,8 @@ class UserProfile(models.Model):
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, password=None):
 #         pass
+
+
+class Address(models.Model):
+    pass
+    

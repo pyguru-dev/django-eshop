@@ -1,9 +1,12 @@
 import time
-
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.http import Http404
-from . import jalali
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
+# from six import text_type
+
+from . import jalali
+
 
 def jalali_converter(time):
     jmonths = []
@@ -48,8 +51,8 @@ def persian_number_converter(string):
 def timeit(func):
     def wrapper(*args, **kwargs):
         starttime = time.time()
-        value=func(*args, **kwargs)
-        endtime=time.time()
+        value = func(*args, **kwargs)
+        endtime = time.time()
         print(f"func name: {func.__name__} taketime: {endtime - starttime}")
         return value
     return wrapper
@@ -62,3 +65,21 @@ def superuser_only(func):
         return func(request, *args, **kwargs)
     return wrapper
 
+def get_ip_address(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+    
+
+class TokenGenerator(PasswordResetTokenGenerator):
+    pass
+#     def _make_hash_value(self, user, timestamp):
+#         return (
+#             six.text_type(user.pk) + six.text_type(timestamp)
+#         )
+
+
+account_activation_token = TokenGenerator()

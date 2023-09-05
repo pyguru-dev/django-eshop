@@ -1,9 +1,9 @@
 import os
 import sys
-from datetime import timedelta
 from pathlib import Path
 from django.conf import settings
 from os.path import abspath, dirname, join
+# from decouple 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 PROJECT_ROOT = os.path.dirname(__file__)
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.humanize',
     
     
     'rest_framework',

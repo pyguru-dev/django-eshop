@@ -1,22 +1,24 @@
 import csv
 import datetime
-from typing import Any, Optional
-from django.db import models
+from django.forms.models import BaseModelForm
+
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import auth, User
+from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth import get_user_model
-
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from apps.accounts.forms import RegisterForm
 from apps.payments.models import Payment
-from .models import UserProfile
-
-# User = get_user_model()
+from utils.utils import account_activation_token
+from .models import UserProfile, User
 
 
 class AccountView(LoginRequiredMixin, generic.TemplateView):
@@ -32,16 +34,52 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
         return User.objects.get(pk = self.request.user.pk)
 
 class RegisterView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
+    form_class = RegisterForm
     template_name = 'registration/register.html'
+    success_url = reverse_lazy('login')
 
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.save()
+        current_site = get_current_site(self.request)
+        mail_message = render_to_string('accounts/account_verification_mail.html', {
+            'user' : user,
+            'domail' : current_site.domain,
+            'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+            'token' : account_activation_token.make_token(user)
+        })
+        
+        to_mail = form.cleaned_data.get('email')
+        email = EmailMessage('subject', mail_message, to=to_mail)
+        email.send()
+        return HttpResponse('email sent')
+        
+def activate_account_mail(request,uidb64,token):
+    try:
+        uid = force_text(urlsafe_base64_encode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError,OverflowError,User.DoesNotExist):
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return HttpResponse('ok')
+    else:
+        return HttpResponse('link invalid')
 
 class LoginView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('home_view')
     template_name = 'registration/login.html'
 
+
+class PasswordChangeView(BasePasswordChangeView):
+    success_url = reverse_lazy('')
+
+class PasswordChangeDoneView(generic.TemplateView):
+    pass
 
 def register(request):
     if request.method == 'POST':

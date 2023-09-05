@@ -37,3 +37,7 @@ class SoftDelete(models.Model):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
+
+
+class IPAddress(models.Model):
+    ip_address = models.GenericIPAddressField()

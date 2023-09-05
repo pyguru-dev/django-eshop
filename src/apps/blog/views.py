@@ -101,6 +101,7 @@ def post_by_tag(request, slug):
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
+        
     context = {
         'post' : post
     }
@@ -124,3 +125,7 @@ class AuthorDetailView(generic.DetailView):
             return Post.objects.all()
         else:
             return Post.objects.filter(author=self.request.user)
+        
+        
+class SearchListView(generic.ListView):
+    pass
