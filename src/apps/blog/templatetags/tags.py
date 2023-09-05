@@ -12,3 +12,13 @@ def category_navbar():
     return {
         'categories' : Category.objects.all()
     }
+    
+    
+@register.inclusion_tag('partials/link.html')
+def link(request,link_name,content):
+    return {
+        'request': request,
+        'link_name': link_name,
+        'link' : '',
+        'content' : content
+    }

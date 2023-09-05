@@ -1,6 +1,9 @@
+import time
+
+from django.http import Http404
 from . import jalali
 from django.utils import timezone
-
+from django.core.exceptions import PermissionDenied
 
 def jalali_converter(time):
     jmonths = []
@@ -40,3 +43,22 @@ def persian_number_converter(string):
     for e, p in numbers.items():
         s = string.replace(e, p)
         return s
+
+
+def timeit(func):
+    def wrapper(*args, **kwargs):
+        starttime = time.time()
+        value=func(*args, **kwargs)
+        endtime=time.time()
+        print(f"func name: {func.__name__} taketime: {endtime - starttime}")
+        return value
+    return wrapper
+
+
+def superuser_only(func):
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_supperuser:
+            raise PermissionDenied
+        return func(request, *args, **kwargs)
+    return wrapper
+

@@ -1,5 +1,6 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 from django.views.decorators.cache import cache_page
 from .forms import ContactForm
@@ -17,7 +18,9 @@ class HomePageView(TemplateView):
     
 class ContactCreateView(CreateView):
     form_class = ContactForm
+    fields = "__all__"
     template_name = "pages/contact.html"
+    # success_url = reverse_lazy('contact_view')
     
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)

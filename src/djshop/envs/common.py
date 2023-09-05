@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.sitemaps',
+    
+    
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -113,9 +115,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     },
     'postgres':  {
+        'ENGINE': 'django.db.backends.postgresql',
 
-    }
+    },
+    'mongodb' : {}
 }
+
+# DATABASE_ROUTERS=['routers.db_routers.AuthRouter']
 
 INTERNAL_IPS = [
     # ...
@@ -176,7 +182,7 @@ LOGOUT_REDIRECT_URL = 'home_view'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.User'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'

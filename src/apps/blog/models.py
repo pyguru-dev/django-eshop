@@ -2,9 +2,7 @@ import datetime
 from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.db import models
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
+from apps.accounts.models import User
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
@@ -17,7 +15,7 @@ from utils.utils import jalali_converter
 
 
 class Rate(models.Model):
-    rate = models.PositiveBigIntegerField()
+    rate = models.PositiveBigIntegerField(default=0)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveBigIntegerField()
     content_object = GenericForeignKey()
@@ -38,21 +36,22 @@ class Post(models.Model):
     objects = models.Manager()
     published = PublishedManager()
     PUBLISHED_STATUS = (
-        ('p', 'Published'),
-        ('d', 'Draft'),
+        ('p', 'منتشر شده'),
+        ('d', 'پیش نویس'),
     )
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts', verbose_name=_('نویسنده'))
     title = models.CharField(_('عنوان'), max_length=150)
-    # slug = models.SlugField(unique=True)
+    slug = models.SlugField(
+        unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)
     body = RichTextField(_('متن مقاله'))
     thumbnail = models.ImageField(
         upload_to="posts/%Y/%m/%d", blank=False, null=False)
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
     category = models.ForeignKey(
-        "Category", related_name='post', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
+        "Category", verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
     # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
 
     likes = models.PositiveBigIntegerField(default=0)
@@ -62,6 +61,7 @@ class Post(models.Model):
         auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+
 
     class Meta:
         db_table = 'posts'
@@ -80,10 +80,10 @@ class Post(models.Model):
 
     def jcreated_at(self):
         return jalali_converter(self.created_at)
-    
+
     def category_published(self):
         return self.category.filter(status=True)
-    
+
     def thumbnail_tag(self):
         return format_html("<img width=100 src='{}' />".format(self.thumbnail.url))
 
@@ -117,13 +117,14 @@ class Category(MP_Node):
     name = models.CharField(max_length=255, unique=True,
                             blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
     slug = models.SlugField(max_length=255, unique=True,
-                            verbose_name=_('اسلاگ'))
+                            verbose_name=_('اسلاگ'),allow_unicode=True)
     description = models.TextField(
         blank=True, null=True, max_length=2048, verbose_name=_('توضیحات'))
     is_active = models.BooleanField(
         default=True, verbose_name=_('دسته بندی فعال باشد?'))
     # image = models.
-
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     class Meta:
         db_table = 'categories'
         verbose_name = _("دسته بندی")
@@ -138,8 +139,8 @@ class Tag(models.Model):
                             blank=False, null=False, verbose_name=_('عنوان'))
     slug = models.SlugField(max_length=255, unique=True,
                             verbose_name=_('اسلاگ'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'tags'

@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth.models import User
 from .models import Post
 from .forms import CommentCreateForm
 
@@ -105,3 +105,22 @@ def post_detail(request, pk):
         'post' : post
     }
     return render(request, "blog/post_detail.html", context)
+
+
+class AuthorListView(generic.ListView):
+    model = User
+    # queryset = Post.objects.all().select_related('posts')
+    # queryset = User.authors.all()
+    context_object_name = 'authors'
+    template_name = 'blog/author_list.html'
+    paginate_by = 24
+    
+class AuthorDetailView(generic.DetailView):
+    template_name = "blog/author_detail.html"
+    context_object_name = 'author'
+    
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Post.objects.all()
+        else:
+            return Post.objects.filter(author=self.request.user)

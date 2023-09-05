@@ -40,7 +40,7 @@
                     {% for post in posts %}
                     <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
                         <figure class="post-media br-sm">
-                            <a href="{% url 'post_detail' post.id %}">
+                            <a href="{{ post.get_absolute_url }}">
                                 <img src="/" width="930"
                                     height="500" alt="blog">
                             </a>
@@ -50,11 +50,11 @@
                                 <a href="#"> {{ post.category }} </a>
                             </div>
                             <h4 class="post-title">
-                                <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                             </h4>
                             <div class="post-content">
-                                <p>{{ post.body|truncatewords:5 }}</p>
-                                <a href="{% url 'post_detail' post.id %}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
+                                <p>{{ post.body|striptags|truncatewords:5 }}</p>
+                                <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-primary">(ادامه مطلب)</a>
                             </div>
                             <div class="post-meta">
                                 توسط <a href="#" class="post-author">{{ post.author.username }}</a>

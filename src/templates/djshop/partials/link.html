@@ -1,0 +1,5 @@
+<a href="{%  url link %}" class="" 
+    {% if request.resolver_match.url_name == link_name %}
+    active
+    {% endif %}
+>{{content}}</a>

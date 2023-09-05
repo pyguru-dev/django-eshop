@@ -9,10 +9,11 @@ class Country(models.Model):
     
     
 
-# class CustomUser(AbstractUser):
-#     mobile = models.CharField(null=True, blank=True,
-#                               unique=True, max_length=11)
+class User(AbstractUser):
+    # mobile = models.CharField(null=True, blank=True,
+    #                           unique=True, max_length=11)
     # mobile_verified = models.BooleanField(default=False)
+    pass
     
 
 
