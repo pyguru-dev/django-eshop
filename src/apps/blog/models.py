@@ -51,7 +51,7 @@ class Post(models.Model):
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
     category = models.ForeignKey(
-        "Category", verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
+        'BlogCategory', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
     # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
 
     likes = models.PositiveBigIntegerField(default=0)
@@ -111,7 +111,7 @@ class Comment(models.Model):
         return reverse("post_list")
 
 
-class Category(MP_Node):
+class BlogCategory(MP_Node):
     parent = models.ForeignKey(
         'self', verbose_name=_('دسته بندی والد'), blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True,
@@ -126,30 +126,12 @@ class Category(MP_Node):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:
-        db_table = 'categories'
+        db_table = 'blog_categories'
         verbose_name = _("دسته بندی")
         verbose_name_plural = _("دسته بندی ها")
 
     def __str__(self) -> str:
         return self.name
-
-
-class Tag(models.Model):
-    name = models.CharField(max_length=255, unique=True,
-                            blank=False, null=False, verbose_name=_('عنوان'))
-    slug = models.SlugField(max_length=255, unique=True,
-                            verbose_name=_('اسلاگ'))
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = 'tags'
-        verbose_name = _("برچسب")
-        verbose_name_plural = _("برچسب ها")
-
-    def __str__(self) -> str:
-        return self.name
-
 
 class RecyclePost(Post):
 

@@ -5,16 +5,15 @@ from rest_framework.exceptions import NotAcceptable
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from django.contrib.auth import get_user_model
 from apps.shop.models import Product
 from apps.shop.serializers import ProductSerializer
-from apps.blog.models import Category, Post, Tag
+from apps.blog.models import BlogCategory, Post
 from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
 from apps.blog.serializers import CategoryTreeSerializer, CreateCategoryNodeSerializer, PostSerializer, CategorySerializer, TagSerializer
 from apps.accounts.serializers import RegisterSerializer
-
-User = get_user_model()
+from apps.accounts.models import User
+from apps.core.models import Tag
 
 
 class ProductListView(APIView):
@@ -181,3 +180,23 @@ class PaymentView(APIView):
 
         # save order
         return Response()
+
+
+# class UserProfileView(APIView):
+
+#     permission_classes = [IsAuthenticated]
+
+#     def get(self, request):
+#         pass
+
+#     def put(self, request, pk):
+#         user_profile = UserProfile.objects.get(pk=pk)
+#         serializer = UserProfileSerializer(
+#             instance=user_profile,
+#             data=request.data
+#         )
+        
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response('profile updated')
+        

@@ -1,10 +1,12 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
-from .models import Category, Tag, Post, Comment
+from .models import BlogCategory, Post, Comment
+from apps.core.models import Tag
 
 
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Category
+        model = BlogCategory
         fields = ['name', 'url']
 
 
@@ -16,14 +18,14 @@ class CreateCategoryNodeSerializer(serializers.HyperlinkedModelSerializer):
         parent = validated_data.pop('parent', None)
 
         if parent is None:
-            instance = Category.add_root(**validated_data)
+            instance = BlogCategory.add_root(**validated_data)
         else:
-            parent_node = get_object_or_404(Category, pk=parent)
+            parent_node = get_object_or_404(BlogCategory, pk=parent)
             instance = parent_node.add_child(**validated_data)
         return instance
 
     class Meta:
-        model = Category
+        model = BlogCategory
         fields = ['id', 'name', 'description', 'is_active', 'url', 'parent']
 
 
@@ -34,7 +36,7 @@ class CategoryTreeSerializer(serializers.ModelSerializer):
         return CategoryTreeSerializer(obj.get_children(), many=True).data
 
     class Meta:
-        model = Category
+        model = BlogCategory
         fields = ['id', 'name', 'description', 'is_active', 'children']
 
 

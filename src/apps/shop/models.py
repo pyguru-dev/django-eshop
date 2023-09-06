@@ -1,13 +1,10 @@
-from datetime import timezone
 from django.db import models
 from django.db.models import Q
-from ckeditor.fields import RichTextField
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-from apps.blog.models import Category
-
-
-User = get_user_model()
+from treebeard.mp_tree import MP_Node
+from ckeditor.fields import RichTextField
+from apps.accounts.models import User
+from apps.payments.models import Payment
 
 class ProductAttributeValue(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
@@ -71,6 +68,7 @@ class Option(models.Model):
 
 
 class Brand(models.Model):
+    # country_id, en_title, site_link, description
     title = models.CharField(
         max_length=255, blank=False, null=False, unique=True)
     slug = models.SlugField(
@@ -79,7 +77,30 @@ class Brand(models.Model):
 
 
 
+class ProductCategory(MP_Node):
+    parent = models.ForeignKey(
+        'self', verbose_name=_('دسته بندی والد'), blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255, unique=True,
+                            blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
+    slug = models.SlugField(max_length=255, unique=True,
+                            verbose_name=_('اسلاگ'),allow_unicode=True)
+    description = models.TextField(
+        blank=True, null=True, max_length=2048, verbose_name=_('توضیحات'))
+    is_active = models.BooleanField(
+        default=True, verbose_name=_('دسته بندی فعال باشد?'))
+    # image = models.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        db_table = 'product_categories'
+        verbose_name = _("دسته بندی")
+        verbose_name_plural = _("دسته بندی ها")
+
+    def __str__(self) -> str:
+        return self.name
+
 class Product(models.Model):
+    # en_title, sku, 
     PUBLISHED_STATUS = (
         ('p', 'Published'),
         ('d', 'Draft'),
@@ -113,7 +134,7 @@ class Product(models.Model):
     require_shipping = models.BooleanField(default=True)
     options = models.ManyToManyField('Option', blank=True)
 
-    category = models.ForeignKey(Category, verbose_name=_('دسته بندی'), on_delete=models.CASCADE)
+    category = models.ForeignKey(ProductCategory, verbose_name=_('دسته بندی'), on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, verbose_name=_('برند'), on_delete=models.CASCADE)
     
     # product_class = models.ForeignKey(ProductClass, on_delete=models.PROTECT, null=True, blank=True, related_name='products')
@@ -134,3 +155,35 @@ class Product(models.Model):
 
     def has_attribute(self):
         return self.attributes.exists()
+
+
+class Order(models.Model):
+    class Meta:
+        db_table = 'orders'
+        verbose_name = _('سفارش')
+        verbose_name_plural = _('سفارش ها')
+    
+    order_code = models.CharField(max_length=12, null=False,blank=False, verbose_name=_('شماره سفارش'))
+    payment = models.ForeignKey(Payment, related_name='payment', on_delete=models.CASCADE)
+    # user, address, shipping, discount, user_description,
+    # user_cancel_description, total_amount, payment_method, 
+    # payment_status, order_status
+        
+class OrderProduct:
+    # order_id , product_id, quantity, product_amount, total_product_amount
+    pass
+
+class Discount(models.Model):
+    pass
+    # title , code , description ,value, type count_use,count_use_user,used,infinity,start_at,end_at
+
+class Giftcode(models.Model):
+    pass
+
+class Shipping(models.Model):
+    pass
+    # title, amount, description, logo
+    
+class Warranties:
+    pass
+    # title

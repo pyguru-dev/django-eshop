@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
-from .models import Post, Comment, RecyclePost, Category, Tag
+from .models import Post, Comment, RecyclePost, BlogCategory
 
 # admin.site.disable_action('delete_selected')
 # admin.site.site_header = ''
@@ -71,11 +71,6 @@ class PostAdmin(admin.ModelAdmin):
         queryset.update(status="d")
 
 
-@admin.register(Category)
-class CategoryAdmin(TreeAdmin):
-    form = movenodeform_factory(Category)
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'slug', 'created_at']
+@admin.register(BlogCategory)
+class BlogCategoryAdmin(TreeAdmin):
+    form = movenodeform_factory(BlogCategory)
