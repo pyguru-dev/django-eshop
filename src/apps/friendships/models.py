@@ -1,15 +1,15 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from apps.accounts.models import User
+from apps.core.models import BaseModel
 
 
-class Friendship(models.Model):
+class Friendship(BaseModel):
     request_from = models.ForeignKey(
-        to=get_user_model(), on_delete=models.PROTECT, related_name='friend_request_from')
+        to=User, on_delete=models.PROTECT, related_name='friend_request_from')
     request_to = models.ForeignKey(
-        to=get_user_model(), on_delete=models.PROTECT, related_name='friend_request_to')
+        to=User, on_delete=models.PROTECT, related_name='friend_request_to')
     is_accepted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    
 
     class Meta:
         verbose_name = 'Friendship'

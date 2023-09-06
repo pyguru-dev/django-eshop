@@ -14,7 +14,7 @@ from .models import Post, Comment, RecyclePost, BlogCategory
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['comment', 'is_approved', 'created_at']
+    list_display = ['comment', 'is_approved',]
     list_filter = ['is_approved']
 
 

@@ -2,14 +2,15 @@ from django import forms
 from .models import ContactModel
 
 
-class ContactForm(forms.ModelForm):    
-    message = forms.CharField(max_length=255, widget=forms.Textarea, required=True)    
+class ContactForm(forms.ModelForm):            
     
     class Meta:
         model = ContactModel
         fields = "__all__"
-        # widgets = {}
-    
+        widgets = {
+            'email' : forms.TextInput(attrs={'class' : 'form-control'})
+        }
+
     def clean_mobile(self):
         mobile = self.cleaned_data['mobile']
         if mobile:

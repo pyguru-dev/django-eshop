@@ -101,9 +101,10 @@ def post_by_tag(request, slug):
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
-        
+    
     context = {
-        'post' : post
+        'post' : post,
+        'comments' : post.comments.filter(approved=True)
     }
     return render(request, "blog/post_detail.html", context)
 

@@ -22,7 +22,7 @@ class BaseModel(models.Model):
     
     uuid = models.UUIDField(unique=True)
     is_deleted = models.BooleanField(null=True, blank=True, editable=False)
-    deleted_at = models.DateTimeField(null=True, blank=True, editable=False)    
+    deleted_at = models.DateTimeField(null=True, blank=True, editable=False, verbose_name=_('تاریخ حذف'))    
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
     created_at = models.DateTimeField(
@@ -32,6 +32,9 @@ class BaseModel(models.Model):
         self.is_deleted = True
         self.deleted_at = timezone.now()
         self.save()
+
+    def hard_delete(self):
+        pass
     
     def restore(self):
         self.is_deleted = False
@@ -55,10 +58,8 @@ class IPAddress(BaseModel):
 
 
 class Tag(BaseModel):
-    name = models.CharField(max_length=255, unique=True,
-                            blank=False, null=False, verbose_name=_('عنوان'))
-    slug = models.SlugField(max_length=255, unique=True,
-                            verbose_name=_('اسلاگ'))    
+    name = models.CharField(max_length=255, unique=True, verbose_name=_('عنوان'))
+    slug = models.SlugField(max_length=255, unique=True, verbose_name=_('اسلاگ'), blank=True)    
 
     class Meta:
         db_table = 'tags'

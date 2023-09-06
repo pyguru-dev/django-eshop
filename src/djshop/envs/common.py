@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
-    
-    
+
+
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'jalali_date',
     "graphene_django",
-
+    'taggit',
 
     'apps.core.apps.CoreConfig',
     'apps.accounts.apps.AccountsConfig',
@@ -120,7 +120,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
 
     },
-    'mongodb' : {}
+    'mongodb': {}
 }
 
 # DATABASE_ROUTERS=['routers.db_routers.AuthRouter']
@@ -234,7 +234,7 @@ CACHES = {
 
 
 JALALI_DATE_DEFAULTS = {
-   'Strftime': {
+    'Strftime': {
         'date': '%y/%m/%d',
         'datetime': '%H:%M:%S _ %y/%m/%d',
     },
@@ -260,3 +260,12 @@ JALALI_DATE_DEFAULTS = {
 GRAPHENE = {
     "SCHEMA": "djshop.schema.schema"
 }
+
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_DEFAULT_QUEUE = 'default'

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView
 from django.views.decorators.cache import cache_page
 from .forms import ContactForm
-from .models import Faq
+from .models import ContactSubject, Faq
 from apps.blog.models import Post
 
 # @cache_page(60 * 15)
@@ -19,7 +19,12 @@ class HomePageView(TemplateView):
 class ContactCreateView(CreateView):
     form_class = ContactForm    
     template_name = "pages/contact.html"
-    success_url = reverse_lazy('contact_view')    
+    success_url = reverse_lazy('contact_view')  
+      
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["subjects"] = ContactSubject.objects.all()
+        return context
     
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
@@ -29,9 +34,17 @@ class ContactCreateView(CreateView):
 #         form = ContactForm(request.POST)
 #         if form.is_valid():
 #             contact = Contact.objects.create(
-#                 name=form.cleaned_data['name']
+#                 name=form.cleaned_data['name'],
+#                 email=form.cleaned_data['email'],
+#                 mobile=form.cleaned_data['mobile'],
+#                 subject=form.cleaned_data['subject'],
+#                 message=form.cleaned_data['message'],
 #             )
 #             contact.save()
+
+            #   message_to_admin = "name:{0}\nmobile:{1}\nemail:{2}\nsubject:{3}\nmessage:{4}".format(name,mobile,email,subject,message)  
+            #   send_mail(subject, message, 'sender@gmail.com', ['admin@gmail.com'], fail_silently=False)
+               
 #             return redirect('contact_view')
 #         else:
 #             context = {'form' : form}

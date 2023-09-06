@@ -11,10 +11,11 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from treebeard.mp_tree import MP_Node
+from apps.core.models import BaseModel
 from utils.utils import jalali_converter
+from taggit.managers import TaggableManager
 
-
-class Rate(models.Model):
+class Rate(BaseModel):
     rate = models.PositiveBigIntegerField(default=0)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveBigIntegerField()
@@ -32,7 +33,7 @@ class PublishedManager(models.Manager):
         return super(PublishedManager, self).get_queryset().filter(status='p')
 
 
-class Post(models.Model):
+class Post(BaseModel):
     objects = models.Manager()
     published = PublishedManager()
     PUBLISHED_STATUS = (
@@ -53,15 +54,12 @@ class Post(models.Model):
     category = models.ForeignKey(
         'BlogCategory', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
     # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
-
+    
+    # tags = TaggableManager()
+    
     likes = models.PositiveBigIntegerField(default=0)
     dislikes = models.PositiveBigIntegerField(default=0)
-    rates = GenericRelation(Rate)
-    updated_at = models.DateTimeField(
-        auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
-    created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name=_('تاریخ ثبت'))
-
+    rates = GenericRelation(Rate)    
 
     class Meta:
         db_table = 'posts'
@@ -88,27 +86,23 @@ class Post(models.Model):
         return format_html("<img width=100 src='{}' />".format(self.thumbnail.url))
 
 
-class Comment(models.Model):
-    comment = models.TextField(max_length=250)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+class Comment(BaseModel):
+    user = models.ForeignKey(User,related_name='users', on_delete=models.CASCADE,verbose_name=_('کاربر'))
     article = models.ForeignKey(
         Post, related_name='comments', on_delete=models.CASCADE)
+    comment = models.TextField(verbose_name=_('نظر'))
 
     is_approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    approved_at = models.DateTimeField(null=True,blank=True)    
 
     class Meta:
         db_table = 'comments'
-        ordering = ['-created_at']
+        # ordering = ['-created_at']
         verbose_name = _("نظر")
         verbose_name_plural = _("نظرات")
 
     def __str__(self) -> str:
         return self.comment
-
-    def get_absolute_url(self):
-        return reverse("post_list")
 
 
 class BlogCategory(MP_Node):
@@ -141,7 +135,7 @@ class RecyclePost(Post):
         proxy = True
 
 
-class Vote(models.Model):
+class Vote(BaseModel):
     class VoteChoice(models.TextChoices):
         like = 'l', _('like')
         dislike = 'd', _('dislike')
@@ -155,10 +149,3 @@ class Vote(models.Model):
         db_table = 'votes'
         verbose_name = _('Vote')
         verbose_name_plural = _("Votes")
-
-# @receiver(post_save, sender=Vote)
-# def update_votes(sender,instance, **kwargs):
-#     if instance.vote = Vote.VoteChoice.like:
-#         Post.objects.filter(id=instance.post.id).update(likes=F("likes") + 1)
-#     else:
-#         Post.objects.filter(id=instance.post.id).update(likes=F("dislikes") + 1)
