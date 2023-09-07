@@ -11,6 +11,7 @@ from .views import (
     PostListView,
     ProductListView,
     TagViewSet,
+    RegisterView,
 )
 
 router = routers.DefaultRouter()
@@ -24,6 +25,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     
+    path('register/', RegisterView.as_view()),
         
     path('', include(router.urls)),
     path('categories/', CategoryListView.as_view(),),

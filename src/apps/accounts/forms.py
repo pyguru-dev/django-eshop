@@ -1,5 +1,6 @@
 # from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django import forms
+from django.forms.widgets import PasswordInput
 from django.contrib.auth.forms import UserCreationForm
 from .models import Address, User
 from jalali_date.fields import JalaliDateField
@@ -24,10 +25,36 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-class LoginForm(forms.Form):    
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+# class LoginForm(forms.Form): 
+       
+#     class Meta:
+#         model = User
+#         fields = ['username', 'email', 'password1', 'password2']
+
+class LoginForm(forms.Form):
+    username = forms.TextInput()
+    password = forms.TextInput()
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.PasswordInput()
+    password = forms.PasswordInput()
+    password_confirmation = forms.PasswordInput()
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        if len(password) < 8:
+            raise forms.ValidationError('رمز عبور باید بیشتر از 8 کاراکتر باشد')
+        else:
+            return password
+        
+    def clean_password_confirmation(self):
+        password = self.cleaned_data.get('password')
+        password_confirmation = self.cleaned_data['password_confirmation']
+        
+        if password != password_confirmation:
+            raise forms.ValidationError('رمز عبور ها یکی نیستند')
+        return password_confirmation
+    
 
 
 class AccountSettingForm():

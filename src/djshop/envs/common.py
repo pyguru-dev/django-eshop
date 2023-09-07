@@ -27,10 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# SECURE_SSL_REDIRECT=True
 
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
+    "admin_notification",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,8 +58,10 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'jalali_date',
     "graphene_django",
-    'taggit',
-
+    'taggit',    
+    'django_cleanup.apps.CleanupConfig',
+    
+    
     'apps.core.apps.CoreConfig',
     'apps.accounts.apps.AccountsConfig',
     'apps.shop.apps.ShopConfig',
@@ -274,3 +281,7 @@ CELERY_TASK_DEFAULT_QUEUE = 'default'
 
 TAGGIT_CASE_INSENSITIVE = True
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]
+
+NOTIFICATION_MODEL = 'pages.ContactModel'

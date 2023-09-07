@@ -14,6 +14,7 @@ from treebeard.mp_tree import MP_Node
 from apps.core.models import BaseModel
 from utils.utils import jalali_converter
 from taggit.managers import TaggableManager
+# from colorfield.fields import ColorField
 
 class Rate(BaseModel):
     rate = models.PositiveBigIntegerField(default=0)
@@ -42,7 +43,7 @@ class Post(BaseModel):
     )
 
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts', verbose_name=_('نویسنده'))
+        User, on_delete=models.CASCADE, limit_choices_to={'is_staff':True}, related_name='posts', verbose_name=_('نویسنده'))
     title = models.CharField(_('عنوان'), max_length=150, db_index=True)
     slug = models.SlugField(
         unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)

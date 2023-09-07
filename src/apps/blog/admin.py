@@ -31,6 +31,9 @@ class PostAdmin(ImportExportModelAdmin):
     search_fields = ['title', 'author__username']
     list_display_links = ['id', 'title']
     inlines = [CommentInline]
+    prepopulated_fields = {
+        'slug' : ['title']
+    }
     # fields = ['title', 'body', 'published_status']
     fieldsets = (
         (None, {'fields': ('title', 'body', 'author', 'category')}),

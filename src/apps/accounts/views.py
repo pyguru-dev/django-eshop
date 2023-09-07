@@ -8,13 +8,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView, LoginView as BaseLoginView
+from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from apps.accounts.forms import RegisterForm,LoginForm
+from apps.accounts.forms import ChangePasswordForm, RegisterForm, LoginForm
 from apps.payments.models import Payment
 from utils.utils import account_activation_token
 from .models import UserProfile, User
@@ -23,6 +24,7 @@ from .models import UserProfile, User
 class AccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = "accounts/dashboard.html"
 
+
 class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = User
     template_name = 'accounts/profile_update.html'
@@ -30,7 +32,8 @@ class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     fields = []
 
     def get_object(self, queryset):
-        return User.objects.get(pk = self.request.user.pk)
+        return User.objects.get(pk=self.request.user.pk)
+
 
 class RegisterView(generic.CreateView):
     form_class = RegisterForm
@@ -42,32 +45,49 @@ class RegisterView(generic.CreateView):
         user.save()
         current_site = get_current_site(self.request)
         mail_message = render_to_string('accounts/account_verification_mail.html', {
-            'user' : user,
-            'domail' : current_site.domain,
-            'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
-            'token' : account_activation_token.make_token(user)
+            'user': user,
+            'domail': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': account_activation_token.make_token(user)
         })
-        
+
         to_mail = form.cleaned_data.get('email')
         email = EmailMessage('subject', mail_message, to=to_mail)
         email.send()
         return HttpResponse('email sent')
-        
+
 
 class LoginView(BaseLoginView):
     # form_class = LoginForm
-    # success_url = reverse_lazy('home_view')    
+    # success_url = reverse_lazy('home_view')
     pass
 
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('home_view')
+                else:
+                    return HttpResponse('account is not active')
+            else: 
+                return HttpResponse('credential is wrong')
+    else:
+        form = LoginForm()
+    
+    return render(request, 'registration/login.html', {'form':form})
 
-
-def activate_account_mail(request,uidb64,token):
+def activate_account_mail(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_encode(uidb64))
         user = User.objects.get(pk=uid)
-    except(TypeError, ValueError,OverflowError,User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    
+
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
@@ -76,11 +96,14 @@ def activate_account_mail(request,uidb64,token):
     else:
         return HttpResponse('link invalid')
 
+
 class PasswordChangeView(BasePasswordChangeView):
     success_url = reverse_lazy('')
 
+
 class PasswordChangeDoneView(generic.TemplateView):
     pass
+
 
 def register(request):
     if request.method == 'POST':
@@ -115,9 +138,9 @@ def login(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        user = auth.authenticate(email=email, password=password)
+        user = authenticate(email=email, password=password)
         if user is not None:
-            auth.login(request, user)
+            login(request, user)
             return redirect('home_view')
         else:
             messages.info(request, 'credentials invalid')
@@ -127,11 +150,32 @@ def login(request):
 
 
 @login_required(login_url='login_view')
-def logout(request):
-    auth.logout(request)
+def user_logout(request):
+    logout(request)
     return redirect('home_view')
 
-
+@login_required(login_url='login_view')
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        user = request.user
+        if form.is_valid():
+            cd = form.cleaned_data
+            old_password= cd['old_password']
+            password= cd['password']
+            password_confirmation= cd['password_confirmation']
+            if not user.check_password(old_password):
+                return HttpResponse('رمز عبور فعلی شما درست نیست')
+            elif password != password_confirmation:
+                return HttpResponse('رمز عبور ها یکی نیستند')
+            else:
+                user.set_password(password)
+                user.save()
+                return HttpResponse('password changed')
+        else: 
+            form = ChangePasswordForm()
+        return render(request, '', {'form':form})
+                
 def export_payments_to_csv(request):
     response = HttpResponse(content_type="text/csv")
     response['content-Disposition'] = 'attachment;filename=payments' + \
@@ -172,15 +216,14 @@ def export_payments_to_pdf(request):
     response = HttpResponse(content_type="application/pdf")
     response['content-Disposition'] = 'attachment;filename=payments' + \
         str(datetime.datetime.now)+'.pdf'
-        
+
     template_path = 'accounts/templates/payment_pdf.html'
     template = get_template(template_path)
 
     payments = Payment.objects.all()
-    context={'payments':payments}
-    
+    context = {'payments': payments}
+
     html = template.render(context)
     pisa.CreatePDF(html, dest=response)
-    
+
     return response
-    

@@ -18,7 +18,7 @@ class Payment(BaseModel):
     payment_status = ()
 
     user = models.ForeignKey(
-        'User', related_name='payments', on_delete=models.CASCADE, verbose_name=_('کاربر پرداخت کننده'))
+        User, on_delete=models.CASCADE, verbose_name=_('کاربر پرداخت کننده'))
     payment_code = models.CharField(unique=True, verbose_name=_('شناسه پرداخت'), max_length=100)
     # order = 'order_id'
     reference_id = models.CharField(unique=True, verbose_name=_('کد مرجع'), max_length=100)
@@ -35,7 +35,7 @@ class Payment(BaseModel):
         verbose_name_plural = _('پرداخت ها')
         
 class Factor(BaseModel):
-    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='payment', verbose_name=_("پرداخت مرتبط"))
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, verbose_name=_("پرداخت مرتبط"))
     file = models.FileField(verbose_name=_('فایل فاکتور'))    
 
 class Bank(BaseModel):
@@ -44,7 +44,7 @@ class Bank(BaseModel):
     
 
 class Payout(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payment', verbose_name=_("کاربر"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
 
     # user_id , bank_id, amount,description,approved_at
 

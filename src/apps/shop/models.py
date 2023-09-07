@@ -169,7 +169,7 @@ class Order(BaseModel):
     order_code = models.CharField(
         max_length=12, null=False, blank=False, verbose_name=_('شماره سفارش'))
     payment = models.ForeignKey(
-        Payment, related_name='payment', on_delete=models.CASCADE)
+        Payment, on_delete=models.CASCADE)
     # user, address, shipping, discount, user_description,
     # user_cancel_description, total_amount, payment_method,
     # payment_status, order_status

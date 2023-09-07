@@ -4,7 +4,9 @@ from rest_framework import status, generics, mixins, viewsets
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from apps.api.serializers import UserRegisterSerializer
 from apps.shop.models import Product
 from apps.shop.serializers import ProductSerializer
 from apps.blog.models import BlogCategory, Post
@@ -90,23 +92,81 @@ class TagViewSet(viewsets.ModelViewSet):
     #     return Response(serializer.data)
 
 
+# class RegisterView(APIView):
+#     def post(self, request):
+#         mobile = request.data.get('mobile')
+#         if not mobile:
+#             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+#         user, created = User.objects.get_or_create(mobile=mobile)
+#         if not created:
+#             return Response({'data': 'user registered'}, status=status.HTTP_400_BAD_REQUEST)
+
+#         code = random.randint(10000, 99999)
+
+#         # send sms
+
+#         return Response({'code': code})
+
+
 class RegisterView(APIView):
     def post(self, request):
-        mobile = request.data.get('mobile')
-        if not mobile:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        serializer = UserRegisterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
-        user, created = User.objects.get_or_create(mobile=mobile)
-        if not created:
-            return Response({'data': 'user registered'}, status=status.HTTP_400_BAD_REQUEST)
+class LoginView(APIView):
+    def post(self, request):
+        email = request.data['email']
+        password = request.data['password']
 
-        code = random.randint(10000, 99999)
+        user = User.objects.get(email=email)
+        if user is None:
+            raise AuthenticationFailed('user not found')
+        
+        if not user.check_password(password):
+            raise AuthenticationFailed('password wrong')
 
-        # send sms
+        payload = {
+            'id' : user.id,
+            'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=50),
+            'iat' : datetime.datetime.utcnow()
+        }
+        
+        # PyJwt
+        token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
 
-        return Response({'code': code})
+        response = Response()
+        response.set_cookie(key='jwt', value=token, httponly=True)
+        response.data = {
+            'jwt' : token
+        }
+        return response
 
-
+class CurrentUserView(APIView):
+    def get(self,  request):
+        token = request.COOKIES.get('jwt')
+        
+        if not token:
+            raise AuthenticationFailed('unauthenticate')
+        
+        try:
+            payload = jwt.decode(token, 'secret', algorithm='HS256')
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('un authenticate')
+        
+        user = User.objects.get(id=payload['id'])
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+        
+        
+class LogoutView(APIView):
+    def post(self, request):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {'message' : 'logout'}
+        return Response        
 # class RegisterView(generics.CreateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = RegisterSerializer

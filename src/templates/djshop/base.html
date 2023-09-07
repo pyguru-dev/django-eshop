@@ -25,7 +25,7 @@
       };
       (function (d) {
           var wf = d.createElement('script'), s = d.scripts[0];
-          wf.src = '{% static '' %}js/webfont.js';
+          wf.src = '{% static "js/webfont.js" %}';
           wf.async = true;
           s.parentNode.insertBefore(wf, s);
       })(document);
@@ -95,7 +95,9 @@
       href="{% static '/css/style-rtl.min.css' %}"
     />
 
-    {% block styles %} {% endblock styles %} {% unicorn_scripts %}
+    {% block styles %} {% endblock styles %} 
+    
+    {% unicorn_scripts %}
   </head>
 
   <body class="home">
@@ -124,7 +126,7 @@
               </a>
 
               {% if user.is_authenticated %}
-              <a href="accounts/" class="d-lg-show">حساب کاربری </a>
+              <a href="{% url 'account_index' %}" class="d-lg-show">حساب کاربری </a>
               <a href="{% url 'logout' %}" class="d-lg-show">خروج </a>
               {% else %}
               <a href="{% url 'login_view' %}" class="d-lg-show"

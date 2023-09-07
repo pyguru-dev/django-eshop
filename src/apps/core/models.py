@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -20,7 +21,7 @@ class BaseModel(models.Model):
 
     objects = SoftDeleteManager()
     
-    uuid = models.UUIDField(unique=True)
+    uuid = models.UUIDField(unique=True, default=str(uuid.uuid4()), editable=False)
     is_deleted = models.BooleanField(null=True, blank=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False, verbose_name=_('تاریخ حذف'))    
     updated_at = models.DateTimeField(
@@ -69,3 +70,10 @@ class Tag(BaseModel):
     def __str__(self) -> str:
         return self.name
 
+# class Notification(BaseModel):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE,
+#                              null=True,blank=True, related_name='notifications')
+#     message = models.TextField()
+    
+# class PublicNotification(BaseModel):
+#     pass

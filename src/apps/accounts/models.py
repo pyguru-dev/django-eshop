@@ -29,7 +29,8 @@ class User(AbstractUser):
     # mobile = models.CharField(null=True, blank=True,
     #                           unique=True, max_length=11)
     # mobile_verified = models.BooleanField(default=False)
-    
+    # USERNAME_FIELD = ''
+    # REQUIRED_FIELDS = []
 
 
 class UserProfile(BaseModel):
@@ -37,9 +38,11 @@ class UserProfile(BaseModel):
     class GenderChoices(models.TextChoices):
         male = 'male'
         female = 'female'
-        unknown = 'unknown'
+        unknown = 'unknown'        
+        # __empty__ = '(Unknown)'
+        
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='profile')
+        User, on_delete=models.CASCADE)
     
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, default='default_avatar.jpg')
     gender = models.CharField(max_length=8, choices=GenderChoices.choices, default=GenderChoices.unknown)
@@ -56,7 +59,7 @@ class UserProfile(BaseModel):
 
 
 class Address(BaseModel):    
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', verbose_name=_("کاربر"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province', verbose_name=_("کاربر"))
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='city', verbose_name=_("کاربر"))
     title = models.CharField(max_length=150, verbose_name=_('عنوان'))
@@ -67,19 +70,19 @@ class Address(BaseModel):
     # receiver_mobile, last_used_at, default
     
 class UserBank(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', verbose_name=_("کاربر"))
-    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, related_name='bank', verbose_name=_("بانک"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, verbose_name=_("بانک"))
     title = models.CharField(max_length=150, verbose_name=_('عنوان'))
     shaba = models.CharField(max_length=250, verbose_name=_('شبا'))
     account_number = models.CharField(max_length=250, verbose_name=_('شماره حساب'))    
     
 class Wallet(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wallet')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.PositiveBigIntegerField(verbose_name=_('موجودی'), default=0)
 
 
 class AccountDeleteRequest(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user', verbose_name=_("کاربر"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
     approved_at = models.DateTimeField(null=True, blank=True)
     complete_at = models.DateTimeField(null=True, blank=True)    
     

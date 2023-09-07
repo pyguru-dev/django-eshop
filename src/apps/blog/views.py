@@ -67,7 +67,9 @@ class PostCreateView(LoginRequiredMixin,
     fields = ['title', 'body']
 
     def form_valid(self, form):
+        form.instance = form.save(commit=False)
         form.instance.author = self.request.user
+        form.instance.slug = slugify(form.instance.title, allow_unicode=True)
         return super().form_valid(form)
 
 
