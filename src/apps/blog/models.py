@@ -43,7 +43,7 @@ class Post(BaseModel):
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts', verbose_name=_('نویسنده'))
-    title = models.CharField(_('عنوان'), max_length=150)
+    title = models.CharField(_('عنوان'), max_length=150, db_index=True)
     slug = models.SlugField(
         unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)
     body = RichTextField(_('متن مقاله'))

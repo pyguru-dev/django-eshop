@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.humanize',
+    'django.contrib.postgres',
 
 
     'rest_framework',
@@ -269,3 +270,7 @@ CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_DEFAULT_QUEUE = 'default'
+
+
+TAGGIT_CASE_INSENSITIVE = True
+

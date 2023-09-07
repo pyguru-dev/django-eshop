@@ -14,6 +14,8 @@ from apps.blog.serializers import CategoryTreeSerializer, CreateCategoryNodeSeri
 from apps.accounts.serializers import RegisterSerializer
 from apps.accounts.models import User
 from apps.core.models import Tag
+from django.db.models import Q
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 
 class ProductListView(APIView):
@@ -195,8 +197,18 @@ class PaymentView(APIView):
 #             instance=user_profile,
 #             data=request.data
 #         )
-        
+
 #         serializer.is_valid(raise_exception=True)
 #         serializer.save()
 #         return Response('profile updated')
-        
+
+def search(request):
+    if request.method == 'POST':
+        query = request.POST.get('q')
+        if query:
+            query_for_search = SearchQuery(query)
+            search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            search_rank = SearchRank(search_vector, query_for_search)
+            posts = Post.objects.published.annotate(search=search_vector, rank=search_rank) \
+                .filter(search=query_for_search).order_by('-rank')
+            return Response({'posts': posts})
