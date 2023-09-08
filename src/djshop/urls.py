@@ -23,9 +23,9 @@ urlpatterns = [
     path("__debug__/", include("debug_toolbar.urls")),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     path('check/notification', check_notification_view, name="check_notifications"),
-
-
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# handler404 = 'apps.core.views.page_not_found'

@@ -16,6 +16,7 @@ from utils.utils import jalali_converter
 from taggit.managers import TaggableManager
 # from colorfield.fields import ColorField
 
+
 class Rate(BaseModel):
     rate = models.PositiveBigIntegerField(default=0)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
@@ -43,7 +44,7 @@ class Post(BaseModel):
     )
 
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, limit_choices_to={'is_staff':True}, related_name='posts', verbose_name=_('نویسنده'))
+        User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='posts', verbose_name=_('نویسنده'))
     title = models.CharField(_('عنوان'), max_length=150, db_index=True)
     slug = models.SlugField(
         unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)
@@ -55,12 +56,12 @@ class Post(BaseModel):
     category = models.ForeignKey(
         'BlogCategory', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
     # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
-    
+
     # tags = TaggableManager()
-    
+
     likes = models.PositiveBigIntegerField(default=0)
     dislikes = models.PositiveBigIntegerField(default=0)
-    rates = GenericRelation(Rate)    
+    rates = GenericRelation(Rate)
 
     class Meta:
         db_table = 'posts'
@@ -88,13 +89,13 @@ class Post(BaseModel):
 
 
 class Comment(BaseModel):
-    user = models.ForeignKey(User,related_name='users', on_delete=models.CASCADE,verbose_name=_('کاربر'))
+    user = models.ForeignKey(User, related_name='users',
+                             on_delete=models.CASCADE, verbose_name=_('کاربر'))
     article = models.ForeignKey(
         Post, related_name='comments', on_delete=models.CASCADE)
     comment = models.TextField(verbose_name=_('نظر'))
-
     is_approved = models.BooleanField(default=False)
-    approved_at = models.DateTimeField(null=True,blank=True)    
+    approved_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = 'comments'
@@ -105,6 +106,10 @@ class Comment(BaseModel):
     def __str__(self) -> str:
         return self.comment
 
+class CommentReply(BaseModel):
+    comment =models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
+    body = models.TextField(verbose_name=_('نظر'))
+    
 
 class BlogCategory(MP_Node):
     parent = models.ForeignKey(
@@ -112,7 +117,7 @@ class BlogCategory(MP_Node):
     name = models.CharField(max_length=255, unique=True,
                             blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
     slug = models.SlugField(max_length=255, unique=True,
-                            verbose_name=_('اسلاگ'),allow_unicode=True)
+                            verbose_name=_('اسلاگ'), allow_unicode=True)
     description = models.TextField(
         blank=True, null=True, max_length=2048, verbose_name=_('توضیحات'))
     is_active = models.BooleanField(
@@ -120,6 +125,7 @@ class BlogCategory(MP_Node):
     # image = models.
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = 'blog_categories'
         verbose_name = _("دسته بندی")
@@ -127,6 +133,7 @@ class BlogCategory(MP_Node):
 
     def __str__(self) -> str:
         return self.name
+
 
 class RecyclePost(Post):
 

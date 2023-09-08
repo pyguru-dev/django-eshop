@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 
 @receiver(pre_save, sender=Post)
-def create_post(sender, instance, **kwargs):
+def create_post(sender, instance, created, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_unique_slug(instance)
 
@@ -42,7 +42,7 @@ def create_unique_slug(instance, new_slug=None):
 #             message = ''
 #             post = instance.post
 #             Notification.objects.create(user,instance.parent.user, message)
-            
+
 
 # @receiver(post_save, sender=Post)
 # def create_new_post_notification_signal(sender, instance, *args, **kwargs):

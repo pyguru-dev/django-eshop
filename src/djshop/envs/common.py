@@ -125,8 +125,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     },
     'postgres':  {
-        'ENGINE': 'django.db.backends.postgresql',
-
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME' : '',
+        'USER' : '',
+        'PASSWORD' : '',
+        'HOST' : '',
+        'PORT' : '',
     },
     'mongodb': {}
 }

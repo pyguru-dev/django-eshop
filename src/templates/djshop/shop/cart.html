@@ -3,6 +3,7 @@
 {% block title %}صفحه اصلی{% endblock title %}
 
 {% block content %}
+
 <!-- Start of Main -->
 <div class="cart">
   <!-- Start of Breadcrumb -->
@@ -30,7 +31,7 @@
                 <th></th>
                 <th class="product-price"><span>قیمت </span></th>
                 <th class="product-quantity"><span>تعداد </span></th>
-                <th class="product-subtotal"><span>جمع فرعی </span></th>
+                <th class="product-subtotal"><span>جمع  </span></th>
               </tr>
             </thead>
             <tbody>
@@ -73,53 +74,13 @@
                 <td class="product-subtotal">
                   <span class="amount">80000 تومان </span>
                 </td>
-              </tr>
-              <tr>
-                <td class="product-thumbnail">
-                  <div class="p-relative">
-                    <a href="product-default.html">
-                      <figure>
-                        <img
-                          src="assets/images/shop/13.jpg"
-                          alt="product"
-                          width="300"
-                          height="338"
-                        />
-                      </figure>
-                    </a>
-                    <button class="btn btn-close">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </td>
-                <td class="product-name">
-                  <a href="product-default.html"> ساعت هوشمند </a>
-                </td>
-                <td class="product-price">
-                  <span class="amount">50000 تومان</span>
-                </td>
-                <td class="product-quantity">
-                  <div class="input-group">
-                    <input
-                      class="quantity form-control"
-                      type="number"
-                      min="1"
-                      max="100000"
-                    />
-                    <button class="quantity-plus w-icon-plus"></button>
-                    <button class="quantity-minus w-icon-minus"></button>
-                  </div>
-                </td>
-                <td class="product-subtotal">
-                  <span class="amount">50000 تومان</span>
-                </td>
-              </tr>
+              </tr>            
             </tbody>
           </table>
 
           <div class="cart-action mb-6">
             <a
-              href="#"
+              href="{% url 'product_list' %}"
               class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"
               ><i class="w-icon-long-arrow-left"></i>ادامه خرید کردن
             </a>
@@ -163,8 +124,8 @@
               <div
                 class="cart-subtotal d-flex align-items-center justify-content-between"
               >
-                <label class="ls-25">جمع فرعی </label>
-                <span>100000 تومان</span>
+                <label class="ls-25">جمع  </label>
+                <span>0 تومان</span>
               </div>
 
               <hr class="divider" />
@@ -189,44 +150,10 @@
                       >حمل و نقل رایگان</label
                     >
                   </div>
-                </li>
-                <li>
-                  <div class="custom-radio">
-                    <input
-                      type="radio"
-                      id="local-pickup"
-                      class="custom-control-input"
-                      name="shipping"
-                    />
-                    <label
-                      for="local-pickup"
-                      class="custom-control-label color-dark"
-                      >وانت محلی</label
-                    >
-                  </div>
-                </li>
-                <li>
-                  <div class="custom-radio">
-                    <input
-                      type="radio"
-                      id="flat-rate"
-                      class="custom-control-input"
-                      name="shipping"
-                    />
-                    <label
-                      for="flat-rate"
-                      class="custom-control-label color-dark"
-                      >نرخ ثابت: 78000 تومان</label
-                    >
-                  </div>
-                </li>
+                </li>               
               </ul>
 
-              <div class="shipping-calculator">
-                <p class="shipping-destination lh-1">
-                  حمل و نقل به <strong>CA</strong>.
-                </p>
-
+              <div class="shipping-calculator">            
                 <form class="shipping-calculator-form">
                   <div class="form-group">
                     <div class="select-box">
@@ -243,33 +170,7 @@
                         <option value="aus">استرالیا</option>
                       </select>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="select-box">
-                      <select name="state" class="form-control form-control-md">
-                        <option value="default" selected="selected">
-                          کالیفرنیا
-                        </option>
-                        <option value="ohaio">اوهایو</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control form-control-md"
-                      type="text"
-                      name="town-city"
-                      placeholder="خانه / شهر"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control form-control-md"
-                      type="text"
-                      name="zipcode"
-                      placeholder="کد پستی"
-                    />
-                  </div>
+                  </div>                                  
                   <button
                     type="submit"
                     class="btn btn-dark btn-outline btn-rounded"
@@ -284,13 +185,13 @@
                 class="order-total d-flex justify-content-between align-items-center"
               >
                 <label>مجموع</label>
-                <span class="ls-50">100000 تومان</span>
+                <span class="ls-50">0 تومان</span>
               </div>
               <a
-                href="#"
+                href="{% url 'checkout' %}"
                 class="btn btn-block btn-dark btn-icon-right btn-rounded btn-checkout"
               >
-                پردازش و پرداخت<i class="w-icon-long-arrow-left"></i
+                 پرداخت<i class="w-icon-long-arrow-left"></i
               ></a>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import csv
 import datetime
 from django.forms.models import BaseModelForm
-
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.sites.shortcuts import get_current_site
@@ -10,7 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView, LoginView as BaseLoginView
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
-from django.urls import reverse_lazy
+from django.views.generic import TemplateView, UpdateView, ListView, CreateView
+from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
@@ -18,14 +18,14 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from apps.accounts.forms import ChangePasswordForm, RegisterForm, LoginForm
 from apps.payments.models import Payment
 from utils.utils import account_activation_token
-from .models import UserProfile, User
+from .models import UserProfile, User, Address, Province, City, UserBank
 
 
-class AccountView(LoginRequiredMixin, generic.TemplateView):
+class AccountView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/dashboard.html"
 
 
-class AccountSettingView(LoginRequiredMixin, generic.TemplateView):
+class AccountSettingView(LoginRequiredMixin, TemplateView):
     # model = User
     template_name = 'accounts/settings.html'
     # success_url = reverse_lazy('accounts')
@@ -34,18 +34,18 @@ class AccountSettingView(LoginRequiredMixin, generic.TemplateView):
     # def get_object(self, queryset):
     #     return User.objects.get(pk=self.request.user.pk)
 
-class AccountPaymentView(LoginRequiredMixin, generic.TemplateView):
+class AccountPaymentView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/payments.html'
 
-class AccountOrderView(LoginRequiredMixin, generic.TemplateView):
+class AccountOrderView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/shop_orders.html'
 
 
-class AccountAddressView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'accounts/shop_addresses.html'
+class AccountAddressView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/shop_addresses.html'    
 
 
-class RegisterView(generic.CreateView):
+class RegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
@@ -111,7 +111,7 @@ class PasswordChangeView(BasePasswordChangeView):
     success_url = reverse_lazy('')
 
 
-class PasswordChangeDoneView(generic.TemplateView):
+class PasswordChangeDoneView(TemplateView):
     pass
 
 

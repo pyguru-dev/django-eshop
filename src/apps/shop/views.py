@@ -20,6 +20,9 @@ class CartView(TemplateView):
 class CompareView(TemplateView):
     template_name = "shop/compare.html"
 
+class WishListView(TemplateView):
+    template_name = "shop/wishlist.html"
+
 
 class CheckoutView(LoginRequiredMixin,TemplateView):
     template_name = "shop/checkout.html"

@@ -55,19 +55,19 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
-            <a href="#account-details" class="link-to-tab">
+            <a href="{% url 'account_setting' %}" class="link-to-tab">
                 <div class="icon-box text-center">
                     <span class="icon-box-icon icon-account">
                         <i class="w-icon-user"></i>
                     </span>
                     <div class="icon-box-content">
-                        <p class="text-uppercase mb-0">جزئیات حساب </p>
+                        <p class="text-uppercase mb-0">تنظیمات حساب </p>
                     </div>
                 </div>
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
-            <a href="wishlist.html" class="link-to-tab">
+            <a href="{% url 'wishlist' %}" class="link-to-tab">
                 <div class="icon-box text-center">
                     <span class="icon-box-icon icon-wishlist">
                         <i class="w-icon-heart"></i>
@@ -79,7 +79,7 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
-            <a href="#">
+            <a href="{% url 'logout' %}">
                 <div class="icon-box text-center">
                     <span class="icon-box-icon icon-logout">
                         <i class="w-icon-logout"></i>
