@@ -7,29 +7,35 @@ from rest_framework_simplejwt.views import (
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from .views import (
-    CategoryListView,
-    PostListView,
+    CategoryListView,    
     ProductListView,
+    UserRegisterView,
     TagViewSet,
-    RegisterView,
+    UserLoginView,
+    PostViewSet,
+    ProductViewSet,
+    UserLogoutView,
 )
 
 router = routers.DefaultRouter()
-router.register(r'tags', TagViewSet)
-# router.register(r'categories', TagViewSet)
-# router.register(r'posts', TagViewSet)
-# router.register(r'products', TagViewSet)
+router.register(r'tags', TagViewSet, basename='tag')
+router.register(r'posts', PostViewSet, basename='post')
+router.register(r'products', ProductViewSet, basename='product')
+# router.register(r'categories', CategoryViewSet)
+
 
 urlpatterns = [
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('auth/register/', UserRegisterView.as_view()),
+    path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('auth/logout/', UserLogoutView.as_view()),
+    # path('auth/passwords/forgot/', UserLogoutView.as_view()),
     
-    path('register/', RegisterView.as_view()),
+    
         
     path('', include(router.urls)),
-    path('categories/', CategoryListView.as_view(),),
-    path('posts/', PostListView.as_view(),),
+    path('categories/', CategoryListView.as_view(),),    
     path('products/', ProductListView.as_view(),),
     
     

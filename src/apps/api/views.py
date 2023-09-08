@@ -1,19 +1,22 @@
+import datetime
 import requests
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import status, generics, mixins, viewsets
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from apps.api.serializers import UserRegisterSerializer
+from apps.api.renderers import UserRenderer
+from apps.api.serializers import UserLoginSerializer, UserRegisterSerializer
 from apps.shop.models import Product
 from apps.shop.serializers import ProductSerializer
 from apps.blog.models import BlogCategory, Post
 from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
-from apps.blog.serializers import CategoryTreeSerializer, CreateCategoryNodeSerializer, PostSerializer, CategorySerializer, TagSerializer
-from apps.accounts.serializers import RegisterSerializer
+from apps.blog.serializers import (CategoryTreeSerializer, CreateCategoryNodeSerializer,
+                                   PostSerializer, CategorySerializer, TagSerializer)
 from apps.accounts.models import User
 from apps.core.models import Tag
 from django.db.models import Q
@@ -41,12 +44,6 @@ class ProductDetailView(APIView):
         product = get_object_or_404(Product, pk=pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class PostListView(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly,]
 
 
 class CategoryListView(APIView):
@@ -84,14 +81,19 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly,]
-    # def get(self, request):
-
-    #     categories = Tag.objects.all()
-    #     serializer = TagSerializer(categories, many=True)
-    #     return Response(serializer.data)
+    permission_classes = [IsAuthenticatedOrReadOnly]    
 
 
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.published.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
 # class RegisterView(APIView):
 #     def post(self, request):
 #         mobile = request.data.get('mobile')
@@ -109,14 +111,40 @@ class TagViewSet(viewsets.ModelViewSet):
 #         return Response({'code': code})
 
 
-class RegisterView(APIView):
+class UserRegisterView(APIView):
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.save()
+            context = {
+                'user': user,
+                'message': 'registration is successful'
+            }
+            return Response(context, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLoginView(APIView):
+    renderer_classes = [UserRenderer]
+
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            email = serializer.data.get('email')
+            password = serializer.data.get('password')
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                context = {'user': user, 'msg': 'login successful'}
+                return Response(context, status=status.HTTP_200_OK)
+            else:
+                return Response('email or password is wrong', status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoginView(APIView):
+    renderer_classes = [UserRenderer]
+
     def post(self, request):
         email = request.data['email']
         password = request.data['password']
@@ -124,52 +152,52 @@ class LoginView(APIView):
         user = User.objects.get(email=email)
         if user is None:
             raise AuthenticationFailed('user not found')
-        
+
         if not user.check_password(password):
             raise AuthenticationFailed('password wrong')
 
         payload = {
-            'id' : user.id,
-            'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=50),
-            'iat' : datetime.datetime.utcnow()
+            'id': user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=50),
+            'iat': datetime.datetime.utcnow()
         }
-        
+
         # PyJwt
-        token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, 'secret',
+                           algorithm='HS256').decode('utf-8')
 
         response = Response()
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
-            'jwt' : token
+            'jwt': token
         }
         return response
+
 
 class CurrentUserView(APIView):
     def get(self,  request):
         token = request.COOKIES.get('jwt')
-        
+
         if not token:
             raise AuthenticationFailed('unauthenticate')
-        
+
         try:
             payload = jwt.decode(token, 'secret', algorithm='HS256')
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('un authenticate')
-        
+
         user = User.objects.get(id=payload['id'])
         serializer = UserSerializer(user)
         return Response(serializer.data)
-        
-        
-class LogoutView(APIView):
+
+
+class UserLogoutView(APIView):
     def post(self, request):
         response = Response()
         response.delete_cookie('jwt')
-        response.data = {'message' : 'logout'}
-        return Response        
-# class RegisterView(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = RegisterSerializer
+        response.data = {'message': 'logout'}
+        return Response(response)
+
 
 # @api_view(["POST"])
 # def register(request):
@@ -267,7 +295,8 @@ def search(request):
         query = request.POST.get('q')
         if query:
             query_for_search = SearchQuery(query)
-            search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            search_vector = SearchVector(
+                'title', weight='A') + SearchVector('body', weight='B')
             search_rank = SearchRank(search_vector, query_for_search)
             posts = Post.objects.published.annotate(search=search_vector, rank=search_rank) \
                 .filter(search=query_for_search).order_by('-rank')

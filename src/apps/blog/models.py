@@ -31,7 +31,7 @@ class Rate(BaseModel):
 
 class PublishedManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super(PublishedManager, self).get_queryset().filter(status='p')
+        return super(PublishedManager, self).get_queryset().filter(published_status='p')
 
 
 class Post(BaseModel):

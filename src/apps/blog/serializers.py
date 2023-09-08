@@ -52,4 +52,5 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['title', 'category', 'url']
+        fields = ['title', 'slug', 'created_at',
+                  'updated_at', 'category', 'url']
