@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "admin_interface",
     "colorfield",
     "admin_notification",
@@ -46,7 +47,22 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.postgres',
 
+    # Local apps
+    'apps.core.apps.CoreConfig',
+    'apps.accounts.apps.AccountsConfig',
+    'apps.shop.apps.ShopConfig',
+    'apps.blog.apps.BlogConfig',
+    'apps.api.apps.ApiConfig',
+    'apps.pages.apps.PagesConfig',
+    'apps.payments.apps.PaymentsConfig',
+    'apps.friendships.apps.FriendshipConfig',
+    'apps.shortener.apps.ShortenerConfig',
+    'apps.notifications.apps.NotificationsConfig',
 
+
+
+    # Third-party apps
+    'channels',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -58,19 +74,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'jalali_date',
     "graphene_django",
-    'taggit',    
+    'taggit',
     'django_cleanup.apps.CleanupConfig',
-    
-    
-    'apps.core.apps.CoreConfig',
-    'apps.accounts.apps.AccountsConfig',
-    'apps.shop.apps.ShopConfig',
-    'apps.blog.apps.BlogConfig',
-    'apps.api.apps.ApiConfig',
-    'apps.pages.apps.PagesConfig',
-    'apps.payments.apps.PaymentsConfig',
-    'apps.friendships.apps.FriendshipConfig',
-    'apps.shortener.apps.ShortenerConfig',
 
 
     'utils',
@@ -115,9 +120,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'djshop.wsgi.application'
 ASGI_APPLICATION = 'djshop.asgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 DATABASES = {
     'default': {
@@ -126,11 +136,11 @@ DATABASES = {
     },
     'postgres':  {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : '',
-        'USER' : '',
-        'PASSWORD' : '',
-        'HOST' : '',
-        'PORT' : '',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     },
     'mongodb': {}
 }
@@ -164,9 +174,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'Asia/Tehran'

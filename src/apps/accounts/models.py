@@ -25,13 +25,14 @@ class ActivationCode(BaseModel):
     expired_at = models.CharField(max_length=50)
     
 class User(AbstractUser):
-    pass
     # mobile = models.CharField(null=True, blank=True,
     #                           unique=True, max_length=11)
     # mobile_verified = models.BooleanField(default=False)
     # USERNAME_FIELD = ''
     # REQUIRED_FIELDS = []
 
+    def __str__(self):
+        return self.username
 
 class UserProfile(BaseModel):
     # province, city, instagram, telegram
@@ -52,6 +53,9 @@ class UserProfile(BaseModel):
     def __str__(self) -> str:
         return self.user.username
 
+class UserMeta(BaseModel):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE)
 
 # class CustomUserManager(BaseUserManager):
 #     def create_user(self, email, password=None):

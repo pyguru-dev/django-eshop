@@ -9,3 +9,4 @@ def create_user_signal(sender, instance, created, *args, **kwargs):
     if created:
         # os.mkdir(f"statics/users/{instance.username}")
         UserProfile.objects.create(user=instance)
+        # UserMeta.objects.create(user=instance)

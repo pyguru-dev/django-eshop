@@ -179,6 +179,9 @@ class OrderProduct:
     # order_id , product_id, quantity, product_amount, total_product_amount
     pass
 
+class Cart(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
 
 class Discount(BaseModel):
     title = models.CharField(
