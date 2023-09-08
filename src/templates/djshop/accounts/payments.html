@@ -1,8 +1,23 @@
 {% extends 'accounts/base.html' %}
 
-{% block title %} سفارش ها {% endblock title %}
+{% block title %} پرداخت ها {% endblock title %}
 
 {% block inner %} 
+
+<div class="tab-pane active in" id="account-downloads">
+    <div class="icon-box icon-box-side icon-box-light">
+        <span class="icon-box-icon icon-downloads mr-2">
+            <i class="w-icon-download"></i>
+        </span>
+        <div class="icon-box-content">
+            <h4 class="icon-box-title ls-normal">پرداخت ها </h4>
+        </div>
+    </div>
+    <p class="mb-4">هنوز پرداختی در دسترس نیست.</p>
+    <a href="shop-banner-sidebar.html" class="btn btn-dark btn-rounded btn-icon-right">برو فروشگاه <i class="w-icon-long-arrow-left"></i></a>
+</div> 
+
+
 
 <div class="tab-pane active in mb-4" id="account-orders">
     <div class="icon-box icon-box-side icon-box-light">
@@ -43,5 +58,8 @@
 
     <a href="shop-banner-sidebar.html" class="btn btn-dark btn-rounded btn-icon-right">برو فروشگاه <i class="w-icon-long-arrow-left"></i></a>
 </div>
+
+
+
 
 {% endblock inner %}

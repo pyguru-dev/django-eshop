@@ -1,1 +1,67 @@
 {% extends 'accounts/base.html' %}
+
+{% block title %} تنظیمات حساب {% endblock title %}
+
+{% block inner %}
+
+<div class="tab-pane active in" id="account-details">
+    <div class="icon-box icon-box-side icon-box-light">
+        <span class="icon-box-icon icon-account mr-2">
+            <i class="w-icon-user"></i>
+        </span>
+        <div class="icon-box-content">
+            <h4 class="icon-box-title mb-0 ls-normal">جزئیات حساب </h4>
+        </div>
+    </div>
+    <form class="form account-details-form" action="#" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="firstname"> نام کوچک*</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="جعفر"
+                        class="form-control form-control-md">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="lastname"> نام خانوادگی  *</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="عباسی"
+                        class="form-control form-control-md">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="display-name">نام نمایشی *</label>
+            <input type="text" id="display-name" name="display_name" placeholder="جعفر خان"
+                class="form-control form-control-md mb-0">
+            <p>به این ترتیب نام شما در بخش حساب و در بررسی ها نمایش داده می شود</p>
+        </div>
+
+        <div class="form-group mb-6">
+            <label for="email_1">آدرس ایمیل*</label>
+            <input type="email" id="email_1" name="email_1"
+                class="form-control form-control-md">
+        </div>
+      
+        <h4 class="title title-password ls-25 font-weight-bold">تغییر رمز </h4>
+        <div class="form-group">
+            <label class="text-dark" for="cur-password">رمز عبور فعلی را خالی بگذارید تا بدون تغییر باقی بماند</label>
+            <input type="password" class="form-control form-control-md"
+                id="cur-password" name="cur_password">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="new-password">رمز عبور جدید را خالی بگذارید تا بدون تغییر باقی بماند</label>
+            <input type="password" class="form-control form-control-md"
+                id="new-password" name="new_password">
+        </div>
+        <div class="form-group mb-10">
+            <label class="text-dark" for="conf-password">تایید رمز عبور </label>
+            <input type="password" class="form-control form-control-md"
+                id="conf-password" name="conf_password">
+        </div>
+        <button type="submit" class="btn btn-dark btn-rounded btn-sm mb-4">ذخیره تغییرات </button>
+    </form>
+</div>
+
+{% endblock inner %}

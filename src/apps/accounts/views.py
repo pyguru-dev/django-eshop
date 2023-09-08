@@ -25,14 +25,24 @@ class AccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = "accounts/dashboard.html"
 
 
-class ProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = User
-    template_name = 'accounts/profile_update.html'
+class AccountSettingView(LoginRequiredMixin, generic.TemplateView):
+    # model = User
+    template_name = 'accounts/settings.html'
     # success_url = reverse_lazy('accounts')
-    fields = []
+    # fields = []
 
-    def get_object(self, queryset):
-        return User.objects.get(pk=self.request.user.pk)
+    # def get_object(self, queryset):
+    #     return User.objects.get(pk=self.request.user.pk)
+
+class AccountPaymentView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/payments.html'
+
+class AccountOrderView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/shop_orders.html'
+
+
+class AccountAddressView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/shop_addresses.html'
 
 
 class RegisterView(generic.CreateView):

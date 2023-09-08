@@ -1,5 +1,97 @@
 {% extends 'accounts/base.html' %}
 
-{% block title %} {% endblock title %}
+{% block title %} داشبورد {% endblock title %}
 
-{% block inner %} {% endblock inner %}
+{% block inner %}
+
+<div class="tab-pane active in" id="account-dashboard">
+    <p class="greeting">
+        سلام
+        <span class="text-dark font-weight-bold">{{ user.first_name }}</span>                        
+    </p>
+
+    <p class="mb-4">
+        از داشبورد حساب خود می توانید خود را مشاهده کنید <a href="{% url 'account_orders' %}"
+            class="text-primary link-to-tab">سفارشات اخیر </a>,
+        مدیریت شما روی <a href="#account-addresses" class="text-primary link-to-tab">آدرس حمل و نقلها  </a>, و
+        <a href="#account-details" class="text-primary link-to-tab">رمز عبور و جزئیات حساب خود را ویرایش کنید.</a>
+    </p>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="{% url 'account_orders' %}" class="link-to-tab">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-orders">
+                        <i class="w-icon-orders"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">سفارشات </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="{% url 'account_payments' %}" class="link-to-tab">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-download">
+                        <i class="w-icon-download"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">پرداخت ها </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="{% url 'account_addresses' %}" class="link-to-tab">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-address">
+                        <i class="w-icon-map-marker"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">آدرس ها </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="#account-details" class="link-to-tab">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-account">
+                        <i class="w-icon-user"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">جزئیات حساب </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="wishlist.html" class="link-to-tab">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-wishlist">
+                        <i class="w-icon-heart"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">علاقه مندیها </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4 col-xs-6 mb-4">
+            <a href="#">
+                <div class="icon-box text-center">
+                    <span class="icon-box-icon icon-logout">
+                        <i class="w-icon-logout"></i>
+                    </span>
+                    <div class="icon-box-content">
+                        <p class="text-uppercase mb-0">خروج </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>         
+
+
+{% endblock inner %}
