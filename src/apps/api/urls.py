@@ -6,9 +6,13 @@ from rest_framework_simplejwt.views import (
 )
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+from apps.accounts.views import PasswordChangeView
+
 from .views import (
     CategoryListView,    
     ProductListView,
+    UserChangePasswordAPIView,
+    UserForgotPasswordAPIView,
     UserRegisterView,
     TagViewSet,
     UserLoginView,
@@ -21,6 +25,11 @@ router = routers.DefaultRouter()
 router.register(r'tags', TagViewSet, basename='tag')
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'products', ProductViewSet, basename='product')
+# router.register(r'banks', ProductViewSet, basename='bank')
+# router.register(r'shippings', ProductViewSet, basename='shipping')
+# router.register(r'products', ProductViewSet, basename='product')
+# router.register(r'products', ProductViewSet, basename='product')
+# router.register(r'products', ProductViewSet, basename='product')
 # router.register(r'categories', CategoryViewSet)
 
 
@@ -30,13 +39,16 @@ urlpatterns = [
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('auth/logout/', UserLogoutView.as_view()),
-    # path('auth/passwords/forgot/', UserLogoutView.as_view()),
+    path('auth/passwords/forgot/', UserForgotPasswordAPIView.as_view()),
+    # path('auth/passwords/reset/<uid>/<token>/', UserForgotPasswordAPIView.as_view()),
+    
+    path('account/password_change', UserChangePasswordAPIView.as_view()),
     
     
         
     path('', include(router.urls)),
     path('categories/', CategoryListView.as_view(),),    
-    path('products/', ProductListView.as_view(),),
+    
     
     
     

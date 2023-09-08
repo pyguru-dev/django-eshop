@@ -1,3 +1,5 @@
+from django.utils.encoding import smart_str,force_bytes
+from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer, Serializer, ValidationError
 
@@ -66,3 +68,64 @@ class RegisterSerializer(Serializer):
         )
         user.set_password(validated_data['password_1'])
         user.save()
+
+
+class UserProfileSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'uuid', 'email', 'first_name', 'last_name', 'username']
+        
+class UserChangePasswordSerializer(Serializer):
+    old_password = serializers.CharField(max_length=255, style={'input_type' : 'password'}, write_only=True)
+    password = serializers.CharField(max_length=255, style={'input_type' : 'password'}, write_only=True)
+    password2 = serializers.CharField(max_length=255, style={'input_type' : 'password'}, write_only=True)
+    
+    class Meta:
+        fields = ['old_password','password','password2']
+    
+    def validate(self, attrs):
+        old_password = attrs.get('old_password')
+        password = attrs.get('password')
+        password2 = attrs.get('password2')
+        user = self.context.get('user')
+        
+        if password != password2:
+            raise ValidationError({'password': 'Passwords not same'})
+        
+        user.set_password(password)
+        user.save()
+        return attrs      
+
+class UserForgotPasswordSerializer(Serializer):
+    email = serializers.EmailField(max_length=255)
+    class Meta:
+        fields = ['email']
+        
+    def validate(self, attrs):
+        email = attrs.get('email')
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            uid = urlsafe_base64_encode(force_bytes(user.id))
+            token = PasswordResetTokenGenerator().make_token(user)
+            # link = reverse('')
+            # link = 'https://localhost:3000/api/password_reset/'+uid+'/'+token
+            return attrs
+        else:
+            raise ValidationError('email not found')
+        
+class UserResetPasswordSerializer(Serializer):
+    def validate(self, attrs):
+        uid = self.context.get('uid')
+        token = self.context.get('token')
+        password = attrs.get('password')
+        password2 = attrs.get('password2')
+        if password != password2:
+            raise ValidationError({'password': 'Passwords not same'})
+
+        id = smart_str(urlsafe_base64_decode(uid))
+        user = User.objects.get(id=id)
+        if not PasswordResetTokenGenerator().check_token(user,token):
+            raise ValidationError('token is not valid')
+        user.set_password(password)
+        user.save()
+        return attrs
