@@ -10,7 +10,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from apps.api.renderers import UserRenderer
 from apps.api.serializers import UserChangePasswordSerializer, UserForgotPasswordSerializer, UserLoginSerializer, UserRegisterSerializer
-from apps.shop.models import Product
+from apps.shop.models import Cart, Product
 from apps.shop.serializers import ProductSerializer
 from apps.blog.models import BlogCategory, Post
 from apps.payments.models import Gateway, Payment
@@ -343,3 +343,54 @@ def search(request):
             posts = Post.objects.published.annotate(search=search_vector, rank=search_rank) \
                 .filter(search=query_for_search).order_by('-rank')
             return Response({'posts': posts})
+
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated:
+            product_id = request.POST.get('product_id')
+            product = Product.objects.get(id=product_id)
+            if product:
+                if Cart.objects.filter(user=user, product_id=product_id):
+                    return 'product is already in card'
+                else:
+                    quantity = 1
+                    Cart.objects.create(user=user,product_id=product_id, quantity=quantity)
+                    return 'added'
+            else:
+                return 'product not found'
+        else:
+            pass
+def update_cart_quantity(request):
+    product_id = request.POST.get('product_id')
+    action = request.POST.get('action')
+    
+    cart_item = Cart.objects.filter(user=request.user, product_id=product_id)[0]
+    if cart_item:
+        if action == 'add':
+            cart_item.quantity+=1
+        elif action == 'decrease':
+            cart_item-=1
+        
+        cart_item.save()
+    
+    return 'update'
+    
+    
+def checkout(request):
+    context = {}
+    user = request.user
+    cart_items = Cart.objects.filter(user=user)
+    
+    context['cart_items']=cart_items
+    context['cart_items_count']=cart_items.count()
+    
+    total_price = 0
+    if cart_items:
+        for item in cart_items:
+            total_price += item.product.price
+        
+        context['total_price'] = total_price
+        
+    

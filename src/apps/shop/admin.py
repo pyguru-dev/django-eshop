@@ -1,7 +1,7 @@
 from typing import Any, List, Tuple
 from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
-from .models import Product, ProductAttribute
+from .models import Product, ProductAttribute, Order, OrderItem, ProductCategory
 
 
 class ProductAttributeInline(admin.TabularInline):
@@ -46,3 +46,11 @@ class ProductAdmin(ImportExportModelAdmin):
     def enable_track_stock(self, request, queryset):
         queryset.update(track_stock=True)
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = False
+
+@admin.register(Order)
+class OrderAdmin(ImportExportModelAdmin):
+    list_display = []
+    # inlines = [OrderItemInline]

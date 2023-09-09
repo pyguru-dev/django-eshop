@@ -1,5 +1,7 @@
 import csv
 import datetime
+from typing import Any
+from django.forms import ValidationError
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -7,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView, LoginView as BaseLoginView
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout,forms
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView, ListView, CreateView
@@ -26,8 +29,8 @@ class AccountView(LoginRequiredMixin, TemplateView):
 
 
 class AccountSettingView(LoginRequiredMixin, TemplateView):
-    # model = User
     template_name = 'accounts/settings.html'
+    # model = User
     # success_url = reverse_lazy('accounts')
     # fields = []
 
@@ -45,7 +48,7 @@ class AccountAddressView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/shop_addresses.html'    
 
 
-class RegisterView(CreateView):
+class UserRegisterView(CreateView):
     form_class = UserRegisterForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
@@ -67,14 +70,12 @@ class RegisterView(CreateView):
         return HttpResponse('email sent')
 
 
-class LoginView(BaseLoginView):
-    # form_class = UserLoginForm
-    # success_url = reverse_lazy('home_view')
+class UserLoginView(BaseLoginView):    
     pass
 
 def login(request):
     if request.method == 'POST':
-        form = UserLoginForm(request.POST)
+        form = UserLoginForm(data=request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
@@ -85,6 +86,7 @@ def login(request):
                 else:
                     return HttpResponse('account is not active')
             else: 
+                messages.info(request, 'credentials invalid')                
                 return HttpResponse('credential is wrong')
     else:
         form = UserLoginForm()
@@ -107,8 +109,8 @@ def activate_account_mail(request, uidb64, token):
         return HttpResponse('link invalid')
 
 
-class PasswordChangeView(BasePasswordChangeView):
-    success_url = reverse_lazy('')
+class PasswordChangeView(BasePasswordChangeView):    
+    pass
 
 
 class PasswordChangeDoneView(TemplateView):
@@ -141,23 +143,6 @@ def register(request):
 
     else:
         return render(request, 'registration/register.html')
-
-
-def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('home_view')
-        else:
-            messages.info(request, 'credentials invalid')
-            return redirect('login_view')
-    else:
-        return render(request, 'registration/login.html')
-
 
 @login_required(login_url='login_view')
 def user_logout(request):
@@ -237,3 +222,17 @@ def export_payments_to_pdf(request):
     pisa.CreatePDF(html, dest=response)
 
     return response
+
+
+class RegisterView(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        try:
+            user = User.objects.exclude(pk=self.instance.pk).get(email=email)            
+        except User.DoesNotExist:
+            return email
+        raise ValidationError(f'Email {email} is exists')

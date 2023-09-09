@@ -166,22 +166,38 @@ class Order(BaseModel):
         verbose_name = _('سفارش')
         verbose_name_plural = _('سفارش ها')
 
-    order_code = models.CharField(
-        max_length=12, null=False, blank=False, verbose_name=_('شماره سفارش'))
+    tracking_code = models.CharField(
+        max_length=150, null=False, blank=False,unique=True, verbose_name=_('کد پیگیری'))
     payment = models.ForeignKey(
         Payment, on_delete=models.CASCADE)
     # user, address, shipping, discount, user_description,
     # user_cancel_description, total_amount, payment_method,
     # payment_status, order_status
+    def __str__(self):
+        return '#' +self.tracking_code
 
 
-class OrderProduct:
-    # order_id , product_id, quantity, product_amount, total_product_amount
-    pass
+class OrderItem(BaseModel):
+    class Meta:
+        db_table = 'order_items'
+        verbose_name = _('آیتم های سفارش')
+        verbose_name_plural = _('آیتم های سفارش ها')
+    
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orders')
+    quantity = models.PositiveIntegerField(default=0)
+    
+    def __str__(self) -> str:
+        return '#' +self.order.tracking_code
+    # product_amount, total_product_amount
+    
 
 class Cart(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
+
+class CartItem(BaseModel):
+    pass
 
 class Discount(BaseModel):
     title = models.CharField(

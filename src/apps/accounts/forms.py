@@ -1,4 +1,5 @@
 # from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from typing import Any
 from django import forms
 from django.forms.widgets import PasswordInput
 from django.contrib.auth.forms import UserCreationForm
@@ -6,23 +7,18 @@ from .models import Address, User
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
 
-# class CustomUserChangeForm(UserChangeForm):
-#     class Meta(UserChangeForm):
-#         model = User
-#         fields = UserChangeForm.Meta.fields
-
 class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
         # fields = UserCreationForm.Meta.fields + ('mobile',) 
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password', 'password2']
 
-# class LoginForm(forms.Form): 
+class LoginForm(forms.ModelForm): 
        
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password1', 'password2']
+    class Meta:
+        model = User
+        fields = ['email', 'password']
 
 class UserLoginForm(forms.Form):
     username = forms.TextInput()
@@ -50,18 +46,25 @@ class ChangePasswordForm(forms.Form):
     
 
 
-class AccountSettingForm():
+class AccountSettingForm(forms.ModelForm):
     class Meta:
         model = User
+        fields = []
 
     def __init__(self, *args, **kwargs):
         super(AccountSettingForm, self).__init__(*args, **kwargs)
         self.fields['birthday'] = JalaliDateField(
             label=_('تاریخ تولد'), widget=AdminJalaliDateWidget)
-
+    def save(self, commit):
+        account =  super(AccountSettingForm, self).save(commit=False)
 
 # class AddressForm(forms.ModelForm):
-
 #     class Meta:
 #         model = Address
-#         fields = ("",)
+#         fields = ['title', 'zip_code']
+
+# class BankForm(forms.ModelForm):
+#     class Meta:
+#         model = Bank
+#         fields = ['title', 'zip_code']
+
