@@ -12,10 +12,17 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     context_object_name = 'product'
     template_name = 'shop/product_detail.html'
+    queryset = Product.objects.all()
 
 
 class CartView(TemplateView):
     template_name = "shop/cart.html"
+
+class BrandListView(TemplateView):
+    template_name = "shop/brand_list.html"
+    
+class BrandDetailView(TemplateView):
+    template_name = "shop/brand_detail.html"
 
 class CompareView(TemplateView):
     template_name = "shop/compare.html"

@@ -36,13 +36,15 @@
                 {{ form.as_p }}
                 <div class="form-group">
                   <label>آدرس ایمیل *</label>
+                {{ form.email }}
+{% comment %} 
                   <input
                     type="email"
                     class="form-control"
                     name="email"
                     id="email"
                     required
-                  />
+                  /> {% endcomment %}
                 </div>
                 <div class="form-group mb-5">
                   <label>رمز عبور *</label>

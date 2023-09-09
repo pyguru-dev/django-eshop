@@ -8,11 +8,14 @@ from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
 
 class UserRegisterForm(UserCreationForm):
-
+    # username = forms.CharField(widget=forms.TextInput(attrs={'placeholder' : 'نام کاربری'}))
+    # email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder' : 'ایمیل'}))
+    # password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder' : 'ایمیل'}))
+    
     class Meta:
         model = User
         # fields = UserCreationForm.Meta.fields + ('mobile',) 
-        fields = ['username', 'email', 'password', 'password2']
+        fields = ['username', 'email']
 
 class LoginForm(forms.ModelForm): 
        

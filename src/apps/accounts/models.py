@@ -79,9 +79,10 @@ class Address(BaseModel):
     title = models.CharField(max_length=150, verbose_name=_('عنوان'))
     address = models.TextField(verbose_name=_('آدرس'))
     zip_code = models.CharField(max_length=50, verbose_name=_('کد پستی'))
+    default = models.BooleanField(default=False)
     
     # map , receiver_self, receiver_name, 
-    # receiver_mobile, last_used_at, default
+    # receiver_mobile, last_used_at
     
 class UserBank(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))

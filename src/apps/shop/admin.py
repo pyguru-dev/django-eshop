@@ -1,9 +1,12 @@
 from typing import Any, List, Tuple
 from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
-from .models import Product, ProductAttribute, Order, OrderItem, ProductCategory
+from .models import Brand, Discount, Giftcode, Product, ProductAttribute, Order, OrderItem, ProductCategory, ProductImages, Shipping, Warranty
 
 
+class ProductImagesInline(admin.TabularInline):
+    model = ProductImages
+    
 class ProductAttributeInline(admin.TabularInline):
     model = ProductAttribute
     extra = 1
@@ -54,3 +57,30 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(ImportExportModelAdmin):
     list_display = []
     # inlines = [OrderItemInline]
+    
+@admin.register(Shipping)
+class ShippingAdmin(ImportExportModelAdmin):
+    list_display = []
+    
+@admin.register(Warranty)
+class WarrantyAdmin(ImportExportModelAdmin):
+    list_display = []
+    
+@admin.register(Giftcode)
+class GiftcodeAdmin(ImportExportModelAdmin):
+    list_display = []
+    
+@admin.register(Discount)
+class DiscountAdmin(ImportExportModelAdmin):
+    list_display = []
+    
+@admin.register(Brand)
+class BrandAdmin(ImportExportModelAdmin):
+    list_display = ['title', 'slug']
+    prepopulated_fields = {
+        'slug': ('title',)
+    }
+    
+@admin.register(ProductCategory)
+class ProductCategoryAdmin(ImportExportModelAdmin):
+    list_display = []
