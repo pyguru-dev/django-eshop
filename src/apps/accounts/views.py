@@ -7,7 +7,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView as BasePasswordChangeView, LoginView as BaseLoginView
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,forms
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView, ListView, CreateView
 from django.urls import reverse_lazy, reverse
@@ -15,7 +15,7 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from apps.accounts.forms import ChangePasswordForm, RegisterForm, LoginForm
+from apps.accounts.forms import ChangePasswordForm, UserRegisterForm, UserLoginForm
 from apps.payments.models import Payment
 from utils.utils import account_activation_token
 from .models import UserProfile, User, Address, Province, City, UserBank
@@ -46,7 +46,7 @@ class AccountAddressView(LoginRequiredMixin, TemplateView):
 
 
 class RegisterView(CreateView):
-    form_class = RegisterForm
+    form_class = UserRegisterForm
     template_name = 'registration/register.html'
     success_url = reverse_lazy('login')
 
@@ -68,13 +68,13 @@ class RegisterView(CreateView):
 
 
 class LoginView(BaseLoginView):
-    # form_class = LoginForm
+    # form_class = UserLoginForm
     # success_url = reverse_lazy('home_view')
     pass
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = UserLoginForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
@@ -87,7 +87,7 @@ def login(request):
             else: 
                 return HttpResponse('credential is wrong')
     else:
-        form = LoginForm()
+        form = UserLoginForm()
     
     return render(request, 'registration/login.html', {'form':form})
 

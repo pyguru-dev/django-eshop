@@ -3,6 +3,9 @@ from .views import (
     CartView, CheckoutView, ProductListView, ProductDetailView, CompareView,WishListView
 )
 
+
+# app_name = 'apps.shop'
+
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list'),
     path('<int:product_id>', ProductDetailView.as_view(), name='product_detail'),

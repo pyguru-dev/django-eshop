@@ -6,23 +6,16 @@ from .models import Address, User
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
 
-
-# class CustomUserCreationForm(UserCreationForm):
-#     class Meta(UserCreationForm):
-#         model = User
-#         # fields = UserCreationForm.Meta.fields + ('mobile',)
-#         fields = UserCreationForm.Meta.fields
-
-
 # class CustomUserChangeForm(UserChangeForm):
 #     class Meta(UserChangeForm):
 #         model = User
 #         fields = UserChangeForm.Meta.fields
 
-class RegisterForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
+        # fields = UserCreationForm.Meta.fields + ('mobile',) 
         fields = ['username', 'email', 'password1', 'password2']
 
 # class LoginForm(forms.Form): 
@@ -31,7 +24,7 @@ class RegisterForm(UserCreationForm):
 #         model = User
 #         fields = ['username', 'email', 'password1', 'password2']
 
-class LoginForm(forms.Form):
+class UserLoginForm(forms.Form):
     username = forms.TextInput()
     password = forms.TextInput()
 

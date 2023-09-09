@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import UserlistView, RequestView, RequestListView, AcceptView, FriendListView
 
+# app_name = 'apps.friendships'
+
 urlpatterns = [
     path('users/', UserlistView.as_view()),
     path('request/', RequestView.as_view()),

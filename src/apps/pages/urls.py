@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import (AboutView, ContactCreateView, HomePageView, FaqsView)
 
+# app_name= 'apps.pages'
+
 urlpatterns = [
     path('', HomePageView.as_view(), name='home_view'),
     path('about/', AboutView.as_view(), name='about_view'),

@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from apps.core.models import BaseModel
 from apps.payments.models import Bank
@@ -29,10 +29,12 @@ class User(AbstractUser):
     #                           unique=True, max_length=11)
     # mobile_verified = models.BooleanField(default=False)
     # USERNAME_FIELD = ''
-    # REQUIRED_FIELDS = []
+    # REQUIRED_FIELDS = ['mobile']
 
     def __str__(self):
         return self.username
+    
+    
 
 class UserProfile(BaseModel):
     # province, city, instagram, telegram
@@ -52,7 +54,15 @@ class UserProfile(BaseModel):
     
     def __str__(self) -> str:
         return self.user.username
+    
+    def get_avatar_image_path(self, filename):
+        return f'accounts/avatars/{self.pk}/profile_image.jpg'
 
+    def get_default_avatar_image():
+        return 'accounts/avatars/default_avatar.jpg'
+
+    
+    
 class UserMeta(BaseModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
