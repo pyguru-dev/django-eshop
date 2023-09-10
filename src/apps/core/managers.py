@@ -12,7 +12,6 @@ class SoftDeleteQuerySet(models.QuerySet):
     def delete(self):
         return self.update(is_deleted=True, deleted_at=timezone.now())
 
-
 class SoftDeleteManager(models.Manager):
     def get_queryset(self):
         return SoftDeleteQuerySet(self.model, self._db).filter(Q(is_deleted=False) | Q(is_deleted__isnull=True))

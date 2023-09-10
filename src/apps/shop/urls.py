@@ -11,6 +11,7 @@ from .views import (
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list'),
     path('<slug:slug>/detail/', ProductDetailView.as_view(), name='product_detail'),
+    # re_path(r'detail/(?P<article_slug>[-\w]+)/', article_detail, name='article_detail')
 
     path('brands/', BrandListView.as_view(), name='brand_list'),
     path('brands/<slug:slug>/', BrandDetailView.as_view(), name='brand_detail'),

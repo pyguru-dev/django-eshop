@@ -67,11 +67,6 @@ class UserMeta(BaseModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
 
-# class CustomUserManager(BaseUserManager):
-#     def create_user(self, email, password=None):
-#         pass
-
-
 class Address(BaseModel):    
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='province', verbose_name=_("کاربر"))

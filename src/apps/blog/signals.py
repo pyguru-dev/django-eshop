@@ -8,6 +8,7 @@ from django.utils.text import slugify
 def create_post(sender, instance, created, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_unique_slug(instance)
+        instance.save()
 
 # @receiver(post_save, sender=Vote)
 # def update_votes(sender,instance, **kwargs):

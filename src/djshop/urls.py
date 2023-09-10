@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -6,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from admin_notification.views import check_notification_view
 from apps.api.schema import schema
+from apps.core.urls import sitemaps
 
 urlpatterns = [
     path('', include('apps.pages.urls')),
@@ -22,7 +24,9 @@ urlpatterns = [
     path("unicorn/", include("django_unicorn.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
     path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
-    path('check/notification', check_notification_view, name="check_notifications"),
+    path('check/notification', check_notification_view,
+         name="check_notifications"),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
 ]
 
 # if settings.DEBUG:

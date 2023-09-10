@@ -182,7 +182,9 @@ class Order(BaseModel):
         db_table = 'orders'
         verbose_name = _('سفارش')
         verbose_name_plural = _('سفارش ها')
-
+        
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     tracking_code = models.CharField(
         max_length=150, null=False, blank=False,unique=True, verbose_name=_('کد پیگیری'))
     payment = models.ForeignKey(

@@ -13,6 +13,8 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     template_name = 'shop/product_detail.html'
     queryset = Product.objects.all()
+    
+    # related_products = Product.objects.filter(category=product.category).exclude(pk=product.id)
 
 
 class CartView(TemplateView):

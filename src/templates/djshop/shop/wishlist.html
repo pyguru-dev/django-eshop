@@ -18,7 +18,7 @@
     <nav class="breadcrumb-nav mb-10">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="demo1.html">خانه </a></li>
+                <li><a href="{% url 'home_view' %}">خانه </a></li>
                 <li>علاقه مندیها</li>
             </ul>
         </div>
@@ -29,6 +29,7 @@
     <div class="page-content">
         <div class="container">
             <h3 class="wishlist-title">علاقه مندیهای من</h3>
+            {% if user.is_authenticated %}
             <table class="shop-table wishlist-table">
                 <thead>
                     <tr>
@@ -74,6 +75,10 @@
                     </tr>                  
                 </tbody>
             </table>
+            {% else %}
+            <a href="{% url 'login_view' %}" class="btn btn-dark btn-rounded btn-sm ml-lg-2 btn-cart">برای مشاهده وارد شوید</a>
+            
+            {% endif %}
             <div class="social-links">
                 <label>اشتراک در:</label>
                 <div class="social-icons social-no-color border-thin">
