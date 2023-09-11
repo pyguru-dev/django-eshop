@@ -1,3 +1,6 @@
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
 import datetime
 from django.db.models.query import QuerySet
 from django.urls import reverse
@@ -83,6 +86,18 @@ class Post(BaseModel):
     def thumbnail_tag(self):
         return format_html("<img width=100 src='{}' />".format(self.thumbnail.url))
 
+    def make_thumbnail(self, image, size=(300, 200)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
+
 
 class Comment(BaseModel):
     user = models.ForeignKey(User, related_name='users',
@@ -155,3 +170,16 @@ class Vote(BaseModel):
         db_table = 'votes'
         verbose_name = _('Vote')
         verbose_name_plural = _("Votes")
+
+
+class Attachment(BaseModel):
+    file = models.FileField(_('file'), upload_to='')
+    # attachmentable = GenericForeignKey()
+
+
+class NewsletterSubscriber(BaseModel):
+    email = models.EmailField(max_length=255)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '%s' % self.email

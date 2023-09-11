@@ -35,7 +35,7 @@ router.register(r'products', ProductViewSet, basename='product')
 
 urlpatterns = [
     path('auth/register/', UserRegisterView.as_view()),
-    path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('auth/logout/', UserLogoutView.as_view()),

@@ -3,7 +3,7 @@ import string
 import uuid
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, PermissionsMixin, UserManager
 from django.utils.translation import gettext_lazy as _
 from apps.core.models import BaseModel
 from apps.payments.models import Bank
@@ -34,9 +34,11 @@ class User(AbstractUser):
     # mobile = models.CharField(null=True, blank=True,
     #                           unique=True, max_length=11)
     # mobile_verified = models.BooleanField(default=False)
-    # USERNAME_FIELD = ''
+    # USERNAME_FIELD = 'email'
     # REQUIRED_FIELDS = ['mobile']
-
+    
+    # objects = UserManager()
+    
     def __str__(self):
         return self.username
 

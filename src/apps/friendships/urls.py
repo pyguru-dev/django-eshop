@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import UserlistView, RequestView, RequestListView, AcceptView, FriendListView
+from .views import (UserlistView, RequestView, RequestListView,
+                    AcceptView, FriendListView,)
 
 # app_name = 'apps.friendships'
 

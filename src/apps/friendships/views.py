@@ -25,7 +25,8 @@ class RequestView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        user_id = request.data.get('user')
+        user_id = request.data.get('user_id')
+        request_receiver_user_id = request.data.get('id')
 
         try:
             user = User.objects.get(pk=user_id)

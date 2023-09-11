@@ -76,11 +76,13 @@ class Brand(BaseModel):
         max_length=255, blank=False, null=False, unique=True, verbose_name=_('عنوان'))
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
-    logo = models.ImageField(upload_to='brands/', null=False, blank=False, verbose_name=_('لوگو'))
+    logo = models.ImageField(
+        upload_to='brands/', null=False, blank=False, verbose_name=_('لوگو'))
 
     class Meta:
         verbose_name = _("برند")
         verbose_name_plural = _("برند ها")
+
 
 class ProductCategory(MP_Node):
     parent = models.ForeignKey(
@@ -112,8 +114,6 @@ class Product(BaseModel):
         ('p', 'Published'),
         ('d', 'Draft'),
     )
-    
-    
 
     class ProductTypeChoice(models.TextChoices):
         standalone = 'standalone'
@@ -152,7 +152,6 @@ class Product(BaseModel):
     # attributes = models.ManyToManyField('ProductAttribute', through='ProductAttributeValue')
 
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
-    
 
     class Meta:
         verbose_name = _('محصول')
@@ -164,37 +163,62 @@ class Product(BaseModel):
     def has_attribute(self):
         return self.attributes.exists()
 
+
 class ProductImages(BaseModel):
     # product - image - alt -  order priority
-    pass
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+
+    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        self.thumbnail = self.make_thumbnail(self.image)
+
+        super().save(*args, **kwargs)
+
+    def make_thumbnail(self, image, size=(300, 200)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=image.name)
+
+        return thumbnail
+
 
 class Order(BaseModel):
-    
+
     class OrderStatus(models.TextChoices):
         processing = 'Processing'
-        
+
     ORDER_STATUS = (
         ('p', 'Processing'),
         ('d', 'Delivered'),
         ('s', 'Shipped'),
     )
+
     class Meta:
         db_table = 'orders'
         verbose_name = _('سفارش')
         verbose_name_plural = _('سفارش ها')
-        
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+
     tracking_code = models.CharField(
-        max_length=150, null=False, blank=False,unique=True, verbose_name=_('کد پیگیری'))
+        max_length=150, null=False, blank=False, unique=True, verbose_name=_('کد پیگیری'))
     payment = models.ForeignKey(
         Payment, on_delete=models.CASCADE)
-    order_status =models.CharField(max_length=40,choices=OrderStatus.choices, default='pending')
+    order_status = models.CharField(
+        max_length=40, choices=OrderStatus.choices, default='pending')
     # user, address, shipping, discount, user_description,
     # user_cancel_description, total_amount, payment_method,
     # payment_status
+
     def __str__(self):
-        return '#' +self.tracking_code
+        return '#' + self.tracking_code
 
 
 class OrderItem(BaseModel):
@@ -202,32 +226,36 @@ class OrderItem(BaseModel):
         db_table = 'order_items'
         verbose_name = _('آیتم های سفارش')
         verbose_name_plural = _('آیتم های سفارش ها')
-    
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='orders')
+
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name='orders')
     quantity = models.PositiveIntegerField(default=0)
     product_amount = models.PositiveBigIntegerField(default=0)
     total_product_amount = models.PositiveBigIntegerField(default=0)
-    
+
     def __str__(self) -> str:
-        return '#' +self.order.tracking_code    
-    
+        return '#' + self.order.tracking_code
+
 
 class Wishlist(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-     
-    class Meta:        
+
+    class Meta:
         verbose_name = _('علاقه مندی')
         verbose_name_plural = _('علاقه مندی ها')
-        
-        
+
+
 class Cart(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
 
+
 class CartItem(BaseModel):
     pass
+
 
 class Discount(BaseModel):
     title = models.CharField(
@@ -248,6 +276,7 @@ class Discount(BaseModel):
     start_at = models.DateTimeField(verbose_name=_('زمان شروع'))
     end_at = models.DateTimeField(verbose_name=_('زمان پایان'))
     #  type
+
     class Meta:
         verbose_name = _('تخفیف')
         verbose_name_plural = _('تخفیف ها')
@@ -269,10 +298,33 @@ class Giftcode(BaseModel):
         default=0, verbose_name=_('تعداد قابل استفاده برای کاربر'))
     used = models.PositiveIntegerField(
         default=0, verbose_name=_('تعداد استفاده شده'))
-    class Meta:        
+
+    class Meta:
         verbose_name = _('کد هدیه')
         verbose_name_plural = _('کد هدیه ها')
-    
+
+    def __str__(self):
+        return self.code
+
+    def can_use(self):
+        is_active = True
+
+        if self.active == False:
+            is_active = False
+
+        if self.num_used >= self.num_available and self.num_available != 0:
+            is_active = False
+
+        return is_active
+
+    def use(self):
+        self.num_used = self.num_used + 1
+
+        if self.num_used == self.num_available:
+            self.active = False
+
+        self.save()
+
 
 class Shipping(BaseModel):
     title = models.CharField(
@@ -288,7 +340,7 @@ class Shipping(BaseModel):
 class Warranty(BaseModel):
     title = models.CharField(
         max_length=255, unique=True, verbose_name=_('عنوان'))
+
     class Meta:
         verbose_name = _('گارانتی')
         verbose_name_plural = _('گارانتی ها')
-    
