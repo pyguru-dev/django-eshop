@@ -4,16 +4,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-
-class SoftDeleteQuerySet(models.QuerySet):
-    def delete(self):
-        return self.update(is_deleted=True, deleted_at=timezone.now())
-
-
-class SoftDeleteManager(models.Manager):
-    def get_queryset(self):
-        return SoftDeleteQuerySet(self.model, self._db).filter(Q(is_deleted=False) | Q(is_deleted__isnull=True))
-
+from apps.core.managers import SoftDeleteManager
 
 class BaseModel(models.Model):
     class Meta:

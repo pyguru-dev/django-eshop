@@ -1,15 +1,9 @@
-from typing import Any, Optional
-from django.db import models
-from django.forms.models import BaseModelForm
-from django.http import HttpResponse
 from django.views import generic
 from django.views.generic.edit import FormMixin
-from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from .models import Post
 from .forms import CommentCreateForm
@@ -18,24 +12,23 @@ from .forms import CommentCreateForm
 class PostListView(generic.ListView):
     model = Post
     # queryset = Post.objects.all().select_related('category')
-    queryset = Post.objects.all()
+    queryset = Post.published.all()
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
-    paginate_by = 1
+    paginate_by = 12
     
-
 
 class PostDetailView(FormMixin, generic.DetailView):
     model = Post
     context_object_name = 'post'
-    template_name = 'blog/post_detail.html'    
-    # slug_field = 'post_id'        
+    template_name = 'blog/post_detail.html'
+    # slug_field = 'post_id'
     # slug_url_kwarg = 'id'
-    
+
     # def get_object(self, queryset):
     #     slug = self.kwargs.get('post_id')
     #     return get_object_or_404(Post.objects.published(), slug=slug)
-    
+
     # form_class = CommentCreateForm
 
     # def get_success_url(self) -> str:
@@ -96,17 +89,17 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def post_by_tag(request, slug):
     posts = Post.objects.filter(tags__slug=slug)
     context = {
-        'posts' : posts
+        'posts': posts
     }
     return render(request, "blog/post_list.html", context)
 
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
-    
+
     context = {
-        'post' : post,
-        'comments' : post.comments.filter(approved=True)
+        'post': post,
+        'comments': post.comments.filter(approved=True)
     }
     return render(request, "blog/post_detail.html", context)
 
@@ -118,17 +111,18 @@ class AuthorListView(generic.ListView):
     context_object_name = 'authors'
     template_name = 'blog/author_list.html'
     paginate_by = 24
-    
+
+
 class AuthorDetailView(generic.DetailView):
     template_name = "blog/author_detail.html"
     context_object_name = 'author'
-    
+
     def get_queryset(self):
         if self.request.user.is_superuser:
             return Post.objects.all()
         else:
             return Post.objects.filter(author=self.request.user)
-        
-        
+
+
 class SearchListView(generic.ListView):
     pass

@@ -1,15 +1,17 @@
+from rest_framework.throttling import UserRateThrottle
 import datetime
 import requests
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status, generics, mixins, viewsets
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import NotAcceptable
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from apps.api.renderers import UserRenderer
-from apps.api.serializers import UserChangePasswordSerializer, UserForgotPasswordSerializer, UserLoginSerializer, UserRegisterSerializer
+from apps.api.serializers import RequestOtpResponseSerializer, RequestOtpSerializer, UserChangePasswordSerializer, UserForgotPasswordSerializer, UserLoginSerializer, UserRegisterSerializer, VerifyOtpSerializer
 from apps.shop.models import Cart, Product
 from apps.shop.serializers import ProductSerializer
 from apps.blog.models import BlogCategory, Post
@@ -17,7 +19,7 @@ from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
 from apps.blog.serializers import (CategoryTreeSerializer, CreateCategoryNodeSerializer,
                                    PostSerializer, CategorySerializer, TagSerializer)
-from apps.accounts.models import User
+from apps.accounts.models import OtpRequest, User
 from apps.core.models import Tag
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
@@ -57,13 +59,13 @@ class CategoryListView(APIView):
         return Response(serializer.data)
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class BlogCategoryViewSet(ModelViewSet):
 
     def get_queryset(self):
         if self.action == 'list':
-            return Category.objects.filter(depth=1)
+            return BlogCategory.objects.filter(depth=1)
         else:
-            return Category.objects.all()
+            return BlogCategory.objects.all()
 
     def get_serializer_class(self):
 
@@ -78,19 +80,19 @@ class CategoryViewSet(viewsets.ModelViewSet):
                 raise NotAcceptable()
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostViewSet(ModelViewSet):
     queryset = Post.published.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -190,6 +192,7 @@ class LoginView(APIView):
 class UserProfileView(APIView):
     renderer_classes = [UserRenderer]
     permission_classes = [IsAuthenticated]
+
     def get(self,  request, format=None):
         token = request.COOKIES.get('jwt')
 
@@ -213,33 +216,35 @@ class UserLogoutView(APIView):
         response.data = {'message': 'logout'}
         return Response(response)
 
+
 class UserForgotPasswordAPIView(APIView):
     def post(self, request):
         serializer = UserForgotPasswordSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            return Response({'msg':'password reset link sent'}, status=status.HTTP_200_OK)        
+            return Response({'msg': 'password reset link sent'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserPasswordResetAPIView(APIView):
-    def post(self, request,uid,token):
+    def post(self, request, uid, token):
         serializer = UserPasswordSerializer(data=request.data)
-        context = {'uid':uid,'token':token}
+        context = {'uid': uid, 'token': token}
         if serializer.is_valid(raise_exception=True):
-            return Response({'msg':'password reset successfully'})
+            return Response({'msg': 'password reset successfully'})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserChangePasswordAPIView(APIView):
     renderer_classes = [UserRenderer]
     permission_classes = [IsAuthenticated]
-    
+
     def post(self, request, format=None):
         serializer = UserChangePasswordSerializer(data=request.data)
-        context = {'user' : request.user, 'msg' : 'password changed'}
+        context = {'user': request.user, 'msg': 'password changed'}
         if serializer.is_valid(raise_exception=True):
             return Response(context, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        
+
 
 # @api_view(["POST"])
 # def register(request):
@@ -356,41 +361,101 @@ def add_to_cart(request):
                     return 'product is already in card'
                 else:
                     quantity = 1
-                    Cart.objects.create(user=user,product_id=product_id, quantity=quantity)
+                    Cart.objects.create(
+                        user=user, product_id=product_id, quantity=quantity)
                     return 'added'
             else:
                 return 'product not found'
         else:
             pass
+
+
 def update_cart_quantity(request):
     product_id = request.POST.get('product_id')
     action = request.POST.get('action')
-    
-    cart_item = Cart.objects.filter(user=request.user, product_id=product_id)[0]
+
+    cart_item = Cart.objects.filter(
+        user=request.user, product_id=product_id)[0]
     if cart_item:
         if action == 'add':
-            cart_item.quantity+=1
+            cart_item.quantity += 1
         elif action == 'decrease':
-            cart_item-=1
-        
+            cart_item -= 1
+
         cart_item.save()
-    
+
     return 'update'
-    
-    
+
+
 def checkout(request):
     context = {}
     user = request.user
     cart_items = Cart.objects.filter(user=user)
-    
-    context['cart_items']=cart_items
-    context['cart_items_count']=cart_items.count()
-    
+
+    context['cart_items'] = cart_items
+    context['cart_items_count'] = cart_items.count()
+
     total_price = 0
     if cart_items:
         for item in cart_items:
             total_price += item.product.price
-        
+
         context['total_price'] = total_price
-        
-    
+
+
+############ OTP ############
+
+
+class OncePerMinuteThrottle(UserRateThrottle):
+    rate = '1/minute'
+
+
+class RequestOtpAPIView(APIView):
+
+    # throttle_classes = [OncePerMinuteThrottle]
+
+    def post(self, request):
+        serializer = RequestOtpSerializer(data=request.data)
+        if serializer.is_valid():
+            mobile = serializer.validated_data['mobile']
+            channel = serializer.validated_data['channel']
+            otp_request = OtpRequest(mobile=mobile, channel=channel)
+            otp_request.generate_otp()
+            otp_request.save()
+
+            # Send sms
+
+            return Response(RequestOtpResponseSerializer(otp_request).data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VerifyOtpAPIView(APIView):
+    def post(self, request):
+        serializer = VerifyOtpSerializer(data=request.data)
+        if serializer.is_valid():
+            request_id = serializer.validated_data['request_id']
+            mobile = serializer.validated_data['mobile']
+            password = serializer.validated_data['password']
+
+            otp_request = OtpRequest.objects.filter(
+                request_id=request_id,
+                mobile=mobile,
+                valid_until__gte=timezone.now()
+            )
+            if otp_request.exists():
+                userq = User.objects.filter(mobile=mobile)
+                if userq.exists():
+                    user = userq.first()
+                    token, created = Token.objects.get_or_create(user=user)
+                    return Response({'token': token, 'new_user': False})
+                else:
+                    user = User.objects.create(mobile=mobile)
+                    token, created = Token.objects.get_or_create(user=user)
+                    return Response({'token': token, 'new_user': True})
+
+            else:
+                return Response(serializer.errors, status=status.HTTP_403_FORBIDDEN)
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

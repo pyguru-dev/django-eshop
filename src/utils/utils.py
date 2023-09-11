@@ -3,6 +3,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.http import Http404
 from django.utils import timezone
 from django.core.exceptions import PermissionDenied
+from functools import wraps
 # from six import text_type
 
 from . import jalali
@@ -49,6 +50,7 @@ def persian_number_converter(string):
 
 
 def timeit(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         starttime = time.time()
         value = func(*args, **kwargs)
@@ -58,7 +60,18 @@ def timeit(func):
     return wrapper
 
 
+def time_of_execution(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        t_s = time.time()
+        result = func(*args, **kwargs)
+        t_e = time.time()
+        print(func.__name__, t_s - t_e)
+        return result
+    return wrapper
+
 def superuser_only(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_supperuser:
             raise PermissionDenied

@@ -5,7 +5,7 @@ from rest_framework.serializers import ModelSerializer, Serializer, ValidationEr
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from apps.accounts.models import User
+from apps.accounts.models import OtpRequest, User
 
 
 class UserRegisterSerializer(ModelSerializer):
@@ -138,3 +138,26 @@ class UserResetPasswordSerializer(Serializer):
         user.set_password(password)
         user.save()
         return attrs
+
+
+#### OTP ####
+
+class RequestOtpSerializer(Serializer):
+    mobile = serializers.CharField(max_length=12, allow_null=False)
+    # channel =
+
+
+class RequestOtpResponseSerializer(ModelSerializer):
+    class Meta:
+        model = OtpRequest
+        fields = ['request_id']
+
+
+class VerifyOtpSerializer(Serializer):
+    request_id = serializers.CharField(max_length=64, allow_null=False)
+    mobile = serializers.CharField(max_length=12, allow_null=False)
+    password = serializers.CharField(allow_null=False)
+
+
+class VerifyOtpResponseSerializer(Serializer):
+    token = serializers.CharField(max_length=12, allow_null=False)

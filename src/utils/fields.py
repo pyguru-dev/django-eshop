@@ -12,3 +12,7 @@ class UppercaseCharField(models.CharField):
         if isinstance(val, str):
             return val.upper()
         return val
+
+
+class SlugableField(models.SlugField):
+    pass

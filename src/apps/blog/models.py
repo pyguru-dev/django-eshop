@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from treebeard.mp_tree import MP_Node
+from apps.core.managers import PublishedManager
 from apps.core.models import BaseModel
 from utils.utils import jalali_converter
 from taggit.managers import TaggableManager
@@ -28,11 +29,6 @@ class Rate(BaseModel):
         indexes = [
             models.Index(fields=['content_type', 'object_id'])
         ]
-
-
-class PublishedManager(models.Manager):
-    def get_queryset(self) -> QuerySet:
-        return super(PublishedManager, self).get_queryset().filter(published_status='p')
 
 
 class Post(BaseModel):
@@ -73,7 +69,7 @@ class Post(BaseModel):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("post_detail",  args=[str(self.id)])
+        return reverse("post_detail",  args=[str(self.slug)])
 
     def posts_was_published_recently(self):
         return self.created_at >= timezone.now() - datetime.timedelta(days=1)
@@ -106,16 +102,18 @@ class Comment(BaseModel):
     def __str__(self) -> str:
         return self.comment
 
+
 class CommentReply(BaseModel):
-    comment =models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name='replies')
     body = models.TextField(verbose_name=_('نظر'))
-    
+
 
 class BlogCategory(MP_Node):
     parent = models.ForeignKey(
         'self', verbose_name=_('دسته بندی والد'), blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True,
-                            blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
+                            db_index=True, verbose_name=_('عنوان'))
     slug = models.SlugField(max_length=255, unique=True,
                             verbose_name=_('اسلاگ'), allow_unicode=True)
     description = models.TextField(

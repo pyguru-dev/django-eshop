@@ -6,11 +6,10 @@ from rest_framework_simplejwt.views import (
 )
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
-from apps.accounts.views import PasswordChangeView
-
 from .views import (
     CategoryListView,    
     ProductListView,
+    RequestOtpAPIView,
     UserChangePasswordAPIView,
     UserForgotPasswordAPIView,
     UserRegisterView,
@@ -18,7 +17,10 @@ from .views import (
     UserLoginView,
     PostViewSet,
     ProductViewSet,
+    BlogCategoryViewSet,
+    # ProductCategoryViewSet,
     UserLogoutView,
+    VerifyOtpAPIView,
 )
 
 router = routers.DefaultRouter()
@@ -27,8 +29,6 @@ router.register(r'posts', PostViewSet, basename='post')
 router.register(r'products', ProductViewSet, basename='product')
 # router.register(r'banks', ProductViewSet, basename='bank')
 # router.register(r'shippings', ProductViewSet, basename='shipping')
-# router.register(r'products', ProductViewSet, basename='product')
-# router.register(r'products', ProductViewSet, basename='product')
 # router.register(r'products', ProductViewSet, basename='product')
 # router.register(r'categories', CategoryViewSet)
 
@@ -41,6 +41,8 @@ urlpatterns = [
     path('auth/logout/', UserLogoutView.as_view()),
     path('auth/passwords/forgot/', UserForgotPasswordAPIView.as_view()),
     # path('auth/passwords/reset/<uid>/<token>/', UserForgotPasswordAPIView.as_view()),
+    path('auth/otp/request/', RequestOtpAPIView.as_view()),
+    path('auth/otp/verify/', VerifyOtpAPIView.as_view()),
     
     path('account/password_change', UserChangePasswordAPIView.as_view()),
     
