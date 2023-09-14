@@ -1,7 +1,6 @@
 import asyncio
-from django.views import generic
-from django.views.generic.edit import FormMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import  ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
@@ -10,7 +9,7 @@ from .models import Post
 from .forms import CommentCreateForm
 
 
-class PostListView(generic.ListView):
+class PostListView(ListView):
     model = Post
     # queryset = Post.objects.all().select_related('category')
     queryset = Post.published.all()
@@ -18,11 +17,18 @@ class PostListView(generic.ListView):
     template_name = 'blog/post_list.html'
     paginate_by = 12
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context["products"] = Product.published.all() 
+        return context
+    
+    
 
-class PostDetailView(FormMixin, generic.DetailView):
+class PostDetailView(FormMixin, DetailView):
     model = Post
     context_object_name = 'post'
     template_name = 'blog/post_detail.html'
+    # pk_url_kwarg = 'slug'
     # slug_field = 'post_id'
     # slug_url_kwarg = 'id'
 
@@ -105,7 +111,7 @@ def post_detail(request, pk):
     return render(request, "blog/post_detail.html", context)
 
 
-class AuthorListView(generic.ListView):
+class AuthorListView(ListView):
     model = User
     # queryset = Post.objects.all().select_related('posts')
     # queryset = User.authors.all()
@@ -114,7 +120,7 @@ class AuthorListView(generic.ListView):
     paginate_by = 24
 
 
-class AuthorDetailView(generic.DetailView):
+class AuthorDetailView(DetailView):
     template_name = "blog/author_detail.html"
     context_object_name = 'author'
 
@@ -125,5 +131,5 @@ class AuthorDetailView(generic.DetailView):
             return Post.objects.filter(author=self.request.user)
 
 
-class SearchListView(generic.ListView):
+class SearchListView(ListView):
     pass

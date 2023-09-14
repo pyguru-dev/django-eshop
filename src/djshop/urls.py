@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
 from graphene_django.views import GraphQLView
 from admin_notification.views import check_notification_view
-from apps.api.schema import schema
+from apps.core.schema import schema
 from apps.core.urls import sitemaps
 
 urlpatterns = [

@@ -2,10 +2,10 @@ from django.http import HttpRequest, HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView
 from django.views.decorators.cache import cache_page
+from django.contrib import messages
 from .forms import ContactForm
 from .models import ContactSubject, Faq
 from apps.blog.models import Post
-
 # @cache_page(60 * 15)
 class HomePageView(TemplateView):
     template_name = 'pages/index.html'
@@ -27,6 +27,7 @@ class ContactCreateView(CreateView):
         return context
     
     def post(self, request, *args, **kwargs):
+        
         return super().post(request, *args, **kwargs)
     
 # def ContactUsCreate(request):
@@ -41,7 +42,7 @@ class ContactCreateView(CreateView):
 #                 message=form.cleaned_data['message'],
 #             )
 #             contact.save()
-
+            # messages.success(request, 'contact us stored ')
             #   message_to_admin = "name:{0}\nmobile:{1}\nemail:{2}\nsubject:{3}\nmessage:{4}".format(name,mobile,email,subject,message)  
             #   send_mail(subject, message, 'sender@gmail.com', ['admin@gmail.com'], fail_silently=False)
                

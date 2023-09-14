@@ -82,6 +82,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # "django.middleware.cache.UpdateCacheMiddleware",
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -91,12 +93,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # "django.middleware.cache.UpdateCacheMiddleware",
-    # "django.middleware.common.CommonMiddleware",
-    # "django.middleware.cache.FetchFromCacheMiddleware",
 
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 
+    # "django.middleware.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = 'djshop.urls'
@@ -177,7 +177,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 
-LANGUAGE_CODE = 'fa-ir'
+LANGUAGE_CODE = 'fa-IR'
 
 TIME_ZONE = 'Asia/Tehran'
 
@@ -218,12 +218,12 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 
 
@@ -244,7 +244,8 @@ CACHES = {
     "default": {
         # "BACKEND": "django.core.cache.backends.redis.RedisCache",
         # "LOCATION": "redis://127.0.0.1:6379",
-
+        # "LOCATION": "redis://username:password@127.0.0.1:6379",
+        
         # "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         # "LOCATION": "c:/foo/bar",
 
@@ -279,7 +280,7 @@ JALALI_DATE_DEFAULTS = {
 }
 
 GRAPHENE = {
-    "SCHEMA": "djshop.schema.schema"
+    "SCHEMA": "apps.core.schema.schema"
 }
 
 CELERY_TIMEZONE = TIME_ZONE

@@ -25,9 +25,12 @@ services:
       - POSTGRES_DB=djshop
       - POSTGRES_USER=djshop
       - POSTGRES_PASSWORD=1234
-  redis:
+  redis_cache:
     ports:
       - 6379:6379
+  redis_celery:
+    ports:
+      - 6378:6378
   rabitmq:
     ports:
       - 5672:5672

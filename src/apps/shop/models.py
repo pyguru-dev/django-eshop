@@ -348,7 +348,10 @@ class Shipping(BaseModel):
         max_length=255, verbose_name=_('توضیحات'), null=True, blank=True)
     logo = models.CharField(
         max_length=255, verbose_name=_('لوگو'), null=True, blank=True)
-
+    
+    class Meta:
+        verbose_name = _('روش حمل و نقل')
+        verbose_name_plural = _('روش حمل و نقل ها')
 
 class Warranty(BaseModel):
     title = models.CharField(
