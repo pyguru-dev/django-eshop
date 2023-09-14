@@ -1,7 +1,7 @@
 from typing import Any, List, Tuple
 from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
-from .models import Brand, Discount, Giftcode, Product, ProductAttribute, Order, OrderItem, ProductCategory, ProductImages, Shipping, Warranty
+from .models import Brand, Discount, Giftcode, Product, ProductAttribute, Order, OrderItem, ProductCategory, ProductImages, ProductRecommendation, Shipping, Warranty
 
 
 class ProductImagesInline(admin.TabularInline):
@@ -11,6 +11,10 @@ class ProductAttributeInline(admin.TabularInline):
     model = ProductAttribute
     extra = 1
 
+class ProductRecommendationInline(admin.StackedInline):
+    model = ProductRecommendation
+    extra = 2
+    fk_name = 'primary'
 
 class AttributeCountFilter(admin.SimpleListFilter):
     parameter_name = 'attr_count'

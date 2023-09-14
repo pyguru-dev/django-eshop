@@ -152,7 +152,8 @@ class Product(BaseModel):
     # attributes = models.ManyToManyField('ProductAttribute', through='ProductAttributeValue')
 
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
-
+    # recommended_products = models.ManyToManyField('catalog.Proudct',through='ProductRecommendation', blank=True)
+    
     class Meta:
         verbose_name = _('محصول')
         verbose_name_plural = _('محصولات')
@@ -166,7 +167,8 @@ class Product(BaseModel):
 
 class ProductImages(BaseModel):
     # product - image - alt -  order priority
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        Product, related_name='images', on_delete=models.CASCADE)
 
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
@@ -187,6 +189,17 @@ class ProductImages(BaseModel):
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
+
+
+class ProductRecommendation(BaseModel):
+    primary = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='primary_recommendation')
+    recommendation = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rank = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        unique_together = ('primary', 'recommendation')
+        ordering = ('primary', '-rank')
 
 
 class Order(BaseModel):

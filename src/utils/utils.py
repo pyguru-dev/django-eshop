@@ -1,3 +1,5 @@
+from asgiref.sync import sync_to_async
+from django.core.mail import send_mail
 import time
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.http import Http404
@@ -70,6 +72,7 @@ def time_of_execution(func):
         return result
     return wrapper
 
+
 def superuser_only(func):
     @wraps(func)
     def wrapper(request, *args, **kwargs):
@@ -78,6 +81,7 @@ def superuser_only(func):
         return func(request, *args, **kwargs)
     return wrapper
 
+
 def get_ip_address(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -85,7 +89,16 @@ def get_ip_address(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
-    
+
+
+async def send_async_mail(subject, message, from_mail, to_mail=[]):
+    print('sending mail .............')
+    async_send_mail = sync_to_async(send_mail, thread_sensitive=False)
+    await async_send_mail(subject, message, from_mail, to_mail, fail_silently=False)
+    print('mail sent .............')
+    # asyncio.create_task(async_send_mail('subject', 'message', 'from@gmail.com', ['to_gmail.com'], fail_silently=False))
+
+
 
 class TokenGenerator(PasswordResetTokenGenerator):
     pass
@@ -96,4 +109,3 @@ class TokenGenerator(PasswordResetTokenGenerator):
 
 
 account_activation_token = TokenGenerator()
-
