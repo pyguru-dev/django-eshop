@@ -1,20 +1,25 @@
+from import_export.admin import ExportActionModelAdmin
 from typing import Any, List, Tuple
 from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 from django.contrib import admin
 from .models import Brand, Discount, Giftcode, Product, ProductAttribute, Order, OrderItem, ProductCategory, ProductImages, ProductRecommendation, Shipping, Warranty
 
 
 class ProductImagesInline(admin.TabularInline):
     model = ProductImages
-    
+
+
 class ProductAttributeInline(admin.TabularInline):
     model = ProductAttribute
     extra = 1
+
 
 class ProductRecommendationInline(admin.StackedInline):
     model = ProductRecommendation
     extra = 2
     fk_name = 'primary'
+
 
 class AttributeCountFilter(admin.SimpleListFilter):
     parameter_name = 'attr_count'
@@ -53,38 +58,53 @@ class ProductAdmin(ImportExportModelAdmin):
     def enable_track_stock(self, request, queryset):
         queryset.update(track_stock=True)
 
+
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = False
+
 
 @admin.register(Order)
 class OrderAdmin(ImportExportModelAdmin):
     list_display = []
     # inlines = [OrderItemInline]
-    
+
+
 @admin.register(Shipping)
 class ShippingAdmin(ImportExportModelAdmin):
     list_display = []
-    
+
+
 @admin.register(Warranty)
 class WarrantyAdmin(ImportExportModelAdmin):
     list_display = []
-    
+
+
 @admin.register(Giftcode)
 class GiftcodeAdmin(ImportExportModelAdmin):
     list_display = []
-    
+
+
 @admin.register(Discount)
 class DiscountAdmin(ImportExportModelAdmin):
     list_display = []
-    
+
+
+class BrandResource(resources.ModelResource):
+    class Meta:
+        model = Brand
+        fields = ('id','title')
+
+
 @admin.register(Brand)
-class BrandAdmin(ImportExportModelAdmin):
+class BrandAdmin(ExportActionModelAdmin, ImportExportModelAdmin):
+    resource_class = BrandResource
     list_display = ['title', 'slug']
     prepopulated_fields = {
         'slug': ('title',)
     }
-    
+
+
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(ImportExportModelAdmin):
     list_display = []

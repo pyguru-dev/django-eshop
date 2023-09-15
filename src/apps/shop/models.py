@@ -82,6 +82,9 @@ class Brand(BaseModel):
     class Meta:
         verbose_name = _("برند")
         verbose_name_plural = _("برند ها")
+        
+    def __str__(self) -> str:
+        return self.title
 
 
 class ProductCategory(MP_Node):
@@ -356,7 +359,9 @@ class Shipping(BaseModel):
 class Warranty(BaseModel):
     title = models.CharField(
         max_length=255, unique=True, verbose_name=_('عنوان'))
-
+    slug = models.SlugField(
+        unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
+    
     class Meta:
         verbose_name = _('گارانتی')
         verbose_name_plural = _('گارانتی ها')

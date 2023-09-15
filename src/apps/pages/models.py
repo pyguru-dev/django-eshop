@@ -5,11 +5,15 @@ from apps.core.models import BaseModel
 
 
 class ContactSubject(BaseModel):
-    title = models.CharField(max_length=250, unique=True)
+    title = models.CharField(max_length=250, unique=True, verbose_name=_('عنوان'))
 
     class Meta:
         verbose_name = _('موضوع تماس با ما')
         verbose_name_plural = _('موضوع تماس با ما ها')
+
+    def __str__(self) -> str:
+        return self.title
+
 
 class ContactModel(BaseModel):
     name = models.CharField(max_length=100, verbose_name=_('نام'))
@@ -28,17 +32,25 @@ class ContactModel(BaseModel):
 
 
 class FaqGroup(BaseModel):
-    title = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100, unique=True, verbose_name=_('عنوان'))
 
     class Meta:
         verbose_name = _('گروه سوالات متداول')
         verbose_name_plural = _('گروه سوالات متداول ها')
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Faq(BaseModel):
-    question = models.CharField(max_length=255, unique=True,verbose_name=_('سوال'))
-    answer = models.CharField(max_length=255, unique=True,verbose_name=_('پاسخ'))
+    question = models.CharField(
+        max_length=255, unique=True, verbose_name=_('سوال'))
+    answer = models.CharField(
+        max_length=255, unique=True, verbose_name=_('پاسخ'))
 
     class Meta:
         verbose_name = _('سوال متداول')
         verbose_name_plural = _('سوال متداول ها')
+
+    def __str__(self) -> str:
+        return self.question

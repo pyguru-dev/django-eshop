@@ -5,7 +5,8 @@ services:
     build:
       context: .
     command: >
-      sh -c "python manage.py migrate && 
+      sh -c "python manage.py makemigration &&
+             python manage.py migrate && 
              python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
@@ -14,7 +15,6 @@ services:
       - ./data/web:/vol/web
     depends_on:
       - db
-
   db:
     image: postgres:15.4
     ports:
@@ -34,6 +34,15 @@ services:
   rabitmq:
     ports:
       - 5672:5672
-  
+  meilisearch:
+    image: getmeili/meilisearch
+    environment:
+      - MEILI_MASTER_KEY=TESTKEYLOCAL
+    volumes:
+      - meilisearch-volume:/data.ms
+    ports:
+      - 7700:7700
+
 volumes:
   djshop-data:
+  meilisearch-volume: 

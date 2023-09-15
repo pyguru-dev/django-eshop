@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+# from apps.accounts.models import User
 
 from apps.core.managers import SoftDeleteManager
 
@@ -15,17 +16,19 @@ class BaseModel(models.Model):
 
     uuid = models.UUIDField(
         unique=True, default=str(uuid.uuid4()), editable=False)
-    is_deleted = models.BooleanField(null=True, blank=True, editable=False)
+    is_deleted = models.BooleanField(default=False,null=True, blank=True, editable=False)
     deleted_at = models.DateTimeField(
         null=True, blank=True, editable=False, verbose_name=_('تاریخ حذف'))
+    # deleted_by = models.ForeignKey(User, null=True)
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name=_('تاریخ بروزرسانی'))
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name=_('تاریخ ثبت'))
 
-    def delete(self, using=None, keep_parents=False):
+    def delete(self, user_id=None):
         self.is_deleted = True
         self.deleted_at = timezone.now()
+        # self.deleted_by = user_id
         self.save()
 
     def hard_delete(self):

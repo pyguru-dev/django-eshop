@@ -1,2 +1,10 @@
 add qraphql
+add oauth login google
+add star rating for products, posts
+add meiliseach or elasticsearch
+add django-social-share
+add django-hitcount
+add django-comments-dab
+add django-recaptcha
+add django-treenode for categories
 

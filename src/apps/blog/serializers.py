@@ -1,16 +1,19 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.serializers import HyperlinkedModelSerializer
+from taggit.serializers import (TagListSerializerField,
+                                TaggitSerializer)
 from .models import BlogCategory, Post, Comment
 from apps.core.models import Tag
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(HyperlinkedModelSerializer):
     class Meta:
         model = BlogCategory
         fields = ['name', 'url']
 
 
-class CreateCategoryNodeSerializer(serializers.HyperlinkedModelSerializer):
+class CreateCategoryNodeSerializer(HyperlinkedModelSerializer):
 
     parent = serializers.IntegerField(required=False)
 
@@ -40,15 +43,17 @@ class CategoryTreeSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'is_active', 'children']
 
 
-class TagSerializer(serializers.HyperlinkedModelSerializer):
+class TagSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = Tag
         fields = ['id', 'name', 'url']
 
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
+# TaggitSerializer
+class PostSerializer(HyperlinkedModelSerializer):
     category = CategorySerializer(many=False)
     # tags = TagSerializer(many=True)
+    # tags = TagListSerializerField()
 
     class Meta:
         model = Post

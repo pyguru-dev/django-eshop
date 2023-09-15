@@ -87,7 +87,7 @@ class TagViewSet(ModelViewSet):
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.published.all()
+    queryset = Post.published.select_related('category').all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 

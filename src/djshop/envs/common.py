@@ -1,3 +1,4 @@
+from import_export.formats.base_formats import CSV, XLSX, XLS, JSON
 import os
 import sys
 from pathlib import Path
@@ -77,13 +78,12 @@ INSTALLED_APPS = [
     'taggit',
     'django_cleanup.apps.CleanupConfig',
 
-
     'utils',
 ]
 
 MIDDLEWARE = [
     # "django.middleware.cache.UpdateCacheMiddleware",
-    
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -245,7 +245,7 @@ CACHES = {
         # "BACKEND": "django.core.cache.backends.redis.RedisCache",
         # "LOCATION": "redis://127.0.0.1:6379",
         # "LOCATION": "redis://username:password@127.0.0.1:6379",
-        
+
         # "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         # "LOCATION": "c:/foo/bar",
 
@@ -278,6 +278,8 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
+
+IMPORT_EXPORT_FORMATS = [CSV]
 
 GRAPHENE = {
     "SCHEMA": "apps.core.schema.schema"

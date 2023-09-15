@@ -145,10 +145,9 @@
                     class="form-control"
                     required
                   >
-                  <option>مدیریت</option>
-                  <option>مدیریت</option>
-                  <option>مدیریت</option>
-                  <option>مدیریت</option>
+                {% for subject in subjects %}
+                  <option>{{ subject.title }} </option>
+                  {% endfor %}
                 </select>
                 </div>
               </div>
