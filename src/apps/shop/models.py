@@ -365,3 +365,27 @@ class Warranty(BaseModel):
     class Meta:
         verbose_name = _('گارانتی')
         verbose_name_plural = _('گارانتی ها')
+
+
+class Color(BaseModel):
+    title = models.CharField(
+        max_length=255, unique=True, verbose_name=_('عنوان'))
+    slug = models.SlugField(
+        unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
+    hex_color = models.CharField(max_length=100)
+    
+    class Meta:
+        verbose_name = _('رنگ')
+        verbose_name_plural = _('رنگ ها')
+
+
+class Banner(BaseModel):
+    title = models.CharField(
+        max_length=255, unique=True, verbose_name=_('عنوان'))
+    
+    class Meta:
+        verbose_name = _('بنر')
+        verbose_name_plural = _('بنر ها')
+        
+    def __str__(self) -> str:
+        return self.title

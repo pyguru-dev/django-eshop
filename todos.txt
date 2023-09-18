@@ -7,4 +7,6 @@ add django-hitcount
 add django-comments-dab
 add django-recaptcha
 add django-treenode for categories
-
+add pwa
+add caching layer
+add pylint

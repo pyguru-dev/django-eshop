@@ -18,6 +18,7 @@ urlpatterns = [
     path('cart/', CartView.as_view(), name='cart'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('order/', CartView.as_view(), name='order'),
+    path('order/<uuid:uuid>/invoice', CartView.as_view(), name='order_invoice'),
     path('compare/', CompareView.as_view(), name='compare'),
     path('wishlist/', WishListView.as_view(), name='wishlist'),
 ]

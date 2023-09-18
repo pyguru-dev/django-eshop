@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'apps.friendships.apps.FriendshipConfig',
     'apps.shortener.apps.ShortenerConfig',
     'apps.notifications.apps.NotificationsConfig',
+    'apps.vendors.apps.VendorsConfig',
 
 
 
@@ -75,9 +76,10 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'jalali_date',
     "graphene_django",
+    "graphql_auth",
     'taggit',
     'django_cleanup.apps.CleanupConfig',
-
+    "django_filters",
     'utils',
 ]
 

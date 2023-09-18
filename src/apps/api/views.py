@@ -1,8 +1,10 @@
-from rest_framework.throttling import UserRateThrottle
 import datetime
 import requests
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from rest_framework.throttling import UserRateThrottle
 from rest_framework import status, generics, mixins, viewsets
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import NotAcceptable
@@ -12,8 +14,8 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from apps.api.renderers import UserRenderer
 from apps.api.serializers import RequestOtpResponseSerializer, RequestOtpSerializer, UserChangePasswordSerializer, UserForgotPasswordSerializer, UserLoginSerializer, UserRegisterSerializer, VerifyOtpSerializer
-from apps.shop.models import Cart, Product
-from apps.shop.serializers import ProductSerializer
+from apps.shop.models import Brand, Cart, Product
+from apps.shop.serializers import BrandSerializer, ProductSerializer
 from apps.blog.models import BlogCategory, Post
 from apps.payments.models import Gateway, Payment
 from apps.payments.serializers import PaymentSerializer, GatewaySerializer
@@ -21,8 +23,8 @@ from apps.blog.serializers import (CategoryTreeSerializer, CreateCategoryNodeSer
                                    PostSerializer, CategorySerializer, TagSerializer)
 from apps.accounts.models import OtpRequest, User
 from apps.core.models import Tag
-from django.db.models import Q
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from apps.vendors.models import Vendor
+from apps.vendors.serializers import VendorSerializer
 
 
 class ProductListView(APIView):
@@ -50,11 +52,11 @@ class ProductDetailView(APIView):
 
 class CategoryListView(APIView):
     def get_queryset(self):
-        return Category.objects.all()
+        return BlogCategory.objects.all()
 
     def get(self, request):
 
-        categories = Category.objects.all()
+        categories = BlogCategory.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
@@ -244,18 +246,6 @@ class UserChangePasswordAPIView(APIView):
         if serializer.is_valid(raise_exception=True):
             return Response(context, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(["POST"])
-# def register(request):
-#     if request.method == 'POST':
-#         serializer = RegisterSerializer(data=request.data)
-#         data = {}
-#         if serializer.is_valid():
-#             user = serializer.save()
-#             data['token'] = Token.objects.get(user=user).key
-#             data['message'] = 'register is ok'
-#             return Response(data)
 
 
 class GetTokenView(APIView):
@@ -459,3 +449,15 @@ class VerifyOtpAPIView(APIView):
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VendorViewSet(ModelViewSet):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class BrandListAPIView(ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly ]

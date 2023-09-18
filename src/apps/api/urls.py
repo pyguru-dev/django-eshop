@@ -27,10 +27,12 @@ router = routers.DefaultRouter()
 router.register(r'tags', TagViewSet, basename='tag')
 router.register(r'posts', PostViewSet, basename='post')
 router.register(r'products', ProductViewSet, basename='product')
-# router.register(r'banks', ProductViewSet, basename='bank')
-# router.register(r'shippings', ProductViewSet, basename='shipping')
+# router.register(r'banks', BankViewSet, basename='bank')
+# router.register(r'shippings', ShippingViewSet, basename='shipping')
 # router.register(r'products', ProductViewSet, basename='product')
-# router.register(r'categories', CategoryViewSet)
+# router.register(r'blog/categories', BlogCategoryViewSet)
+# router.register(r'shop/categories', ProductCategoryViewSet)
+# router.register(r'vendors', VendorViewSet, basename='vendor')
 
 
 urlpatterns = [
@@ -49,9 +51,6 @@ urlpatterns = [
     
         
     path('', include(router.urls)),
-    path('categories/', CategoryListView.as_view(),),    
-    
-    
     
     
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
