@@ -1,9 +1,11 @@
+from io import BytesIO
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from treebeard.mp_tree import MP_Node
 from ckeditor.fields import RichTextField
-from apps.accounts.models import User
+from PIL import Image
+from apps.accounts.models import Address, User
 from apps.core.models import BaseModel
 from apps.payments.models import Payment
 
@@ -82,7 +84,7 @@ class Brand(BaseModel):
     class Meta:
         verbose_name = _("برند")
         verbose_name_plural = _("برند ها")
-        
+
     def __str__(self) -> str:
         return self.title
 
@@ -142,7 +144,7 @@ class Product(BaseModel):
     published_status = models.CharField(
         max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
 
-    track_stock = models.BooleanField(default=True)
+    in_stock = models.BooleanField(default=True)
     require_shipping = models.BooleanField(default=True)
     options = models.ManyToManyField('Option', blank=True)
 
@@ -156,7 +158,7 @@ class Product(BaseModel):
 
     # tags = models.ManyToManyField("Tag", verbose_name='tags', related_name='posts')
     # recommended_products = models.ManyToManyField('catalog.Proudct',through='ProductRecommendation', blank=True)
-    
+
     class Meta:
         verbose_name = _('محصول')
         verbose_name_plural = _('محصولات')
@@ -169,13 +171,13 @@ class Product(BaseModel):
 
 
 class ProductImages(BaseModel):
-    # product - image - alt -  order priority
+    # order priority
     product = models.ForeignKey(
         Product, related_name='images', on_delete=models.CASCADE)
 
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
-
+    image = models.ImageField(upload_to='uploads/product/images/', blank=True, null=True)    
+    alt_text = models.CharField(max_length=255, null=True, blank=True)
+    
     def save(self, *args, **kwargs):
         self.thumbnail = self.make_thumbnail(self.image)
 
@@ -208,7 +210,8 @@ class ProductRecommendation(BaseModel):
 class Order(BaseModel):
 
     class OrderStatus(models.TextChoices):
-        processing = 'Processing'
+        processing = 'p', _('Processing')
+        delivered = 'd', _('Delivered')
 
     ORDER_STATUS = (
         ('p', 'Processing'),
@@ -221,7 +224,9 @@ class Order(BaseModel):
         verbose_name = _('سفارش')
         verbose_name_plural = _('سفارش ها')
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='orders')
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     tracking_code = models.CharField(
         max_length=150, null=False, blank=False, unique=True, verbose_name=_('کد پیگیری'))
@@ -229,9 +234,12 @@ class Order(BaseModel):
         Payment, on_delete=models.CASCADE)
     order_status = models.CharField(
         max_length=40, choices=OrderStatus.choices, default='pending')
-    # user, address, shipping, discount, user_description,
-    # user_cancel_description, total_amount, payment_method,
-    # payment_status
+    user_description = models.CharField(
+        max_length=255, verbose_name=_('توضیحات کاربر'), null=True, blank=True)
+    user_cancel_description = models.CharField(
+        max_length=255, verbose_name=_('علت کنسل کردن'), null=True, blank=True)
+    total_amount = models.PositiveBigIntegerField(verbose_name=_('جمع سفارش'), default=0)
+    # shipping, discount,    
 
     def __str__(self):
         return '#' + self.tracking_code
@@ -246,7 +254,7 @@ class OrderItem(BaseModel):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(
-        Order, on_delete=models.CASCADE, related_name='orders')
+        Product, on_delete=models.CASCADE, related_name='order_items')
     quantity = models.PositiveIntegerField(default=0)
     product_amount = models.PositiveBigIntegerField(default=0)
     total_product_amount = models.PositiveBigIntegerField(default=0)
@@ -351,17 +359,18 @@ class Shipping(BaseModel):
         max_length=255, verbose_name=_('توضیحات'), null=True, blank=True)
     logo = models.CharField(
         max_length=255, verbose_name=_('لوگو'), null=True, blank=True)
-    
+
     class Meta:
         verbose_name = _('روش حمل و نقل')
         verbose_name_plural = _('روش حمل و نقل ها')
+
 
 class Warranty(BaseModel):
     title = models.CharField(
         max_length=255, unique=True, verbose_name=_('عنوان'))
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
-    
+
     class Meta:
         verbose_name = _('گارانتی')
         verbose_name_plural = _('گارانتی ها')
@@ -373,7 +382,7 @@ class Color(BaseModel):
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
     hex_color = models.CharField(max_length=100)
-    
+
     class Meta:
         verbose_name = _('رنگ')
         verbose_name_plural = _('رنگ ها')
@@ -382,10 +391,13 @@ class Color(BaseModel):
 class Banner(BaseModel):
     title = models.CharField(
         max_length=255, unique=True, verbose_name=_('عنوان'))
-    
+
     class Meta:
         verbose_name = _('بنر')
         verbose_name_plural = _('بنر ها')
-        
+
     def __str__(self) -> str:
         return self.title
+
+class ProductInventory:
+    pass

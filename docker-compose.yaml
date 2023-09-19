@@ -42,6 +42,11 @@ services:
       - meilisearch-volume:/data.ms
     ports:
       - 7700:7700
+  elasticsearch:
+    image: elasticsearch:7.14.2
+    ports:
+      - 9200:9200
+
 
 volumes:
   djshop-data:

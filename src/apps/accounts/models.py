@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 import uuid
@@ -26,8 +27,8 @@ class City(BaseModel):
 
 
 class ActivationCode(BaseModel):
-    code = models.CharField(max_length=50)
-    expired_at = models.CharField(max_length=50)
+    code = models.CharField(max_length=50, unique=True)
+    expired_at = models.DateTimeField(default=datetime.timedelta(minutes=3))
 
 
 class User(AbstractUser):
@@ -75,8 +76,21 @@ class UserProfile(BaseModel):
 class UserMeta(BaseModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
-# last_logout_at, last_login_at, last_login_ip, last_login_agent,
-# email_verified_at , mobile_verified_at,password_changed_at, is_banned, banned_at, unbanned_at
+    
+    last_login_at = models.DateTimeField(null=True, blank=True)
+    last_login_ip = models.GenericIPAddressField(null=True, blank=True)
+    last_logout_at = models.DateTimeField(null=True, blank=True)
+    last_login_agent = models.TextField(null=True,blank=True)
+    email_verified_at = models.DateTimeField(null=True, blank=True)
+    email_changed_at = models.DateTimeField(null=True, blank=True)
+    mobile_changed_at = models.DateTimeField(null=True, blank=True)
+    mobile_verified_at = models.DateTimeField(null=True, blank=True)
+    username_changed_at = models.DateTimeField(null=True, blank=True)
+    password_changed_at = models.DateTimeField(null=True, blank=True)
+    is_banned = models.BooleanField(default=False)
+    banned_at = models.DateTimeField(null=True, blank=True)
+    unbanned_at = models.DateTimeField(null=True, blank=True)
+
 
 
 class Address(BaseModel):
@@ -88,7 +102,7 @@ class Address(BaseModel):
         City, on_delete=models.CASCADE, related_name='city', verbose_name=_("کاربر"))
     title = models.CharField(max_length=150, verbose_name=_('عنوان'))
     address = models.TextField(verbose_name=_('آدرس'))
-    zip_code = models.CharField(max_length=50, verbose_name=_('کد پستی'))
+    # zip_code = models.CharField(max_length=50, verbose_name=_('کد پستی'))
     default = models.BooleanField(default=False)
 
     # map , receiver_self, receiver_name,

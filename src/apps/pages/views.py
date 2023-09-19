@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import ContactForm
 from .models import ContactSubject, Faq
 from apps.blog.models import Post
+
 # @cache_page(60 * 15)
 class HomePageView(TemplateView):
     template_name = 'pages/index.html'
@@ -20,7 +21,7 @@ class ContactCreateView(CreateView):
     form_class = ContactForm    
     template_name = "pages/contact.html"
     success_url = reverse_lazy('contact_view')  
-      
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["subjects"] = ContactSubject.objects.all()

@@ -1,3 +1,4 @@
+from apps.shop.basket import Basket
 from .cart import Cart
 from .models import Cart as CartModel, ProductCategory
 
@@ -25,3 +26,9 @@ def menu_categories(request):
     categories = ProductCategory.objects.filter(parent=None)
 
     return {'menu_categories': categories}
+
+
+def basket(request):
+    return {
+        'basket' : Basket(request)
+    }

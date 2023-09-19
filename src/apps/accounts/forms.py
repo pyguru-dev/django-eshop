@@ -3,6 +3,8 @@ from typing import Any
 from django import forms
 from django.forms.widgets import PasswordInput
 from django.contrib.auth.forms import UserCreationForm
+
+from apps.payments.models import Bank
 from .models import Address, User
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
@@ -66,12 +68,13 @@ class AccountSettingForm(forms.ModelForm):
     def save(self, commit):
         account = super(AccountSettingForm, self).save(commit=False)
 
-# class AddressForm(forms.ModelForm):
-#     class Meta:
-#         model = Address
-#         fields = ['title', 'zip_code']
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['title']
 
-# class BankForm(forms.ModelForm):
-#     class Meta:
-#         model = Bank
-#         fields = ['title', 'zip_code']
+
+class BankForm(forms.ModelForm):
+    class Meta:
+        model = Bank
+        fields = ['title']

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     CartView, CheckoutView, ProductListView,
     ProductDetailView, CompareView, WishListView,
-    BrandListView, BrandDetailView,
+    BrandListView, BrandDetailView, wishlist_add, wishlist_remove,
 )
 
 
@@ -21,4 +21,6 @@ urlpatterns = [
     path('order/<uuid:uuid>/invoice', CartView.as_view(), name='order_invoice'),
     path('compare/', CompareView.as_view(), name='compare'),
     path('wishlist/', WishListView.as_view(), name='wishlist'),
+    path('wishlist/<int:product_id>/add', wishlist_add, name='wishlist_add'),
+    path('wishlist/<int:product_id>/remove', wishlist_remove, name='wishlist_remove'),
 ]

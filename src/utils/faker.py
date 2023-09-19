@@ -1,5 +1,5 @@
 from faker import Faker
-import faktory
+import factory
 from faker.providers import internet
 from django.conf import settings
 from apps.blog.models import Post
