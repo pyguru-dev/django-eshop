@@ -108,3 +108,6 @@ class BrandAdmin(ExportActionModelAdmin, ImportExportModelAdmin):
 @admin.register(ProductCategory)
 class ProductCategoryAdmin(ImportExportModelAdmin):
     list_display = []
+    prepopulated_fields = {
+        'slug': ('name',)
+    }

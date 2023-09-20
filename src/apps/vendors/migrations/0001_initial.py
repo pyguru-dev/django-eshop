@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Url',
+            name='Vendor',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default='4e9e4c4c-d5d2-4a4f-930e-ab1fe7f7e3fe', editable=False, unique=True)),
@@ -20,12 +20,16 @@ class Migration(migrations.Migration):
                 ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True, verbose_name='تاریخ حذف')),
                 ('updated_at', models.DateTimeField(auto_now=True, verbose_name='تاریخ بروزرسانی')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت')),
-                ('url', models.URLField()),
-                ('slug', models.CharField(max_length=255)),
-                ('visit_count', models.PositiveBigIntegerField(default=0)),
+                ('title', models.CharField(max_length=255)),
+                ('slug', models.SlugField(max_length=255)),
+                ('logo', models.ImageField(upload_to='')),
+                ('short_description', models.CharField(max_length=255)),
+                ('description', models.TextField()),
             ],
             options={
-                'ordering': ('-created_at',),
+                'verbose_name': 'فروشنده',
+                'verbose_name_plural': 'فروشنده ها',
+                'db_table': 'vendors',
             },
         ),
     ]

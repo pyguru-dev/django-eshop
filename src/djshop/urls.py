@@ -28,6 +28,7 @@ urlpatterns = [
     path('check/notification', check_notification_view,
          name="check_notifications"),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 # if settings.DEBUG:

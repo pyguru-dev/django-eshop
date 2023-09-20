@@ -10,11 +10,13 @@ from .views import (
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list'),
-    path('<slug:slug>/detail/', ProductDetailView.as_view(), name='product_detail'),
+    path('<str:slug>/detail/', ProductDetailView.as_view(), name='product_detail'),
     # re_path(r'detail/(?P<article_slug>[-\w]+)/', article_detail, name='article_detail')
-
+    
+    path('categories/', BrandListView.as_view(), name='product_category_list'),
+    path('categories/<str:slug>/', BrandDetailView.as_view(), name='product_category_detail'),
     path('brands/', BrandListView.as_view(), name='brand_list'),
-    path('brands/<slug:slug>/', BrandDetailView.as_view(), name='brand_detail'),
+    path('brands/<str:slug>/', BrandDetailView.as_view(), name='brand_detail'),
     path('cart/', CartView.as_view(), name='cart'),
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('order/', CartView.as_view(), name='order'),

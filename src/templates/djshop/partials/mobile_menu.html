@@ -1,0 +1,142 @@
+ <!-- Start of Mobile Menu -->
+ <div class="mobile-menu-wrapper">
+    <div class="mobile-menu-overlay"></div>
+    <!-- End of .mobile-menu-overlay -->
+
+    <a href="#" class="mobile-menu-close"><i class="close-icon"></i></a>
+    <!-- End of .mobile-menu-close -->
+
+    <div class="mobile-menu-container scrollable">
+      <form action="#" method="get" class="input-wrapper">
+        <input
+          type="text"
+          class="form-control"
+          name="search"
+          autocomplete="off"
+          placeholder="جستجو"
+          required
+        />
+        <button class="btn btn-search" type="submit">
+          <i class="w-icon-search"></i>
+        </button>
+      </form>
+      <!-- End of Search Form -->
+      <div class="tab">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a href="#main-menu" class="nav-link active">منوی اصلی </a>
+          </li>
+          <li class="nav-item">
+            <a href="#categories" class="nav-link">دسته بندیها </a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="main-menu">
+          <ul class="mobile-menu">
+            <li><a href="{% url 'home_view' %}">خانه </a></li>
+            <li>
+              <a href="shop-banner-sidebar.html">فروشگاه </a>
+              <ul>
+                <li>
+                  <a href="#">صفحات فروشگاه </a>
+                  <ul>
+                    <li>
+                      <a href="shop-banner-sidebar.html">بنر با نوار کناری</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">چیدمان فروشگاه </a>
+                  <ul>
+                    <li>
+                      <a href="shop-grid-3cols.html">3 حالت ستون ها </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="vendor-dokan-store.html">فروشنده </a>
+              <ul>
+                <li>
+                  <a href="#">لیست فروشگاه </a>
+                  <ul>
+                    <li>
+                      <a href="vendor-dokan-store-list.html"
+                        >فهرست فروشگاه 1</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="about-us.html">صفحات </a>
+              <ul>
+                <li><a href="{% url 'about_view' %}">درباره ما </a></li>
+                <li><a href="{% url 'contact_view' %}">تماس با ما </a></li>
+                <li><a href="{% url 'wishlist' %}">علاقه مندیها </a></li>
+                <li><a href="{% url 'cart' %}">سبد خرید </a></li>
+                <li><a href="{% url 'checkout' %}">پرداخت </a></li>
+                <li><a href="accounts/">حساب من </a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="tab-pane" id="categories">
+          <ul class="mobile-menu">
+            <li>
+              <a href="shop-fullwidth-banner.html">
+                <i class="w-icon-tshirt2"></i>مدل
+              </a>
+              <ul>
+                <li>
+                  <a href="#">زنانه </a>
+                  <ul>
+                    <li>
+                      <a href="shop-fullwidth-banner.html">تازه رسیده ها </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#">زنانه </a>
+                  <ul>
+                    <li>
+                      <a href="shop-fullwidth-banner.html">تازه رسیده ها </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="shop-fullwidth-banner.html">
+                <i class="w-icon-electronics"></i>الکترونیک
+              </a>
+              <ul>
+                <li>
+                  <a href="#">لپ تاپ و کامپیوتر</a>
+                  <ul>
+                    <li>
+                      <a href="shop-fullwidth-banner.html"
+                        >کامپیوترهای رومیزی</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a
+                href="shop-banner-sidebar.html"
+                class="font-weight-bold text-primary text-uppercase ls-25"
+              >
+                نمایش همه دسته بندیها <i class="w-icon-angle-left"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Mobile Menu -->

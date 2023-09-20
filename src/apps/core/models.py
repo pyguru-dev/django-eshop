@@ -15,7 +15,7 @@ class BaseModel(models.Model):
     objects = SoftDeleteManager()
 
     uuid = models.UUIDField(
-        unique=True, default=str(uuid.uuid4), editable=False)
+        unique=True, default=str(uuid.uuid4()), editable=False)
     is_deleted = models.BooleanField(default=False,null=True, blank=True, editable=False)
     deleted_at = models.DateTimeField(
         null=True, blank=True, editable=False, verbose_name=_('تاریخ حذف'))

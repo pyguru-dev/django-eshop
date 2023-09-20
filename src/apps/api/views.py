@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.tokens import RefreshToken
 import datetime
 import requests
 from django.shortcuts import get_object_or_404
@@ -460,4 +461,4 @@ class VendorViewSet(ModelViewSet):
 class BrandListAPIView(ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly ]
+    permission_classes = [IsAuthenticatedOrReadOnly]

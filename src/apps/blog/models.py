@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from io import BytesIO
 from PIL import Image
 from django.core.files import File
@@ -47,7 +48,7 @@ class Post(BaseModel):
     title = models.CharField(_('عنوان'), max_length=150, db_index=True)
     slug = models.SlugField(
         unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)
-    body = RichTextField(_('متن مقاله'))
+    body = RichTextUploadingField(_('متن مقاله'))
     thumbnail = models.ImageField(
         upload_to="posts/%Y/%m/%d", blank=False, null=False)
     published_status = models.CharField(

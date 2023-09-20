@@ -94,7 +94,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    # 'django.middleware.locale.LocaleMiddleware'
 
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 
@@ -203,6 +203,8 @@ STATICFILES_DIRS = [str(BASE_BASE_DIR.joinpath('static/djshop/'))]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 LOGIN_REDIRECT_URL = 'home_view'
 LOGOUT_REDIRECT_URL = 'home_view'
 
@@ -229,6 +231,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
     ],
 
 
@@ -256,9 +259,47 @@ CACHES = {
 
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
 
+        # "BACKEND": "django_redis.cache.RedisCache",
+        # "LOCATION": "redis://127.0.0.1:6379/1",
+        # "OPTIONS": {
+        #     "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        # "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+        # }
     }
 }
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-',
+                'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ],
+        'extraPlugins': ','.join([
+            'uploadimage',  # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+        # 'height': 300,
+        # 'width': 300,
+    },
+}
+
+# CKEDITOR_RESTRICT_BY_USER = True
 
 JALALI_DATE_DEFAULTS = {
     'Strftime': {
@@ -309,3 +350,6 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 NOTIFICATION_MODEL = 'pages.ContactModel'
+
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_CACHE_ALIAS = "default"

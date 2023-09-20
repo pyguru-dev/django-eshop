@@ -1,6 +1,7 @@
 from io import BytesIO
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from treebeard.mp_tree import MP_Node
 from ckeditor.fields import RichTextField
@@ -88,6 +89,9 @@ class Brand(BaseModel):
     def __str__(self) -> str:
         return self.title
 
+    def get_absolute_url(self):
+        return reverse_lazy("brand_detail",  args=[str(self.slug)])
+
 
 class ProductCategory(MP_Node):
     parent = models.ForeignKey(
@@ -111,6 +115,9 @@ class ProductCategory(MP_Node):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse_lazy("product_category_detail",  args=[str(self.slug)])
 
 
 class Product(BaseModel):
@@ -136,6 +143,7 @@ class Product(BaseModel):
         max_length=255, unique=True, verbose_name=_('عنوان '))
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'), default=None)
+    # short_description 
     body = RichTextField(verbose_name=_('توضیحات '))
     price = models.PositiveBigIntegerField(
         null=False, blank=False, verbose_name=_('قیمت'))
@@ -169,15 +177,19 @@ class Product(BaseModel):
     def has_attribute(self):
         return self.attributes.exists()
 
+    def get_absolute_url(self):
+        return reverse_lazy("product_detail",  args=[str(self.slug)])
+
 
 class ProductImages(BaseModel):
     # order priority
     product = models.ForeignKey(
         Product, related_name='images', on_delete=models.CASCADE)
 
-    image = models.ImageField(upload_to='uploads/product/images/', blank=True, null=True)    
+    image = models.ImageField(
+        upload_to='uploads/product/images/', blank=True, null=True)
     alt_text = models.CharField(max_length=255, null=True, blank=True)
-    
+
     def save(self, *args, **kwargs):
         self.thumbnail = self.make_thumbnail(self.image)
 
@@ -238,8 +250,9 @@ class Order(BaseModel):
         max_length=255, verbose_name=_('توضیحات کاربر'), null=True, blank=True)
     user_cancel_description = models.CharField(
         max_length=255, verbose_name=_('علت کنسل کردن'), null=True, blank=True)
-    total_amount = models.PositiveBigIntegerField(verbose_name=_('جمع سفارش'), default=0)
-    # shipping, discount,    
+    total_amount = models.PositiveBigIntegerField(
+        verbose_name=_('جمع سفارش'), default=0)
+    # shipping, discount,
 
     def __str__(self):
         return '#' + self.tracking_code
@@ -398,6 +411,7 @@ class Banner(BaseModel):
 
     def __str__(self) -> str:
         return self.title
+
 
 class ProductInventory:
     pass

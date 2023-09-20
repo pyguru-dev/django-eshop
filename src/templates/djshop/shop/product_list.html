@@ -232,62 +232,23 @@
                         </div>
                     </div>
                 </nav>
-                <div class="product-wrapper row cols-md-3 cols-sm-2 cols-2">
+                <div class="product-wrapper row cols-md-3 cols-sm-2 cols-2">                   
+                    {% for product in products %}
                     <div class="product-wrap">
                         <div class="product text-center">
                             <figure class="product-media">
-                                <a href="product-default.html">
-                                    <img src="assets/images/shop/1.jpg" alt="Product" width="300"
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ product.thumbnail.url }}" alt="{{ product.title }}" width="300"
                                         height="338" />
+                                    {% comment %} <img src="assets/images/shop/2-2.jpg" alt="Product" width="300"
+                                        height="338" /> {% endcomment %}
                                 </a>
-                                <div class="product-action-horizontal">
-                                    <a href="#" class="btn-product-icon btn-cart w-icon-cart"
-                                        title="افزودن به سبد "></a>
-                                    <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
-                                        title="علاقه مندیها"></a>
-                                    <a href="#" class="btn-product-icon btn-compare w-icon-compare"
-                                        title="مقایسه"></a>
-                                    <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                                        title="نمایش سریع"></a>
-                                </div>
-                            </figure>
-                            <div class="product-details">
-                                <div class="product-cat">
-                                    <a href="shop-banner-sidebar.html">الکترونیکی </a>
-                                </div>
-                                <h3 class="product-name">
-                                    <a href="product-default.html">تلویزیون 3 بعدی</a>
-                                </h3>
-                                <div class="ratings-container">
-                                    <div class="ratings-full">
-                                        <span class="ratings" style="width: 100%;"></span>
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <a href="product-default.html" class="rating-reviews">(3 نظر )</a>
-                                </div>
-                                <div class="product-pa-wrapper">
-                                    <div class="product-price">
-                                        480000 - 850000 تومان
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-wrap">
-                        <div class="product text-center">
-                            <figure class="product-media">
-                                <a href="product-default.html">
-                                    <img src="assets/images/shop/2-1.jpg" alt="Product" width="300"
-                                        height="338" />
-                                    <img src="assets/images/shop/2-2.jpg" alt="Product" width="300"
-                                        height="338" />
-                                </a>
-                                <div class="product-countdown-container">
+                                {% comment %} <div class="product-countdown-container">
                                     <div class="product-countdown countdown-compact" data-until="2021, 9, 9"
                                         data-format="DHMS" data-compact="false"
                                         data-labels-short="Days, Hours, Mins, Secs">
                                         00:00:00:00</div>
-                                </div>
+                                </div> {% endcomment %}
                                 <div class="product-action-horizontal">
                                     <a href="#" class="btn-product-icon btn-cart w-icon-cart"
                                         title="افزودن به سبد "></a>
@@ -321,7 +282,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>   
+                    {% empty %}
+                    
+                    {% endfor %}                
                 </div>
 
                 <div class="toolbox toolbox-pagination justify-content-between">

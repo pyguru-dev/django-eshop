@@ -4,11 +4,11 @@ from .models import Comment, Post
 from django.utils.text import slugify
 
 
-@receiver(pre_save, sender=Post)
-def create_post(sender, instance, created, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = create_unique_slug(instance)
-        instance.save()
+# @receiver(pre_save, sender=Post)
+# def create_post(sender, instance, created, *args, **kwargs):
+#     if not instance.slug:
+#         instance.slug = create_unique_slug(instance)
+#         instance.save()
 
 # @receiver(post_save, sender=Vote)
 # def update_votes(sender,instance, **kwargs):

@@ -37,7 +37,7 @@ class PostAdmin(ImportExportModelAdmin):
     # fields = ['title', 'body', 'published_status']
     fieldsets = (
         (None, {'fields': ('title', 'body', 'author', 'category')}),
-        ("Status", {'fields': ('published_status',)})
+        ("وضعیت", {'fields': ('published_status',)})
     )
     # filter_horizontal = ['tags']
     # resource_class = PostResource

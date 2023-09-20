@@ -17,11 +17,11 @@ class ProductDetailView(DetailView):
     template_name = 'shop/product_detail.html'
     queryset = Product.objects.all()
 
-    def get_queryset(self):
-        order_id = self.kwargs['pk']
-        order = Order.objects.get(id=order_id)
-        order_items = OrderItem.objects.filter(order=order)
-        return order_items
+    # def get_queryset(self):
+    #     order_id = self.kwargs['pk']
+    #     order = Order.objects.get(id=order_id)
+    #     order_items = OrderItem.objects.filter(order=order)
+    #     return order_items
 
     # related_products = Product.objects.filter(category=product.category).exclude(pk=product.id)
 
