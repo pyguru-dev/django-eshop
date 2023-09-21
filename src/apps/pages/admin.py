@@ -12,10 +12,10 @@ class ContactSubjectAdmin(admin.ModelAdmin):
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-    # list_display = ['name']
+    # list_display = ['question', 'created_at]
     pass
 
 @admin.register(FaqGroup)
 class FaqGroupAdmin(admin.ModelAdmin):
-    # list_display = ['name']
-    pass
+    list_display = ['title', 'created_at']
+    

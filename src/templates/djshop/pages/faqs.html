@@ -34,23 +34,26 @@
         </section>
 
         <section class="mb-6">
-            <h4 class="title title-center mb-5">اطلاعات حمل و نقل </h4>
-            <div class="row">
-                <div class="col-md-6 mb-8">
-                    <div class="accordion accordion-bg accordion-gutter-md accordion-border">
-                        <div class="card">
-                            <div class="card-header">
-                                <a href="#collapse1-1" class="collapse">چه روش های حمل و نقل موجود است؟</a>
-                            </div>
-                            <div id="collapse1-1" class="card-body expanded">
-                                <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                                    مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای .
-                                </p>
-                            </div>
-                        </div>                       
-                    </div>
-                </div>                
-            </div>
+            {% for group in faqGroups %}            
+                <h4 class="title title-center mb-5">{{ group.title }}</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-8">
+                        <div class="accordion accordion-bg accordion-gutter-md accordion-border">
+                            <div class="card">
+                                <div class="card-header">
+                                    <a href="#collapse1-1" class="collapse">چه روش های حمل و نقل موجود است؟</a>
+                                </div>
+                                <div id="collapse1-1" class="card-body expanded">
+                                    <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+                                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای .
+                                    </p>
+                                </div>
+                            </div>                       
+                        </div>
+                    </div>                
+                </div>
+                
+            {% endfor %}
             
         </section>
 

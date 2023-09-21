@@ -8,6 +8,12 @@ from django.utils.translation import gettext_lazy as _
 from apps.core.managers import SoftDeleteManager
 
 
+
+class PublishStatusChoice(models.TextChoices):
+    published = 'p', _('منتشر شده')
+    draft = 'd', _('پیش نویس')
+
+
 class BaseModel(models.Model):
     class Meta:
         abstract = True

@@ -10,5 +10,4 @@ add django-treenode for categories
 add pwa
 add caching layer
 add pylint
-
 create product unique code 

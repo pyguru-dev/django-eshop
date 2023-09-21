@@ -3,20 +3,18 @@ from io import BytesIO
 from PIL import Image
 from django.core.files import File
 import datetime
-from django.db.models.query import QuerySet
 from django.urls import reverse
 from django.db import models
 from apps.accounts.models import User
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
-from ckeditor.fields import RichTextField
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from treebeard.mp_tree import MP_Node
 from apps.core.managers import PublishedManager
-from apps.core.models import BaseModel
+from apps.core.models import PublishStatusChoice, BaseModel
 from utils.utils import jalali_converter
 from taggit.managers import TaggableManager
 # from colorfield.fields import ColorField
@@ -38,10 +36,6 @@ class Rate(BaseModel):
 class Post(BaseModel):
     objects = models.Manager()
     published = PublishedManager()
-    PUBLISHED_STATUS = (
-        ('p', 'منتشر شده'),
-        ('d', 'پیش نویس'),
-    )
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, limit_choices_to={'is_staff': True}, related_name='posts', verbose_name=_('نویسنده'))
@@ -50,9 +44,9 @@ class Post(BaseModel):
         unique=True, verbose_name=_('اسلاگ'), allow_unicode=True, default=None)
     body = RichTextUploadingField(_('متن مقاله'))
     thumbnail = models.ImageField(
-        upload_to="posts/%Y/%m/%d", blank=False, null=False)
+        upload_to="posts/%Y/%m/%d")
     published_status = models.CharField(
-        max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
+        max_length=1, choices=PublishStatusChoice.choices, default='d', verbose_name=_('وضعیت انتشار'))
     category = models.ForeignKey(
         'BlogCategory', verbose_name=_('دسته بندی'), on_delete=models.CASCADE, )
     # tags = models.ManyToManyField("Tag", verbose_name=_('برچسب ها'), related_name='posts')
@@ -147,6 +141,9 @@ class BlogCategory(MP_Node):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("blog_category_detail",  args=[str(self.slug)])
 
 
 class RecyclePost(Post):

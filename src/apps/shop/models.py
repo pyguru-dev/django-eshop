@@ -9,6 +9,7 @@ from PIL import Image
 from apps.accounts.models import Address, User
 from apps.core.models import BaseModel
 from apps.payments.models import Payment
+from apps.core.models import PublishStatusChoice
 
 
 class ProductAttributeValue(BaseModel):
@@ -74,13 +75,16 @@ class Option(BaseModel):
 
 
 class Brand(BaseModel):
-    # country_id, en_title, site_link, description
+    # country_id, description
     title = models.CharField(
-        max_length=255, blank=False, null=False, unique=True, verbose_name=_('عنوان'))
+        max_length=255, unique=True, verbose_name=_('عنوان'))
+    en_title = models.CharField(
+        max_length=255, unique=True, verbose_name=_('عنوان انگلیسی'))
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'))
     logo = models.ImageField(
-        upload_to='brands/', null=False, blank=False, verbose_name=_('لوگو'))
+        upload_to='brands/', verbose_name=_('لوگو'))
+    site_link = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = _("برند")
@@ -97,7 +101,7 @@ class ProductCategory(MP_Node):
     parent = models.ForeignKey(
         'self', verbose_name=_('دسته بندی والد'), blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, unique=True,
-                            blank=False, null=False, db_index=True, verbose_name=_('عنوان'))
+                            db_index=True, verbose_name=_('عنوان'))
     slug = models.SlugField(max_length=255, unique=True,
                             verbose_name=_('اسلاگ'), allow_unicode=True)
     description = models.TextField(
@@ -122,10 +126,6 @@ class ProductCategory(MP_Node):
 
 class Product(BaseModel):
     # en_title, sku,product_status : approved - rejected  , ...
-    PUBLISHED_STATUS = (
-        ('p', 'Published'),
-        ('d', 'Draft'),
-    )
 
     class ProductTypeChoice(models.TextChoices):
         standalone = 'standalone'
@@ -143,14 +143,14 @@ class Product(BaseModel):
         max_length=255, unique=True, verbose_name=_('عنوان '))
     slug = models.SlugField(
         unique=True, allow_unicode=True, verbose_name=_('اسلاگ'), default=None)
-    # short_description 
+    # short_description
     body = RichTextField(verbose_name=_('توضیحات '))
     price = models.PositiveBigIntegerField(
-        null=False, blank=False, verbose_name=_('قیمت'))
+        verbose_name=_('قیمت'))
     thumbnail = models.ImageField(
         upload_to="posts/%Y/%m/%d", verbose_name=_('تصویر شاخص'))
     published_status = models.CharField(
-        max_length=1, choices=PUBLISHED_STATUS, default='d', verbose_name=_('وضعیت انتشار'))
+        max_length=1, choices=PublishStatusChoice.choices, default='d', verbose_name=_('وضعیت انتشار'))
 
     in_stock = models.BooleanField(default=True)
     require_shipping = models.BooleanField(default=True)
@@ -241,7 +241,7 @@ class Order(BaseModel):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     tracking_code = models.CharField(
-        max_length=150, null=False, blank=False, unique=True, verbose_name=_('کد پیگیری'))
+        max_length=150, unique=True, verbose_name=_('کد پیگیری'))
     payment = models.ForeignKey(
         Payment, on_delete=models.CASCADE)
     order_status = models.CharField(

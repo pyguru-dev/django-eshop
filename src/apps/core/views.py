@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def error404_handler(request, *args, **argv):
+    return render(request, "errors/404.html", {})

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.views.generic import TemplateView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from .models import Order, OrderItem, Product, Wishlist
+from .models import Brand, Order, OrderItem, Product, ProductCategory, Wishlist
 
 
 class ProductListView(ListView):
@@ -30,12 +30,28 @@ class CartView(TemplateView):
     template_name = "shop/cart.html"
 
 
-class BrandListView(TemplateView):
+class BrandListView(ListView):
+    model = Brand
     template_name = "shop/brand_list.html"
+    context_object_name = 'brands'
 
 
-class BrandDetailView(TemplateView):
+class BrandDetailView(DetailView):
+    model = Brand
     template_name = "shop/brand_detail.html"
+    context_object_name = 'brand'
+
+
+class CategoryListView(ListView):
+    model = ProductCategory
+    template_name = "shop/category_list.html"
+    context_object_name = 'categories'
+
+
+class CategoryDetailView(DetailView):
+    model = ProductCategory
+    template_name = "shop/category_detail.html"
+    context_object_name = 'category'
 
 
 class CompareView(TemplateView):
@@ -50,7 +66,6 @@ class WishListView(ListView):
     template_name = "shop/wishlist.html"
     model = Wishlist
     context_object_name = 'wishlist'
-    
 
 
 @login_required(login_url='login_view')
@@ -64,8 +79,6 @@ def wishlist_add(request, product_id):
         messages.success(request, 'added')
 
 
-
 @login_required(login_url='login_view')
 def wishlist_remove(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-

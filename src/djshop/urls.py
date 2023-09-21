@@ -8,6 +8,8 @@ from graphene_django.views import GraphQLView
 from admin_notification.views import check_notification_view
 from apps.core.schema import schema
 from apps.core.urls import sitemaps
+from apps.core.views import error404_handler
+from django.conf.urls import handler404
 
 urlpatterns = [
     path('', include('apps.pages.urls')),
@@ -35,4 +37,4 @@ urlpatterns = [
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# handler404 = 'apps.core.views.page_not_found'
+handler404 = error404_handler

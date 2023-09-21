@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load social_share %}
+
 {% block title %} {{ post.title }} {% endblock title %}
 
 {% block content %}
@@ -28,20 +30,21 @@
 <div class="page-content mb-8">
     <div class="container">
         <div class="row gutter-lg">
-            <div class="main-content post-single-content">
+            <div class="col-10 mx-auto post-single-content">
                 <div class="post post-grid post-single">
                     <figure class="post-media br-sm">
-                        <img src="assets/images/blog/single/1.jpg" alt="{{ post.title }}" width="930" height="500" />
+                        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" width="930" height="500" />
                     </figure>
                     <div class="post-details">
                         <div class="post-meta">
-                            توسط <a href="#" class="post-author">{{ post.author.username }}</a>
-                            - <a href="#" class="post-date">{{ post.created_at }}</a>
+                            توسط :<a href="#" class="post-author">{{ post.author.username }}</a>,
+                            دسته بندی :<a href="{{ post.category.get_absolute_url }}" class="post-author">{{ post.category.name }}</a>,
+                            تاریخ بروزرسانی :<a href="#" class="post-date">{{ post.created_at }}</a>,
                             <a href="#" class="post-comment"><i class="w-icon-comments"></i><span>0</span>نظرات </a>
                         </div>
                         <h2 class="post-title"><a href="#">{{ post.title }}</a></h2>
                         <div class="post-content">
-                            <p>{{ post.body }}</p>
+                            <p>{{ post.body|safe  }}</p>
                         </div>
                     </div>
                 </div>
@@ -52,7 +55,7 @@
                 </div>
                 <!-- End Tag -->
                 <div class="social-links mb-10">
-                    <div class="social-icons social-no-color border-thin">
+                    <div class="social-icons social-no-color border-thin">                        
                         <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
                         <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
                         <a href="#" class="social-icon social-pinterest w-icon-pinterest"></a>
@@ -63,7 +66,7 @@
                 <!-- End Social Links -->
                 <div class="post-author-detail">
                     <figure class="author-media mr-4">
-                        <img src="assets/images/blog/single/1.png" alt="{{ post.author.username }}" width="105" height="105" />
+                        <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.username }}" width="105" height="105" />
                     </figure>
                     <div class="author-details">
                         <div class="author-name-wrapper flex-wrap mb-2">
@@ -184,93 +187,7 @@
                     <button class="btn btn-dark btn-rounded btn-icon-right btn-comment">پست کردن نظر<i class="w-icon-long-arrow-left"></i></button>
                 </form>
             </div>
-            <!-- End of Main Content -->
-            <aside class="sidebar right-sidebar blog-sidebar sidebar-fixed sticky-sidebar-wrapper">
-                <div class="sidebar-overlay">
-                    <a href="#" class="sidebar-close">
-                        <i class="close-icon"></i>
-                    </a>
-                </div>
-                <a href="#" class="sidebar-toggle">
-                    <i class="fas fa-chevron-left"></i>
-                </a>
-                <div class="sidebar-content">
-                    <div class="sticky-sidebar">
-                        <div class="widget widget-search-form">
-                            <div class="widget-body">
-                                <form action="#" method="GET" class="input-wrapper input-wrapper-inline">
-                                    <input type="text" class="form-control"
-                                        placeholder="در بلاگ جستجو کنید" autocomplete="off" required>
-                                    <button class="btn btn-search"><i
-                                            class="w-icon-search"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- End of Widget search form -->
-                        <div class="widget widget-categories">
-                            <h3 class="widget-title bb-no mb-0">دسته بندیها </h3>
-                            <ul class="widget-body filter-items search-ul">
-                                <li><a href="blog.html">لباس ها </a></li>                               
-                            </ul>
-                        </div>
-                        <!-- End of Widget categories -->
-                        <div class="widget widget-posts">
-                            <h3 class="widget-title bb-no">پست های محبوب </h3>
-                            <div class="widget-body">
-                                <div class="swiper">
-                                    <div class="swiper-container swiper-theme nav-top" data-swiper-options="{
-                                        'spaceBetween': 20,
-                                        'slidesPerView': 1
-                                    }">
-                                        <div class="swiper-wrapper row cols-1">
-                                            <div class="swiper-slide widget-col">
-                                                <div class="post-widget mb-4">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/1.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">مد از نقطه نظر بیرونی به شما می گوید که چه کسی هستید</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>                                               
-                                            </div>
-                                            <div class="swiper-slide widget-col">
-                                                <div class="post-widget mb-4">
-                                                    <figure class="post-media br-sm">
-                                                        <img src="assets/images/blog/sidebar/4.jpg" alt="150" height="150" />
-                                                    </figure>
-                                                    <div class="post-details">
-                                                        <div class="post-meta">
-                                                            <a href="#" class="post-date">خرداد 5</a>
-                                                        </div>
-                                                        <h4 class="post-title">
-                                                            <a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی</a>
-                                                        </h4>
-                                                    </div>
-                                                </div>                                                
-                                            </div>
-                                        </div>
-                                        <button class="swiper-button-next"></button>
-                                        <button class="swiper-button-prev"></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                        <!-- End of Widget custom block -->
-                        <div class="widget widget-tags">
-                            <h3 class="widget-title bb-no">برچسب های جدید </h3>
-                            <div class="widget-body tags">
-                                <a href="#" class="tag">مد </a>                            
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+            <!-- End of Main Content -->           
         </div>
     </div>
 </div>

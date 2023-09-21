@@ -36,7 +36,7 @@ class PostAdmin(ImportExportModelAdmin):
     }
     # fields = ['title', 'body', 'published_status']
     fieldsets = (
-        (None, {'fields': ('title', 'body', 'author', 'category')}),
+        (None, {'fields': ('title','slug', 'body','thumbnail', 'author', 'category')}),
         ("وضعیت", {'fields': ('published_status',)})
     )
     # filter_horizontal = ['tags']
@@ -57,7 +57,7 @@ class PostAdmin(admin.ModelAdmin):
 
     @admin.action(description='Recover deleted item')
     def recover(self, request, queryset):
-        queryset.update(is_deleted=False, deleted_at=Null)
+        queryset.update(is_deleted=False, deleted_at=None)
 
     @admin.action(description="Draft posts to published")
     def draft_to_published_posts(self, request, queryset):
@@ -77,3 +77,6 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(BlogCategory)
 class BlogCategoryAdmin(TreeAdmin):
     form = movenodeform_factory(BlogCategory)
+    prepopulated_fields = {
+        'slug' : ['name']
+    }

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, CreateView, ListView
 from django.views.decorators.cache import cache_page
 from django.contrib import messages
 from .forms import ContactForm
-from .models import ContactSubject, Faq
+from .models import ContactSubject, Faq, FaqGroup
 from apps.blog.models import Post
 
 # @cache_page(60 * 15)
@@ -58,7 +58,8 @@ class AboutView(TemplateView):
     
     
 class FaqsView(ListView):
+    model = FaqGroup
     template_name = 'pages/faqs.html'
-    model = Faq
+    context_object_name = 'faqGroups'
     
     

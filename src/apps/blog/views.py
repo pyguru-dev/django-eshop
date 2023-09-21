@@ -1,11 +1,11 @@
 import asyncio
-from django.views.generic import  ListView, DetailView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
-from .models import Post
+from .models import BlogCategory, Post
 from .forms import CommentCreateForm
 
 
@@ -16,21 +16,20 @@ class PostListView(ListView):
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
     paginate_by = 12
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["products"] = Product.published.all() 
+        # context["products"] = Product.published.all()
+        context['popular_posts'] = Post.published.all()
         return context
-    
-    
 
-class PostDetailView(FormMixin, DetailView):
+
+class PostDetailView(DetailView):
     model = Post
-    context_object_name = 'post'
     template_name = 'blog/post_detail.html'
-    # pk_url_kwarg = 'slug'
-    # slug_field = 'post_id'
-    # slug_url_kwarg = 'id'
+    context_object_name = 'post'
+
+#         'comments': post.comments.filter(approved=True)
 
     # def get_object(self, queryset):
     #     slug = self.kwargs.get('post_id')
@@ -101,16 +100,6 @@ def post_by_tag(request, slug):
     return render(request, "blog/post_list.html", context)
 
 
-def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-
-    context = {
-        'post': post,
-        'comments': post.comments.filter(approved=True)
-    }
-    return render(request, "blog/post_detail.html", context)
-
-
 class AuthorListView(ListView):
     model = User
     # queryset = Post.objects.all().select_related('posts')
@@ -129,6 +118,18 @@ class AuthorDetailView(DetailView):
             return Post.objects.all()
         else:
             return Post.objects.filter(author=self.request.user)
+
+
+class BlogCategoryListView(ListView):
+    model = BlogCategory
+    template_name = "blog/category_list.html"
+    context_object_name = 'categories'
+
+
+class BlogCategoryDetailView(DetailView):
+    model = BlogCategory
+    template_name = "blog/category_detail.html"
+    context_object_name = 'category'
 
 
 class SearchListView(ListView):

@@ -42,13 +42,13 @@
                         <article class="post post-list post-listing mb-md-10 mb-6 pb-2 overlay-zoom mb-4">
                             <figure class="post-media br-sm">
                                 <a href="{{ post.get_absolute_url }}">
-                                    <img src="/" width="930"
+                                    <img src="{{ post.thumbnail.url }}" width="930"
                                         height="500" alt="blog">
                                 </a>
                             </figure>
                             <div class="post-details">
                                 <div class="post-cats text-primary">
-                                    <a href="#"> {{ post.category }} </a>
+                                    <a href="{{ post.category.get_absolute_url }}"> {{ post.category }} </a>
                                 </div>
                                 <h4 class="post-title">
                                     <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
@@ -123,8 +123,8 @@
                                 <div class="widget-body">
                                     <form action="#" method="GET" class="input-wrapper input-wrapper-inline">
                                         <input type="text" class="form-control"
-                                            placeholder="در بلاگ جستجو کنید" autocomplete="off" required>
-                                        <button class="btn btn-search"><i
+                                            placeholder="در بلاگ جستجو کنید" name='search' autocomplete="off" required>
+                                        <button class="btn btn-search" type='submit'><i
                                                 class="w-icon-search"></i></button>
                                     </form>
                                 </div>
@@ -133,7 +133,9 @@
                             <div class="widget widget-categories">
                                 <h3 class="widget-title bb-no mb-0">دسته بندیها </h3>
                                 <ul class="widget-body filter-items search-ul">
-                                    <li><a href="blog.html">لباس ها </a></li>                                
+                                    {% for category in blog_categories %}
+                                    <li><a href="{{ category.get_absolute_url }}">{{ category.name }} </a></li>                                                                    
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <!-- End of Widget categories -->
@@ -146,37 +148,23 @@
                                             'slidesPerView': 1
                                         }">
                                             <div class="swiper-wrapper row cols-1">
-                                                <div class="swiper-slide widget-col">
-                                                    <div class="post-widget mb-4">
-                                                        <figure class="post-media br-sm">
-                                                            <img src="assets/images/blog/sidebar/1.jpg" alt="150" height="150" />
-                                                        </figure>
-                                                        <div class="post-details">
-                                                            <div class="post-meta">
-                                                                <a href="#" class="post-date">خرداد 5</a>
+                                                {% for item in popular_posts %}
+                                                    <div class="swiper-slide widget-col">
+                                                        <div class="post-widget mb-4">
+                                                            <figure class="post-media br-sm">
+                                                                <img src="{{ item.thumbnail.url }}" alt="150" height="150" />
+                                                            </figure>
+                                                            <div class="post-details">
+                                                                <div class="post-meta">
+                                                                    <a href="#" class="post-date">{{ item.created_at }}</a>
+                                                                </div>
+                                                                <h4 class="post-title">
+                                                                    <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                                                                </h4>
                                                             </div>
-                                                            <h4 class="post-title">
-                                                                <a href="post-single.html">مد از نقطه نظر بیرونی به شما می گوید که چه کسی هستید</a>
-                                                            </h4>
-                                                        </div>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="swiper-slide widget-col">
-                                                    <div class="post-widget mb-4">
-                                                        <figure class="post-media br-sm">
-                                                            <img src="assets/images/blog/sidebar/4.jpg" alt="150" height="150" />
-                                                        </figure>
-                                                        <div class="post-details">
-                                                            <div class="post-meta">
-                                                                <a href="#" class="post-date">خرداد 5</a>
-                                                            </div>
-                                                            <h4 class="post-title">
-                                                                <a href="post-single.html">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. با تولید سادگی</a>
-                                                            </h4>
-                                                        </div>
+                                                        </div>                                               
                                                     </div>
-                                                  
-                                                </div>
+                                                {% endfor %}                                                
                                             </div>
                                             <div class="swiper-button-next"></div>
                                             <div class="swiper-button-prev"></div>

@@ -1,3 +1,4 @@
+from django.db import models
 from asgiref.sync import sync_to_async
 from django.core.mail import send_mail
 import time
@@ -97,7 +98,6 @@ async def send_async_mail(subject, message, from_mail, to_mail=[]):
     await async_send_mail(subject, message, from_mail, to_mail, fail_silently=False)
     print('mail sent .............')
     # asyncio.create_task(async_send_mail('subject', 'message', 'from@gmail.com', ['to_gmail.com'], fail_silently=False))
-
 
 
 class TokenGenerator(PasswordResetTokenGenerator):
