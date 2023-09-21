@@ -99,7 +99,7 @@ class BrandResource(resources.ModelResource):
 @admin.register(Brand)
 class BrandAdmin(ExportActionModelAdmin, ImportExportModelAdmin):
     resource_class = BrandResource
-    list_display = ['title', 'slug']
+    list_display = ['title', 'slug', 'en_title', 'site_link', 'created_at']
     prepopulated_fields = {
         'slug': ('title',)
     }

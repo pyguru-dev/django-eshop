@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <!-- End Post Navigation -->
-                <h4 class="title title-lg font-weight-bold mt-10 pt-1 mb-5">پست های اخیر</h4>
+                <h4 class="title title-lg font-weight-bold mt-10 pt-1 mb-5">پست های مرتبط</h4>
                 <div class="swiper">
                     <div class="post-slider swiper-container swiper-theme nav-top pb-2" data-swiper-options="{
                         'spaceBetween': 20,
@@ -115,22 +115,26 @@
                         }
                     }">
                         <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-xs-2 cols-1">
-                            <div class="swiper-slide post post-grid">
-                                <figure class="post-media br-sm">
-                                    <a href="post-single.html">
-                                        <img src="assets/images/blog/single/2.jpg" alt="Post" width="296"
-                                            height="190" style="background-color: #bcbcb4;" />
-                                    </a>
-                                </figure>
-                                <div class="post-details text-center">
-                                    <div class="post-meta">
-                                        توسط <a href="#" class="post-author">لوگان لی</a>
-                                        - <a href="#" class="post-date">1401.1.23</a>
+                            {% for item in related_posts %}
+                                <div class="swiper-slide post post-grid">
+                                    <figure class="post-media br-sm">
+                                        <a href="{{ item.get_absolute_url }}">
+                                            <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}" width="296"
+                                                height="190" style="background-color: #bcbcb4;" />
+                                        </a>
+                                    </figure>
+                                    <div class="post-details text-center">
+                                        <div class="post-meta">
+                                            توسط <a href="#" class="post-author">{{ item.author.username }}</a>
+                                            - <a href="#" class="post-date">{{ item.created_at }}</a>
+                                        </div>
+                                        <h4 class="post-title mb-3"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+                                        <a href="{{ item.get_absolute_url }}" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
                                     </div>
-                                    <h4 class="post-title mb-3"><a href="post-single.html">مد در مورد اینکه از چه کسی هستید بگویید...</a></h4>
-                                    <a href="post-single.html" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
-                                </div>
-                            </div>                            
+                                </div>    
+                            {% empty %}
+                                <div class='alert alert-info'>تا کنون پست مرتبطی ثبت نشده است</div>
+                            {% endfor %}                        
                         </div>
                         <button class="swiper-button-next"></button>
                         <button class="swiper-button-prev"></button>
@@ -171,8 +175,11 @@
                         </div>
                     </li>                    
                 </ul>
-                <!-- End Comments -->
-                <form class="reply-section pb-4">
+
+                {% if user.is_authenticated %}
+                                    
+                <form class="reply-section pb-4" method='POST'>
+                    {% csrf_token %}
                     <h4 class="title title-md font-weight-bold pt-1 mt-10 mb-0">پیامی بگذارید</h4>
                     <p>آدرس ایمیل شما منتشر نخواهد شد. فیلدهای الزامی مشخص شده اند</p>
                     <div class="row">
@@ -183,9 +190,12 @@
                             <input type="text" class="form-control" placeholder="لینک را وارد کنید " id="email_1">
                         </div>
                     </div>
-                    <textarea cols="30" rows="6" placeholder="نوشتن یک نظر" class="form-control mb-4" id="comment"></textarea>
-                    <button class="btn btn-dark btn-rounded btn-icon-right btn-comment">پست کردن نظر<i class="w-icon-long-arrow-left"></i></button>
+                    <textarea cols="30" rows="6" placeholder="نظر" class="form-control mb-4" id="comment"></textarea>
+                    <button type="submit" class="btn btn-dark btn-rounded btn-icon-right btn-comment">ثبت نظر </button>
                 </form>
+                {% else %}
+                    <a href="{% url 'login_view' %}" class="btn btn-dark btn-rounded btn-icon-right btn-comment"> برای ثبت نظر وارد شوید <i class="w-icon-long-arrow-left"></i></a>                
+                {% endif %}
             </div>
             <!-- End of Main Content -->           
         </div>

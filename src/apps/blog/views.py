@@ -29,7 +29,6 @@ class PostDetailView(DetailView):
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-#         'comments': post.comments.filter(approved=True)
 
     # def get_object(self, queryset):
     #     slug = self.kwargs.get('post_id')
@@ -40,11 +39,14 @@ class PostDetailView(DetailView):
     # def get_success_url(self) -> str:
     #     return reverse('post_detail', kwargs={'pk': self.object.id})
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(PostDeleteView, self).get_context_data(**kwargs)
-    #     context['form'] = CommentCreateForm(
-    #         initial={'article': self.object, 'user': self.request.user})
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        # context['form'] = CommentCreateForm(
+        #     initial={'article': self.object, 'user': self.request.user})
+        context['related_posts'] = Post.published.all()
+#         context['comments'] = self.object.comments.filter(approved=True)
+        
+        return context
 
     # def post(self, *args, **kwargs):
     #     self.object = self.get_object()

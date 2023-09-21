@@ -1,0 +1,16 @@
+<div class="swiper-slide post post-grid">
+    <figure class="post-media br-sm">
+        <a href="{{ item.get_absolute_url }}">
+            <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}" width="296"
+                height="190" style="background-color: #bcbcb4;" />
+        </a>
+    </figure>
+    <div class="post-details text-center">
+        <div class="post-meta">
+            توسط <a href="#" class="post-author">{{ item.author.username }}</a>
+            - <a href="#" class="post-date">{{ item.created_at }}</a>
+        </div>
+        <h4 class="post-title mb-3"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h4>
+        <a href="{{ item.get_absolute_url }}" class="btn btn-link btn-dark btn-underline font-weight-normal">ادامه مطلب <i class="w-icon-long-arrow-left"></i></a>
+    </div>
+</div>    

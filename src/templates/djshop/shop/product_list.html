@@ -53,11 +53,13 @@
                     }
                 }">
                 <div class="swiper-wrapper row gutter-no cols-xl-7 cols-lg-6 cols-md-4 cols-sm-3 cols-2">
-                    <div class="swiper-slide">
-                        <figure>
-                            <img src="assets/images/brands/category/1.png" alt="Brand" width="160" height="90" />
-                        </figure>
-                    </div>                    
+                    {% for brand in brands %}
+                        <div class="swiper-slide">
+                            <figure>
+                                <a href="{{ brand.get_absolute_url }}"><img src="{{ brand.logo.url }}" alt="{{ brand.title }}" style="max-width: 60px !important; max-height: 60px !important;"/></a>
+                            </figure>
+                        </div>   
+                    {% endfor %}                 
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -65,7 +67,7 @@
         <!-- End of Shop Brands-->
 
         <!-- Start of Shop Category -->
-        <div class="shop-default-category category-ellipse-section mb-6">
+        {% comment %} <div class="shop-default-category category-ellipse-section mb-6">
             <div class="swiper-container swiper-theme shadow-swiper"
                 data-swiper-options="{
                 'spaceBetween': 20,
@@ -109,7 +111,7 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-        <!-- End of Shop Category -->
+        <!-- End of Shop Category --> {% endcomment %}
 
         <!-- Start of Shop Content -->
         <div class="shop-content row gutter-lg mb-10">
@@ -131,7 +133,18 @@
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title"><label>تمام دسته بندیها </label></h3>
                             <ul class="widget-body filter-items search-ul">
-                                <li><a href="#">تجهیزات جانبی </a></li>                               
+                                <li><a href="#">تجهیزات جانبی </a></li>                                      
+                            </ul>
+                        </div>
+                        <!-- End of Collapsible Widget -->
+                        
+                        <!-- Start of Collapsible Widget -->
+                        <div class="widget widget-collapsible">
+                            <h3 class="widget-title"><label>برند </label></h3>
+                            <ul class="widget-body filter-items item-check mt-1">
+                                {% for brand in brands %}
+                                    <li><a href="#">{{ brand.title }}</a></li>                                
+                                {% endfor %}
                             </ul>
                         </div>
                         <!-- End of Collapsible Widget -->
@@ -170,14 +183,6 @@
                         </div>
                         <!-- End of Collapsible Widget -->
 
-                        <!-- Start of Collapsible Widget -->
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title"><label>برند </label></h3>
-                            <ul class="widget-body filter-items item-check mt-1">
-                                <li><a href="#">گروه خودرو زیبا </a></li>                                
-                            </ul>
-                        </div>
-                        <!-- End of Collapsible Widget -->
 
                         <!-- Start of Collapsible Widget -->
                         <div class="widget widget-collapsible">
@@ -283,34 +288,36 @@
                             </div>
                         </div>
                     </div>   
+
+                    <div class="toolbox toolbox-pagination justify-content-between">
+                        <p class="showing-info mb-2 mb-sm-0">
+                            نمایش <span>1-12 از 60</span>محصولات 
+                        </p>
+                        <ul class="pagination">
+                            <li class="prev disabled">
+                                <a href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                    <i class="w-icon-long-arrow-right"></i>قبلی
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="next">
+                                <a href="#" aria-label="Next">
+                                   بعدی <i class="w-icon-long-arrow-left"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     {% empty %}
-                    
+                       <div class="alert">تا کنون محصولی ثبت نشده است.</div>
                     {% endfor %}                
                 </div>
 
-                <div class="toolbox toolbox-pagination justify-content-between">
-                    <p class="showing-info mb-2 mb-sm-0">
-                        نمایش <span>1-12 از 60</span>محصولات 
-                    </p>
-                    <ul class="pagination">
-                        <li class="prev disabled">
-                            <a href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                <i class="w-icon-long-arrow-right"></i>قبلی
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="next">
-                            <a href="#" aria-label="Next">
-                               بعدی <i class="w-icon-long-arrow-left"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                
             </div>
             <!-- End of Shop Main Content -->
         </div>
