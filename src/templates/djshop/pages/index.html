@@ -570,12 +570,14 @@
         }
     }">
         <div class="swiper-wrapper row cols-xl-8 cols-lg-6 cols-md-4 cols-sm-3 cols-2">
-            <div class="swiper-slide">
-                <figure>
-                    <img src="{% static 'images/1.png' %}" alt="Brand" width="290"
-                        height="100" />
-                </figure>
-            </div>            
+            {% for brand in brands %}
+                <div class="swiper-slide">
+                    <figure>
+                        <img src="{{ brand.logo.url }}" alt="{{ brand.title }}" width="290"
+                            height="100" />
+                    </figure>
+                </div> 
+            {% endfor %}           
         </div>
     </div>
     <!-- End of Brands Wrapper -->
@@ -599,26 +601,26 @@
     }">
         <div class="swiper-wrapper row cols-lg-4 cols-md-3 cols-sm-2 cols-1">
             {% for post in last_posts %}
-            <div class="swiper-slide post">
-                <figure class="post-media br-sm">
-                    <a href="{% url 'post_detail' post.id %}">
-                        <img src="{% static post.title %}" alt="Post" width="620" height="398"
-                            style="background-color: #898078;">
-                    </a>
-                    <div class="post-calendar">
-                        <span class="post-day">05</span>
-                        <span class="post-month">اردیبهشت </span>
+                <div class="swiper-slide post">
+                    <figure class="post-media br-sm">
+                        <a href="{{ post.get_absolute_url }}">
+                            <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" width="620" height="398"
+                                style="background-color: #898078;">
+                        </a>
+                        <div class="post-calendar">
+                            <span class="post-day">{{ post.created_at.month }}</span>
+                            <span class="post-month">{{ post.created_at.day }}</span>
+                        </div>
+                    </figure>
+                    <div class="post-details">
+                        <h4 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+                        <div class="post-content">
+                            <p>{{ post.description }}</p>
+                        </div>
+                        <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
+                                class="w-icon-long-arrow-left"></i></a>
                     </div>
-                </figure>
-                <div class="post-details">
-                    <h4 class="post-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h4>
-                    <div class="post-content">
-                        <p>{{ post.description }}</p>
-                    </div>
-                    <a href="{% url 'post_detail' post.id %}" class="btn btn-link btn-dark btn-underline">ادامه مطلب <i
-                            class="w-icon-long-arrow-left"></i></a>
                 </div>
-            </div>
             {% empty %}
                 <div class="alert alert-info">تا کنون مقاله ای منتشر نشده است</div>
             {% endfor %}          

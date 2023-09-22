@@ -10,26 +10,31 @@ class ProductListView(ListView):
     queryset = Product.objects.all()
     context_object_name = 'products'
     template_name = 'shop/product_list.html'
-    
+    paginate_by = 1
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["brands"] = Brand.objects.all()
         return context
-    
 
 
 class ProductDetailView(DetailView):
-    context_object_name = 'product'
-    template_name = 'shop/product_detail.html'
     queryset = Product.objects.all()
+    template_name = 'shop/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["related_products"] = Product.objects.all()
+        # context["related_products"] = Product.objects.filter(category=product.category).exclude(pk=product.id)
+        context["popular_products"] = Product.objects.all()
+        return context
 
     # def get_queryset(self):
     #     order_id = self.kwargs['pk']
     #     order = Order.objects.get(id=order_id)
     #     order_items = OrderItem.objects.filter(order=order)
     #     return order_items
-
-    # related_products = Product.objects.filter(category=product.category).exclude(pk=product.id)
 
 
 class CartView(TemplateView):

@@ -3,6 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView
 from django.views.decorators.cache import cache_page
 from django.contrib import messages
+
+from apps.shop.models import Brand
 from .forms import ContactForm
 from .models import ContactSubject, Faq, FaqGroup
 from apps.blog.models import Post
@@ -14,6 +16,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["last_posts"] = Post.objects.all()
+        context["brands"] = Brand.objects.all()
         return context
     
     

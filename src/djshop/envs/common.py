@@ -232,7 +232,7 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        
+
     ],
 
 
@@ -325,6 +325,22 @@ JALALI_DATE_DEFAULTS = {
         }
     },
 }
+
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "storages.backends.s3.S3Storage",
+#         "OPTIONS": {
+#           ...your_options_here
+#         },
+#     },
+
+# "dropbox": {
+#         "BACKEND": "storages.backends.dropbox.DropboxStorage",
+#         "OPTIONS": {
+#           ...your_options_here
+#         },
+#     },
+# }
 
 IMPORT_EXPORT_FORMATS = [CSV]
 

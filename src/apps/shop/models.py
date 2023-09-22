@@ -136,7 +136,7 @@ class Product(BaseModel):
         max_length=16, choices=ProductTypeChoice.choices, default=ProductTypeChoice.standalone)
     parent = models.ForeignKey(
         "self", related_name='children', on_delete=models.CASCADE, null=True, blank=True)
-
+    # code = models.CharField(max_length=32, unique=True, null=True, blank=True)    
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='products', verbose_name=_('نویسنده'))
     title = models.CharField(

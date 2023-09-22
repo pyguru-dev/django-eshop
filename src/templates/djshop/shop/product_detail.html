@@ -86,7 +86,7 @@
                                 <figure class="brand">
                                     <a href={{ product.brand.get_absolute_url }}>
                                     <img src="{{ product.brand.logo.url }}" alt="{{ product.brand.title }}"
-                                        width="105" height="48" /></a>
+                                        style="max-width:100px !important;"/></a>
                                 </figure>
                                 <div class="product-meta">
                                     <div class="product-sku">
@@ -593,7 +593,7 @@
                 </section>
                 <section class="related-product-section">
                     <div class="title-link-wrapper mb-4">
-                        <h4 class="title">محصولات اخیر </h4>
+                        <h4 class="title">محصولات مرتبط </h4>
                         <a href="#" class="btn btn-dark btn-link btn-slide-right btn-icon-right">محصولات بیشتر<i class="w-icon-long-arrow-left"></i></a>
                     </div>
                     <div class="swiper-container swiper-theme" data-swiper-options="{
@@ -612,10 +612,11 @@
                         }
                     }">
                         <div class="swiper-wrapper row cols-lg-3 cols-md-4 cols-sm-3 cols-2">
+                            {% for item in related_products %}
                             <div class="swiper-slide product">
                                 <figure class="product-media">
-                                    <a href="product-default.html">
-                                        <img src="assets/images/products/default/5.jpg" alt="Product"
+                                    <a href="{{ item.get_absolute_url }}">
+                                        <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}"
                                             width="300" height="338" />
                                     </a>
                                     <div class="product-action-vertical">
@@ -631,19 +632,21 @@
                                     </div>
                                 </figure>
                                 <div class="product-details">
-                                    <h4 class="product-name"><a href="product-default.html">درون </a></h4>
+                                    <h4 class="product-name"><a href="{{ item.get_absolute_url }}">{{ item.title }} </a></h4>
                                     <div class="ratings-container">
                                         <div class="ratings-full">
                                             <span class="ratings" style="width: 100%;"></span>
                                             <span class="tooltiptext tooltip-top"></span>
                                         </div>
-                                        <a href="product-default.html" class="rating-reviews">(3 نظر )</a>
+                                        <a href="{{ item.get_absolute_url }}" class="rating-reviews">(0 نظر )</a>
                                     </div>
                                     <div class="product-pa-wrapper">
-                                        <div class="product-price">480000 تومان</div>
+                                        <div class="product-price">{{ item.price }} تومان</div>
                                     </div>
                                 </div>
                             </div>                            
+                            {% endfor %}
+                            
                         </div>
                     </div>
                 </section>
@@ -688,7 +691,7 @@
                      
                         <div class="widget widget-products">
                             <div class="title-link-wrapper mb-2">
-                                <h4 class="title title-link font-weight-bold">محصولات بیشتر </h4>
+                                <h4 class="title title-link font-weight-bold">محصولات محبوب </h4>
                             </div>
                         
                             <div class="swiper nav-top">
@@ -702,16 +705,17 @@
                                 }">
                                     <div class="swiper-wrapper">
                                         <div class="widget-col swiper-slide">
+                                            {% for item in popular_products %}
                                             <div class="product product-widget">
                                                 <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="assets/images/shop/13.jpg" alt="Product"
+                                                    <a href="{{ item.get_absolute_url }}">
+                                                        <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}"
                                                             width="100" height="113" />
                                                     </a>
                                                 </figure>
                                                 <div class="product-details">
                                                     <h4 class="product-name">
-                                                        <a href="#">ساعت هوشمند </a>
+                                                        <a href="{{ item.get_absolute_url }}">{{ item.title }} </a>
                                                     </h4>
                                                     <div class="ratings-container">
                                                         <div class="ratings-full">
@@ -719,49 +723,12 @@
                                                             <span class="tooltiptext tooltip-top"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="product-price">80000 تومان - 90000 تومان</div>
+                                                    <div class="product-price">{{ item.price }} تومان</div>
                                                 </div>
                                             </div>
-                                            <div class="product product-widget">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="assets/images/shop/14.jpg" alt="Product"
-                                                            width="100" height="113" />
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h4 class="product-name">
-                                                        <a href="#">مرکز پزشکی آسمان</a>
-                                                    </h4>
-                                                    <div class="ratings-container">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width: 80%;"></span>
-                                                            <span class="tooltiptext tooltip-top"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-price">220000 تومان</div>
-                                                </div>
-                                            </div>
-                                            <div class="product product-widget">
-                                                <figure class="product-media">
-                                                    <a href="#">
-                                                        <img src="assets/images/shop/15.jpg" alt="Product"
-                                                            width="100" height="113" />
-                                                    </a>
-                                                </figure>
-                                                <div class="product-details">
-                                                    <h4 class="product-name">
-                                                        <a href="#">موتور بدلکاری مشکی</a>
-                                                    </h4>
-                                                    <div class="ratings-container">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width: 60%;"></span>
-                                                            <span class="tooltiptext tooltip-top"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-price">180000 تومان</div>
-                                                </div>
-                                            </div>
+                                            
+                                            {% endfor %}
+                                            
                                         </div>                                        
                                     </div>
                                     <button class="swiper-button-next"></button>
