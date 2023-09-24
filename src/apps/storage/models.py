@@ -16,7 +16,7 @@ class Media(BaseModel):
         hasher = hashlib.sha1()
         for chunk in self.image.file.chunks():
             hasher.update(chunk)
-        self.file_hash = hasher.digest()
+        self.file_hash = hasher.hexdigest()
         super().save(*args, **kwargs)
 
 
