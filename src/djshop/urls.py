@@ -10,6 +10,7 @@ from apps.core.schema import schema
 from apps.core.urls import sitemaps
 from apps.core.views import error404_handler
 from django.conf.urls import handler404
+from azbankgateways.urls import az_bank_gateways_urls
 
 urlpatterns = [
     path('', include('apps.pages.urls')),
@@ -31,6 +32,8 @@ urlpatterns = [
          name="check_notifications"),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('bankgateways/', az_bank_gateways_urls()),
+
 ]
 
 # if settings.DEBUG:
