@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import Gateway, Payment
-
-
-class GatewaySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Gateway
-        fields = ['id', 'title', 'url']
+from .models import Payment
 
 
 class PaymentSerializer(serializers.HyperlinkedModelSerializer):

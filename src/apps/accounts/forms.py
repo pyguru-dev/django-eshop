@@ -4,7 +4,7 @@ from django import forms
 from django.forms.widgets import PasswordInput
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.payments.models import Bank
+from apps.accounts.models import UserBank
 from .models import Address, User
 from jalali_date.fields import JalaliDateField
 from jalali_date.widgets import AdminJalaliDateWidget
@@ -74,7 +74,7 @@ class AddressForm(forms.ModelForm):
         fields = ['title']
 
 
-class BankForm(forms.ModelForm):
+class UserBankForm(forms.ModelForm):
     class Meta:
-        model = Bank
+        model = UserBank
         fields = ['title']

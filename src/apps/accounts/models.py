@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, UserManager
 from django.utils.translation import gettext_lazy as _
 from apps.core.models import BaseModel
-from apps.payments.models import Bank
+from apps.payments.models import IrBank
 
 
 class Country(BaseModel):
@@ -113,7 +113,7 @@ class UserBank(BaseModel):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name=_("کاربر"))
     bank = models.ForeignKey(
-        Bank, on_delete=models.CASCADE, verbose_name=_("بانک"))
+        IrBank, on_delete=models.CASCADE, verbose_name=_("بانک"))
     title = models.CharField(max_length=150, verbose_name=_('عنوان'))
     shaba = models.CharField(max_length=250, verbose_name=_('شبا'))
     account_number = models.CharField(

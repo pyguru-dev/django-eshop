@@ -50,7 +50,7 @@ class Factor(BaseModel):
 class IrBank(BaseModel):
     title = models.CharField(
         max_length=100, verbose_name=_('عنوان'), unique=True)
-    loo = models.CharField(max_length=255, verbose_name=_(
+    logo = models.CharField(max_length=255, verbose_name=_(
         'لوگو'), unique=True, blank=True, null=True)
 
 

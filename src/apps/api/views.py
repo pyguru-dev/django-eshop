@@ -1,3 +1,4 @@
+import uuid
 from rest_framework_simplejwt.tokens import RefreshToken
 import datetime
 import requests
@@ -18,8 +19,8 @@ from apps.api.serializers import RequestOtpResponseSerializer, RequestOtpSeriali
 from apps.shop.models import Brand, Cart, Product
 from apps.shop.serializers import BrandSerializer, ProductSerializer
 from apps.blog.models import BlogCategory, Post
-from apps.payments.models import Gateway, Payment
-from apps.payments.serializers import PaymentSerializer, GatewaySerializer
+from apps.payments.models import Payment
+from apps.payments.serializers import PaymentSerializer
 from apps.blog.serializers import (CategoryTreeSerializer, CreateCategoryNodeSerializer,
                                    PostSerializer, CategorySerializer, TagSerializer)
 from apps.accounts.models import OtpRequest, User
@@ -61,7 +62,8 @@ class ProductDetailView(APIView):
 #         q = self.generate_q_expression(query)
 #         search = self.document_class.search().query(q)
 #         return Response(self.serializer_class(search.to_queryset(), many=True).data)
-    
+
+
 class CategoryListView(APIView):
     def get_queryset(self):
         return BlogCategory.objects.all()
@@ -266,29 +268,15 @@ class GetTokenView(APIView):
         code = request.data.get('code')
 
 
-class GatewayListView(APIView):
-    def get(self, request):
-        categories = Gateway.objects.all()
-        serializer = GatewaySerializer(categories, many=True)
-        return Response(serializer.data)
-
-
 class PaymentView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        gateway_id = request.query_params.get("gateway")
-
-        try:
-            gateway = Gateway.objects.get(pk=gateway_id)
-        except (Gateway.DoesNotExist):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
 
         payment = Payment.objects.create(
             user=request.user,
-            gateway=gateway,
             price=0,
-            token=str(uuid.uuid4())
+            token=str(uuid.uuid4)
         )
 
         return Response({'token': payment.token, 'callback_url': ''})
