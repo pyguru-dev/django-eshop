@@ -1,5 +1,5 @@
 from io import BytesIO
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -136,7 +136,7 @@ class Product(BaseModel):
         max_length=16, choices=ProductTypeChoice.choices, default=ProductTypeChoice.standalone)
     parent = models.ForeignKey(
         "self", related_name='children', on_delete=models.CASCADE, null=True, blank=True)
-    # code = models.CharField(max_length=32, unique=True, null=True, blank=True)    
+    # code = models.CharField(max_length=32, unique=True, null=True, blank=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='products', verbose_name=_('نویسنده'))
     title = models.CharField(
@@ -180,6 +180,22 @@ class Product(BaseModel):
     def get_absolute_url(self):
         return reverse_lazy("product_detail",  args=[str(self.slug)])
 
+    @property
+    def main_image(self):
+        if self.images.exists():
+            return self.images.first()
+        else:
+            return None
+
+    # def save(self, *args, **kwargs):
+    #     created = self.pk is None
+    #     with transaction.atomic():
+    #         if created:
+    #             transaction.on_commit(
+    #                 lambda: tasks.create_product_thumbnail.delay(self.pk)
+    #             )
+    #         super().save(*args, **kwargs)
+
 
 class ProductImages(BaseModel):
     # order priority
@@ -188,7 +204,13 @@ class ProductImages(BaseModel):
 
     image = models.ImageField(
         upload_to='uploads/product/images/', blank=True, null=True)
+    # image = models.ForeignKey('storage.Image',on_delete=models.PROTECT)
     alt_text = models.CharField(max_length=255, null=True, blank=True)
+
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ('display_order',)
 
     def save(self, *args, **kwargs):
         self.thumbnail = self.make_thumbnail(self.image)
@@ -206,6 +228,13 @@ class ProductImages(BaseModel):
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
+
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
+
+        for index, image in enumerate(self.product.images.all()):
+            image.display_order = index
+            image.save()
 
 
 class ProductRecommendation(BaseModel):

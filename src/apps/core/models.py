@@ -82,3 +82,8 @@ class Tag(BaseModel):
 
 # class PublicNotification(BaseModel):
 #     pass
+
+
+# class ActivityHistory(LogEntry):
+#     class Meta:
+#         proxy = True

@@ -42,12 +42,20 @@ services:
       - meilisearch-volume:/data.ms
     ports:
       - 7700:7700
+
   elasticsearch:
-    image: elasticsearch:7.14.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.1
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
 
-
 volumes:
   djshop-data:
-  meilisearch-volume: 
+  meilisearch-volume:
+  elasticsearch-data:
+

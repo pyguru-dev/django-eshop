@@ -37,6 +37,28 @@ class ProductDetailView(DetailView):
     #     return order_items
 
 
+# class ProductDocumentViewSet(DocumentViewSet):
+#     document = ProductDocument
+#     serializer_class = ProductDocumentSerializer
+
+#     filter_backends = (
+#         FilteringFilterBackend,
+#         SearchFilterBackend,
+#         SuggesterFilterBackend,
+#     )
+
+#     search_fields = ("name",)
+
+#     filter_fields = {
+#         "id": {"field": "id", "lookups": [LOOKUP_QUERY_IN]},
+#         "price": {"field": "price", "lookups": [LOOKUP_QUERY_GTE, LOOKUP_FILTER_RANGE]},
+#     }
+
+#     suggester_fields = {
+#         "name_suggest": {"field": "name.suggest", "suggesters": [SUGGESTER_COMPLETION]}
+#     }
+
+
 class CartView(TemplateView):
     template_name = "shop/cart.html"
 

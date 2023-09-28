@@ -11,3 +11,4 @@ add pwa
 add caching layer
 add pylint
 create product unique code 
+add minio

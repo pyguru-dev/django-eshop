@@ -82,6 +82,8 @@ INSTALLED_APPS = [
     "django_filters",
     'django_social_share',
     'azbankgateways',
+    #  "django_elasticsearch_dsl",
+    # "django_elasticsearch_dsl_drf",
 
 
     'utils',
@@ -376,27 +378,31 @@ NOTIFICATION_MODEL = 'pages.ContactModel'
 
 
 AZ_IRANIAN_BANK_GATEWAYS = {
-   'GATEWAYS': { 
-       'ZARINPAL': {
-           'MERCHANT_CODE': '<YOUR MERCHANT CODE>',
-           'SANDBOX': 1,  # 0 disable, 1 active
-       },
-       'IDPAY': {
-           'MERCHANT_CODE': '<YOUR MERCHANT CODE>',
-           'METHOD': 'POST',  # GET or POST
-           'X_SANDBOX': 1,  # 0 disable, 1 active
-       },       
-   },
-   'IS_SAMPLE_FORM_ENABLE': True, # اختیاری و پیش فرض غیر فعال است
-   'DEFAULT': 'ZARINPAL',
-   'CURRENCY': 'IRT', # اختیاری
-   'TRACKING_CODE_QUERY_PARAM': 'tc', # اختیاری
-   'TRACKING_CODE_LENGTH': 16, # اختیاری
-   'SETTING_VALUE_READER_CLASS': 'azbankgateways.readers.DefaultReader', # اختیاری
-   'BANK_PRIORITIES': [
-       'ZARINPAL',
-       'IDPAY',
-   ], # اختیاری
-   'IS_SAFE_GET_GATEWAY_PAYMENT': True, #اختیاری، بهتر است True بزارید.
-   'CUSTOM_APP': None, # اختیاری 
+    'GATEWAYS': {
+        'ZARINPAL': {
+            'MERCHANT_CODE': '<YOUR MERCHANT CODE>',
+            'SANDBOX': 1,  # 0 disable, 1 active
+        },
+        'IDPAY': {
+            'MERCHANT_CODE': '<YOUR MERCHANT CODE>',
+            'METHOD': 'POST',  # GET or POST
+            'X_SANDBOX': 1,  # 0 disable, 1 active
+        },
+    },
+    'IS_SAMPLE_FORM_ENABLE': True,  # اختیاری و پیش فرض غیر فعال است
+    'DEFAULT': 'ZARINPAL',
+    'CURRENCY': 'IRT',  # اختیاری
+    'TRACKING_CODE_QUERY_PARAM': 'tc',  # اختیاری
+    'TRACKING_CODE_LENGTH': 16,  # اختیاری
+    'SETTING_VALUE_READER_CLASS': 'azbankgateways.readers.DefaultReader',  # اختیاری
+    'BANK_PRIORITIES': [
+        'ZARINPAL',
+        'IDPAY',
+    ],  # اختیاری
+    'IS_SAFE_GET_GATEWAY_PAYMENT': True,  # اختیاری، بهتر است True بزارید.
+    'CUSTOM_APP': None,  # اختیاری
 }
+
+# ELASTICSEARCH_DSL = {
+#     "default": {"hosts": "elasticsearch:9200"},
+# }
